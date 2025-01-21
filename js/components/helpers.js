@@ -24,4 +24,4 @@ const textSizes = {
   large: 24,
 };
 
-
+// TODO für die ganzen Maße eine constante erstellen um einen Ort zum anpassen zu haben

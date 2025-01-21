@@ -14,18 +14,20 @@ class Pin {
     if (this.type == "circle") {
       fill(colors.connectorPin);
       circle(this.pos.x, this.pos.y, 4);
-    } else {
+    } else if (this.type == "rect") {
       const versatz = 1;
       fill(colors.btnActive);
       rect(this.pos.x, this.pos.y, 8, versatz);
       fill(colors.outline);
       rect(this.pos.x, this.pos.y + versatz, 8, versatz);
+    }else if(this.type == "plug"){
+      // TODO Design für den Plug erstellen.
     }
   }
 
   connect(obj) {
     this.connected.push(obj);
-    this.update(new Signal(this.active));
+    this.update(new Signal(this));
   }
 
   disconnect(obj) {
@@ -35,8 +37,8 @@ class Pin {
 
   update(signal) {
     // TODO Click hinzufügen
-    this.active = signal.value;
-    signal.visited.push(this);
+    // TODO Handling vom Loop hinzufügen
+    signal.visit(this);
     this.connected.filter((item) => !signal.visited.includes(item)).forEach((obj) => {      
       obj.update(signal);
     });
