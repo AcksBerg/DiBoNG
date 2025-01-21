@@ -2,11 +2,8 @@ let cam; // Kamera-Position
 let camBounds;
 let prevMouse; // Vorherige Mausposition
 let zoom = 2; // Zoom-Faktor
-let backgroundColor;
 let debug;
 let buttons;
-let colors;
-
 
 // TODO inRect funktion schreiben worauf alle weiteren Elemente zugreifen können.
 const inRect = (obj, height = -1, width = -1) => {
@@ -16,35 +13,10 @@ const inRect = (obj, height = -1, width = -1) => {
   }
 };
 
-const getCssVariable = (varName) => {
-  return getComputedStyle(document.documentElement)
-    .getPropertyValue(varName)
-    .trim();
-};
-
 function setup() {
   textFont("Consolas");
-  // TODO Auslagern der Farben und anderen standard parametern
-  colors = {
-    background: color(getCssVariable("--background")),
-    btnInactive: color(getCssVariable("--buttonInactive")),
-    btnActive: color(getCssVariable("--buttonActive")),
-    outline: color(getCssVariable("--outline")),
-    ledRedOn: color(getCssVariable("--ledRedOn")),
-    ledRedOff: color(getCssVariable("--ledRedOff")),
-    ledGreenOn: color(getCssVariable("--ledGreenOn")),
-    ledGreenOff: color(getCssVariable("--ledGreenOff")),
-    ledYellowOn: color(getCssVariable("--ledYellowOn")),
-    ledYellowOff: color(getCssVariable("--ledYellowOff")),
-    connectorPin: color(getCssVariable("--connectorPin")),
-    silver: color(getCssVariable("--silver")),
-  };
-  textSizes = {
-    small: 6,
-    medium: 12,
-    large: 24
-  };
   createCanvas(windowWidth, windowHeight, P2D);
+  // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
   // In welchem Gebiet sich die Kamera bewegen kann.
   // Muss später an die Szene angepasst werden.
   camBounds = {
@@ -60,11 +32,18 @@ function setup() {
   buttons = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
-    new LedArray(createVector(200,200)),
-    new LedArray(createVector(200,260), {on:colors.ledYellowOn, off:colors.ledYellowOff}),
-    new LedArray(createVector(200,320), {on:colors.ledGreenOn, off:colors.ledGreenOff}),
-    new Socket(createVector(250,200),24)
+    new LedArray(createVector(200, 200)),
+    new LedArray(createVector(200, 260), {
+      on: colors.ledYellowOn,
+      off: colors.ledYellowOff,
+    }),
+    new LedArray(createVector(200, 320), {
+      on: colors.ledGreenOn,
+      off: colors.ledGreenOff,
+    }),
+    new Socket(createVector(250, 200), 24),
   ];
+  // TODO nur für debuging/tests
   buttons[0].buttons[0].connected[1].connect(buttons[2].connectors[0]);
   buttons[0].buttons[0].connected[2].connect(buttons[2].connectors[1]);
   buttons[0].buttons[1].connected[1].connect(buttons[2].connectors[2]);
