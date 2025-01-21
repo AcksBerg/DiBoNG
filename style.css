@@ -1,0 +1,23 @@
+:root {
+  --background: #27508d;
+  --buttonInactive: hsl(236, 16%, 34%);
+  --buttonActive: hsl(236, 50%, 34%);
+  --outline: #cac8c8;
+  --ledRedOn:hsl(0, 64%, 60%);
+  --ledYellowOn:hsl(56, 64%, 60%);
+  --ledGreenOn:hsl(110, 64%, 60%);
+  --ledRedOff:hsl(0, 64%, 20%);
+  --ledYellowOff:hsl(56, 64%, 20%);
+  --ledGreenOff:hsl(110, 64%, 20%);
+  --connectorPin: hsl(41, 96%, 19%);
+  --silver: hsl(0, 0%, 75%);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
