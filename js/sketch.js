@@ -14,6 +14,8 @@ const inRect = (obj, height = -1, width = -1) => {
 };
 
 function setup() {
+  // Framerate reduziert um meinen Akku nicht ganz so schnell zu leeren.
+  setFrameRate(5);
   textFont("Consolas");
   createCanvas(windowWidth, windowHeight, P2D);
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.

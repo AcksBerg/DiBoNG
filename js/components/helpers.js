@@ -24,7 +24,6 @@ const textSizes = {
   large: 24,
 };
 
-// TODO für die ganzen Maße eine constante erstellen um einen Ort zum anpassen zu haben
 const sizes = {
   pin: {
     circle: 4,
@@ -41,5 +40,10 @@ const sizes = {
   },
   btnArray:{
     size: 20,
+  },
+  socket:{
+    xVersatz: 15,
+    yVersatz: 10,
+    border: 3
   }
 };
