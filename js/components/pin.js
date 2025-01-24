@@ -13,13 +13,12 @@ class Pin {
     noStroke();
     if (this.type == "circle") {
       fill(colors.connectorPin);
-      circle(this.pos.x, this.pos.y, 4);
+      circle(this.pos.x, this.pos.y, sizes.pin.circle);
     } else if (this.type == "rect") {
-      const versatz = 1;
       fill(colors.btnActive);
-      rect(this.pos.x, this.pos.y, 8, versatz);
+      rect(this.pos.x, this.pos.y, sizes.pin.rect, sizes.pin.rect_versatz);
       fill(colors.outline);
-      rect(this.pos.x, this.pos.y + versatz, 8, versatz);
+      rect(this.pos.x, this.pos.y + sizes.pin.rect_versatz, sizes.pin.rect, sizes.pin.rect_versatz);
     }else if(this.type == "plug"){
       // TODO Design für den Plug erstellen.
     }
@@ -37,7 +36,7 @@ class Pin {
 
   update(signal) {
     // TODO Click hinzufügen
-    // TODO Handling vom Loop hinzufügen
+    // TODO Handling vom Loop hinzufügen siehe Signal TODO
     signal.visit(this);
     this.connected.filter((item) => !signal.visited.includes(item)).forEach((obj) => {      
       obj.update(signal);

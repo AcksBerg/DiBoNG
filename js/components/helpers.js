@@ -25,3 +25,10 @@ const textSizes = {
 };
 
 // TODO für die ganzen Maße eine constante erstellen um einen Ort zum anpassen zu haben
+const sizes = {
+  pin: {
+    circle: 4,
+    rect: 8,
+    rect_versatz: 1,
+  },
+};
