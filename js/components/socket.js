@@ -55,11 +55,9 @@ class Socket {
   }
 
   show() {
-    // TODO StrokeWeight auch an anderen Orten festlegen wo er benötigt wird um später Fehler zu vermeiden
-    // TODO StrokeWeight auch in der setup definieren und später auslagern
     // In dem Kontext prüfen ob sich die Connectoren verändern wenn man den Hebel umlegt
     noFill();
-    strokeWeight(0.5);
+    strokeWeight(strokeWeights.small);
     stroke(colors.outline);
     for (let i = 0; i < this.pinCount; i++) {
       let l1 = this.connectorsCircle.at(i).pos;

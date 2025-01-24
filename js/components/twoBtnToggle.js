@@ -56,6 +56,7 @@ class TwoBtnToggle {
   }
   show() {
     // Rechtecke
+    strokeWeight(strokeWeights.medium);
     stroke(colors.outline);
     fill(colors.btnActive);
     // Rect links

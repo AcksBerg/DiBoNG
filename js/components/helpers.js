@@ -24,6 +24,12 @@ const textSizes = {
   large: 24,
 };
 
+const strokeWeights = {
+  small:0.5,
+  medium: 1,
+  large: 2
+}
+
 const sizes = {
   pin: {
     circle: 4,
