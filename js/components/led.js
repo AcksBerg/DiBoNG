@@ -1,7 +1,7 @@
 class Led {
   constructor(
     pos,
-    size = 6,
+    size = sizes.led.circle,
     colorSet = { on: colors.ledRedOn, off: colors.ledRedOff }
   ) {
     this.pos = pos;

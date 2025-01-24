@@ -7,13 +7,16 @@ class LedArray {
     for (let i = 0; i < 4; i++) {
       this.leds.push(
         new Led(
-          createVector(this.pos.x + 20, this.pos.y + 15 * i),
-          8,
+          createVector(
+            this.pos.x + sizes.ledArray.ledVersatz,
+            this.pos.y + sizes.ledArray.yVersatz * i
+          ),
+          sizes.ledArray.ledCircle,
           this.colorSet
         )
       );
       this.connectors.push(
-        new Pin(createVector(this.pos.x, this.pos.y + 15 * i))
+        new Pin(createVector(this.pos.x, this.pos.y + sizes.ledArray.yVersatz * i))
       );
       this.connectors.at(-1).connect(this.leds.at(-1));
     }
