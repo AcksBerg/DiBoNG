@@ -32,11 +32,14 @@ const sizes = {
     rect_versatz: 1,
   },
   led: {
-    circle: 8,
+    btn: 4,
+    ledArray: 8,
   },
   ledArray: {
-    ledCircle: 8,
     ledVersatz: 20,
     yVersatz: 15
   },
+  btnArray:{
+    size: 20,
+  }
 };
