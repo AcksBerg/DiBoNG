@@ -55,7 +55,6 @@ class Socket {
   }
 
   show() {
-    // TODO In dem Kontext prüfen ob sich die Connectoren verändern wenn man den Hebel umlegt
     noFill();
     strokeWeight(strokeWeights.small);
     stroke(colors.outline);
@@ -106,6 +105,7 @@ class Socket {
       sizes.socket.xVersatz + sizes.pin.rect + sizes.socket.border * 2,
       ((sizes.socket.yVersatz / 2) * this.pinCount) / 2 + sizes.socket.border
     );
+    // Den Hebel malen
     fill(colors.silver);
     stroke(colors.silver);
     if (this.closed) {
@@ -139,7 +139,89 @@ class Socket {
   }
 
   update() {
-    // TODO Hebel Mechanismus klickbar machen, Aufruf der Pin updates abhängig vom Hebel
-    
+    // Prüfen ob überhaupt der Sockel geklickt worden ist. Falls nicht update verlassen
+    if (
+      !inRect(
+        createVector(
+          this.pos.x - sizes.pin.circle,
+          this.pos.y - sizes.pin.circle
+        ),
+        createVector(
+          sizes.socket.xVersatz * 3 + sizes.pin.rect + sizes.pin.circle * 2,
+          (sizes.socket.yVersatz * (this.pinCount - 2)) / 2 +
+            sizes.pin.circle * 2
+        )
+      )
+    ) {
+      return;
+    }
+    // Return nach jedem treffer da mit einem klick nur ein Element getroffen werden kann.
+    // Prüfen ob der Hebel getroffen worden ist.
+    if (
+      (this.closed &&
+        inRect(
+          createVector(
+            this.connectorsRect.at(0).pos.x - sizes.socket.border,
+            this.connectorsRect.at(0).pos.y -
+              sizes.socket.hebelLange -
+              sizes.socket.hebelBreite * 1.5
+          ),
+          createVector(
+            sizes.socket.hebelBreite * 3,
+            sizes.socket.hebelLange + sizes.socket.hebelBreite
+          )
+        )) ||
+      (!this.closed &&
+        inCircle(
+          createVector(
+            this.connectorsRect.at(0).pos.x -
+              sizes.socket.border +
+              sizes.socket.hebelBreite * 1.5,
+            this.connectorsRect.at(0).pos.y - sizes.socket.border / 2
+          ),
+          sizes.socket.hebelBreite * 2,
+          0
+        ))
+    ) {
+      this.closed = !this.closed;
+      return;
+    }
+
+    // Prüfen ob die Rect Connectors getroffen worden sind, aber nur die auf der Linken Seite
+    // und auch nur wenn der Hebel nicht geschlossen ist.
+    // Die letzte reihe ist ebenfalls ausgeschlossen da der kleinste IC eine Größe von 4 hat (NOT).
+    for (let i = 0; i < this.pinCount - 2 && !this.closed; i = i + 2) {
+      if (
+        inRect(
+          createVector(
+            this.connectorsRect.at(i).pos.x,
+            this.connectorsRect.at(i).pos.y
+          ),
+          createVector(sizes.pin.rect, sizes.pin.rect_versatz * 2)
+        )
+      ) {
+        // TODO Click auf den RectConnector weiter verarbeiten.
+        console.log(this.connectorsRect.at(i));
+        return;
+      }
+    }
+
+    // Prüfen ob die Circle Connectors getroffen worden sind.
+    for (let i = 0; i < this.pinCount; i++) {
+      if (
+        inCircle(
+          createVector(
+            this.connectorsCircle.at(i).pos.x,
+            this.connectorsCircle.at(i).pos.y
+          ),
+          sizes.pin.circle,
+          0
+        )
+      ) {
+        // TODO Click auf den CircleConnector weiter verarbeiten.
+        console.log(this.connectorsCircle.at(i).pos);
+        return
+      }
+    }
   }
 }

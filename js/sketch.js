@@ -30,7 +30,7 @@ const inRect = (pos, size) => {
  */
 const inCircle = (pos, diameter, offset) => {
   const worldMouse = getWorldMousePos();
-  return dist(pos.x, pos.y, worldMouse.x, worldMouse.y) < (diameter * (1 + offset/100));
+  return dist(pos.x, pos.y, worldMouse.x, worldMouse.y) < (diameter * (1 + offset/100))/2;
 };
 
 /**
