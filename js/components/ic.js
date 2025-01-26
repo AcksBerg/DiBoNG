@@ -5,6 +5,7 @@ class Ic {
     }
     this.pos = pos;
     this.rowCount = rowCount;
+    // TODO pins hinzufügen, dafür design überlegen in pin.js
   }
   show() {
     noStroke();
