@@ -29,20 +29,15 @@ class TwoBtnToggle {
     // Den Negierten Ausgang !Q initialisieren.
     this.connected[2].update(new Signal(!this.active));
   }
+  
   update() {
-    // Die Transformation von zoom und translate zurückrechnen
-    let worldMouseX = (mouseX - cam.x) / zoom;
-    let worldMouseY = (mouseY - cam.y) / zoom;
     // Versatz der Aktiviert wird wenn der Button aktiv ist.
     // Dadurch muss die Abfrage welcher der Beiden Button gedrückt wird nur einmal geschrieben werden.
     let versatz = this.active
       ? 0
       : sizes.btnArray.size / 4 + sizes.btnArray.size;
     if (
-      worldMouseX > this.pos.x + versatz &&
-      worldMouseX < this.pos.x + sizes.btnArray.size + versatz &&
-      worldMouseY > this.pos.y &&
-      worldMouseY < this.pos.y + sizes.btnArray.size
+      inRect(createVector(this.pos.x + versatz, this.pos.y),createVector(sizes.btnArray.size,sizes.btnArray.size) )
     ) {
       this.active = !this.active;
       // Die Angeschlossenen Elemente Aktuallisieren um Stromdurchfluss zu Simulieren

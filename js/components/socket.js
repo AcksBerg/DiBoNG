@@ -140,5 +140,6 @@ class Socket {
 
   update() {
     // TODO Hebel Mechanismus klickbar machen, Aufruf der Pin updates abhängig vom Hebel
+    
   }
 }
