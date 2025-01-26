@@ -191,15 +191,7 @@ class Socket {
     // und auch nur wenn der Hebel nicht geschlossen ist.
     // Die letzte reihe ist ebenfalls ausgeschlossen da der kleinste IC eine Größe von 4 hat (NOT).
     for (let i = 0; i < this.pinCount - 2 && !this.closed; i = i + 2) {
-      if (
-        inRect(
-          createVector(
-            this.connectorsRect.at(i).pos.x,
-            this.connectorsRect.at(i).pos.y
-          ),
-          createVector(sizes.pin.rect, sizes.pin.rect_versatz * 2)
-        )
-      ) {
+      if (this.connectorsRect.at(i).isClicked()) {
         // TODO Click auf den RectConnector weiter verarbeiten.
         console.log(this.connectorsRect.at(i));
         return;
@@ -208,19 +200,10 @@ class Socket {
 
     // Prüfen ob die Circle Connectors getroffen worden sind.
     for (let i = 0; i < this.pinCount; i++) {
-      if (
-        inCircle(
-          createVector(
-            this.connectorsCircle.at(i).pos.x,
-            this.connectorsCircle.at(i).pos.y
-          ),
-          sizes.pin.circle,
-          0
-        )
-      ) {
+      if (this.connectorsCircle.at(i).isClicked()) {
         // TODO Click auf den CircleConnector weiter verarbeiten.
         console.log(this.connectorsCircle.at(i).pos);
-        return
+        return;
       }
     }
   }

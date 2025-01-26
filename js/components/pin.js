@@ -9,7 +9,7 @@ class Pin {
   show() {
     // TODO: types Circle(Normales Board), Rect(Auf dem Sockel), Plug(An dem IC), PlugNoGUI(In dem IC)
     // TODO: Update vom IC wird aufgerufen vom Pin update
-    // Compute erzeugt neues Siganal am output pin 
+    // Compute erzeugt neues Siganal am output pin
     noStroke();
     if (this.type == "circle") {
       fill(colors.connectorPin);
@@ -18,8 +18,13 @@ class Pin {
       fill(colors.btnActive);
       rect(this.pos.x, this.pos.y, sizes.pin.rect, sizes.pin.rect_versatz);
       fill(colors.outline);
-      rect(this.pos.x, this.pos.y + sizes.pin.rect_versatz, sizes.pin.rect, sizes.pin.rect_versatz);
-    }else if(this.type == "plug"){
+      rect(
+        this.pos.x,
+        this.pos.y + sizes.pin.rect_versatz,
+        sizes.pin.rect,
+        sizes.pin.rect_versatz
+      );
+    } else if (this.type == "plug") {
       // TODO Design für den Plug erstellen.
     }
   }
@@ -34,12 +39,26 @@ class Pin {
     obj.update(new Signal(false));
   }
 
+  isClicked() {
+    return (
+      (this.type === "circle" &&
+        inCircle(createVector(this.pos.x, this.pos.y), sizes.pin.circle, 0)) ||
+      (this.type === "rect" &&
+        inRect(
+          createVector(this.pos.x, this.pos.y),
+          createVector(sizes.pin.rect, sizes.pin.rect_versatz * 2)
+        ))
+    );
+  }
+
   update(signal) {
     // TODO Click hinzufügen
     // TODO Handling vom Loop hinzufügen siehe Signal TODO
     signal.visit(this);
-    this.connected.filter((item) => !signal.visited.includes(item)).forEach((obj) => {      
-      obj.update(signal);
-    });
+    this.connected
+      .filter((item) => !signal.visited.includes(item))
+      .forEach((obj) => {
+        obj.update(signal);
+      });
   }
 }
