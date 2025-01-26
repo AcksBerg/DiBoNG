@@ -55,6 +55,7 @@ class LedArray {
   }
 
   update() {
+    // Return in Statement damit es direkt gecancelt wird nachdem etwas getroffen worden ist. Man kann ja nur ein Element pro click auswählen
     if (
       !inRect(
         createVector(

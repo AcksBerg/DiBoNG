@@ -17,10 +17,6 @@ class Led {
   };
 
   update(signal) {
-    // Check auf undefined, da sonst der foreach call beim mouseClick im mainSketch die LED zerschießt.
-    if(signal.value == undefined){
-      return
-    }
-    this.active = signal.value;
+    signal.visit(this);
   }
 }
