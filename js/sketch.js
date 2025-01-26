@@ -118,7 +118,7 @@ function draw() {
 }
 
 mouseClicked = () => {
-  // TODO auf unterschiedliche elemente Kontrollieren damit Elemente wie LED nicht zerstört werden.
+  // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
   if (mouseButton == LEFT) {
     platinElements.forEach((button) => {
       button.update();
