@@ -72,7 +72,6 @@ function setup() {
   cam = createVector(-170, -317);
   prevMouse = createVector(0, 0);
   debug = true;
-  // TODO Anders Elemente Speichern
   platinElements = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
@@ -86,6 +85,13 @@ function setup() {
       off: colors.ledGreenOff,
     }),
     new Socket(createVector(250, 200), 24),
+    new Ic(
+      createVector(
+        250 + sizes.socket.xVersatz + sizes.pin.rect / 2,
+        224.5 + sizes.socket.border/2
+      ),
+      12
+    ),
   ];
   // TODO nur für debuging/tests
   platinElements[0].buttons[0].connected[1].connect(
