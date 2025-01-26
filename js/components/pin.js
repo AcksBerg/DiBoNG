@@ -29,16 +29,28 @@ class Pin {
     }
   }
 
+  /**
+   * Verbinde ein Objekt mit einem Connector und Sende das entsprechende Signal an das neu Angeschlossene Objekt
+   * @param {object} obj Das Objekt welches angeschlossen werden soll
+   */
   connect(obj) {
     this.connected.push(obj);
     this.update(new Signal(this));
   }
 
+  /**
+   * Entfernt die Verbindung zu einem Objekt und sendet ein False Signal um es auf Aus zu stellen.
+   * @param {Object} obj Das Objekt welches von dem Connector entfernt werden soll.
+   */
   disconnect(obj) {
     this.connected = this.connected.filter((item) => item !== obj);
     obj.update(new Signal(false));
   }
 
+  /**
+   * Aufzurufen wenn ein Click ausgeführt worden ist und geprüft werden soll on der Connector getroffen worden ist.
+   * @returns {boolean} true = wenn es angeclickt worden ist, false = wenn es nicht angeklickt worden ist.
+   */
   isClicked() {
     return (
       (this.type === "circle" &&
