@@ -55,7 +55,7 @@ class Socket {
   }
 
   show() {
-    // In dem Kontext prüfen ob sich die Connectoren verändern wenn man den Hebel umlegt
+    // TODO In dem Kontext prüfen ob sich die Connectoren verändern wenn man den Hebel umlegt
     noFill();
     strokeWeight(strokeWeights.small);
     stroke(colors.outline);
@@ -63,13 +63,16 @@ class Socket {
       let l1 = this.connectorsCircle.at(i).pos;
       let l2 = this.connectorsRect.at(i).pos;
       if (l1.x < l2.x) {
+        // Horizontale Linie vom Linken Connector(Circle) nach Rechts
         line(l1.x, l1.y, l1.x + sizes.socket.xVersatz / 3, l1.y);
+        // Diagonale Linie vom Linken Connector(Circle)
         line(
           l1.x + sizes.socket.xVersatz / 3,
           l1.y,
           l2.x - sizes.socket.xVersatz / 3,
           l2.y + sizes.pin.rect_versatz
         );
+        // Horizontale Linie von der Diagonalen Linie zum Rechten Connector(Rect)
         line(
           l2.x - sizes.socket.xVersatz / 3,
           l2.y + sizes.pin.rect_versatz,
@@ -77,13 +80,16 @@ class Socket {
           l2.y + sizes.pin.rect_versatz
         );
       } else {
+        // Horizontale Linie vom Rechten Connector(Circle) nach Links
         line(l1.x, l1.y, l1.x - sizes.socket.xVersatz / 3, l1.y);
+        // Diagonale Linie vom Rechten Connector(Circle)
         line(
           l1.x - sizes.socket.xVersatz / 3,
           l1.y,
           l2.x + sizes.socket.xVersatz / 3 + sizes.pin.rect,
           l2.y + sizes.pin.rect_versatz
         );
+        // Horizontale Linie von der Diagonalen Linie zum Linken Connector(Rect)
         line(
           l2.x + sizes.pin.rect,
           l2.y + sizes.pin.rect_versatz,
@@ -94,45 +100,37 @@ class Socket {
     }
     noStroke();
     fill(colors.btnInactive);
-    // TODO Die X-Größe vom Rect anpassen damit, damit verbunden ist allerdings das erstellen des gesamten sockels
     rect(
-      this.connectorsRect.at(0).pos.x - sizes.socket.border,
+      this.pos.x + sizes.socket.xVersatz - sizes.socket.border,
       this.connectorsRect.at(0).pos.y - sizes.socket.border,
-      29,
+      sizes.socket.xVersatz + sizes.pin.rect + sizes.socket.border * 2,
       ((sizes.socket.yVersatz / 2) * this.pinCount) / 2 + sizes.socket.border
     );
     fill(colors.silver);
     stroke(colors.silver);
     if (this.closed) {
       rect(
-        this.connectorsRect.at(0).pos.x - 2,
-        this.connectorsRect.at(0).pos.y - 15,
-        3,
-        13
+        this.connectorsRect.at(0).pos.x -
+          sizes.socket.border +
+          sizes.socket.hebelBreite,
+        this.connectorsRect.at(0).pos.y - sizes.socket.hebelLange,
+        sizes.socket.hebelBreite,
+        sizes.socket.hebelLange - sizes.socket.border / 2
       );
-      quad(
-        this.connectorsRect.at(0).pos.x - 2,
-        this.connectorsRect.at(0).pos.y - 15,
-        this.connectorsRect.at(0).pos.x + 1,
-        this.connectorsRect.at(0).pos.y - 15,
-        this.connectorsRect.at(0).pos.x + 2,
-        this.connectorsRect.at(0).pos.y - 18,
-        this.connectorsRect.at(0).pos.x - 3,
-        this.connectorsRect.at(0).pos.y - 18
-      );
-      arc(
-        this.connectorsRect.at(0).pos.x - 0.5,
-        this.connectorsRect.at(0).pos.y - 18,
-        5,
-        5,
-        PI,
-        0
+      circle(
+        this.connectorsRect.at(0).pos.x -
+          sizes.socket.border +
+          sizes.socket.hebelBreite * 1.5,
+        this.connectorsRect.at(0).pos.y - sizes.socket.hebelLange,
+        sizes.socket.hebelBreite * 2
       );
     } else {
       circle(
-        this.connectorsRect.at(0).pos.x - 1,
-        this.connectorsRect.at(0).pos.y - 3,
-        5
+        this.connectorsRect.at(0).pos.x -
+          sizes.socket.border +
+          sizes.socket.hebelBreite * 1.5,
+        this.connectorsRect.at(0).pos.y - sizes.socket.border / 2,
+        sizes.socket.hebelBreite * 2
       );
     }
     [...this.connectorsCircle, ...this.connectorsRect].forEach((pin) => {
@@ -141,6 +139,6 @@ class Socket {
   }
 
   update() {
-    // TODO Hebel Mechanismus klickbar machen,
+    // TODO Hebel Mechanismus klickbar machen, Aufruf der Pin updates abhängig vom Hebel
   }
 }
