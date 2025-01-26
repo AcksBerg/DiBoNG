@@ -5,8 +5,12 @@ let zoom = 2; // Zoom-Faktor
 let debug;
 let buttons;
 
-// TODO inRect funktion schreiben worauf alle weiteren Elemente zugreifen können.
-
+/**
+ * Bestimmt ob die Maus in einem gegebenen Rechteck ist.
+ * @param {Vector} pos Ein Vector mit der X und Y Koordinaten der zu prüfenden Position
+ * @param {Vector} size Ein Vector mit der X und Y Größe der zu prüfenden Position
+ * @returns {bool} true = im Rechteck, false = außerhalb des Rechtecks
+ */
 const inRect = (pos, size) => {
   const worldMouse = getWorldMousePos();
   return (
@@ -16,10 +20,17 @@ const inRect = (pos, size) => {
     worldMouse.y < pos.y + size.y
   );
 };
-const inCircle = (obj, radius = -1) => {
-  if (radius == -1) {
-    radius = obj.size;
-  }
+
+/**
+ * Bestimmt ob die Maus in einem gegebenen Kreis ist.
+ * @param {Vector} pos Ein Vector mit der X und Y Koordinaten der zu prüfenden Position
+ * @param {number} diameter Der Durchmesser um die Position.
+ * @param {number} offset Der Offset in Prozent, 10 => der Durchmesser wird um 10% vergrößert.
+ * @returns {bool} true = im Kreis, false = außerhalb des Kreises
+ */
+const inCircle = (pos, diameter, offset) => {
+  const worldMouse = getWorldMousePos();
+  return dist(pos.x, pos.y, worldMouse.x, worldMouse.y) < (diameter * (1 + offset/100));
 };
 
 /**
