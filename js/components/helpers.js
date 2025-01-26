@@ -50,6 +50,9 @@ const sizes = {
   socket:{
     xVersatz: 15,
     yVersatz: 10,
-    border: 3
+    border: 3,
+    hebelLange: 12,
+    hebelBreite: 1,
+
   }
 };
