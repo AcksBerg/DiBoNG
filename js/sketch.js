@@ -6,11 +6,30 @@ let debug;
 let buttons;
 
 // TODO inRect funktion schreiben worauf alle weiteren Elemente zugreifen können.
-const inRect = (obj, height = -1, width = -1) => {
-  if (height == -1) {
-    height = obj.size;
-    width = obj.size;
+
+const inRect = (pos, size) => {
+  const worldMouse = getWorldMousePos();
+  return (
+    worldMouse.x > pos.x &&
+    worldMouse.x < pos.x + size.x &&
+    worldMouse.y > pos.y &&
+    worldMouse.y < pos.y + size.y
+  );
+};
+const inCircle = (obj, radius = -1) => {
+  if (radius == -1) {
+    radius = obj.size;
   }
+};
+
+/**
+ * Errechnet aus der derzeitigen Position der Maus über dem Canvas die Position
+ * in der Szene indem es die angewandten Transformationen (Move und Zoom)
+ * auf die Maus anwendet.
+ * @returns {Vector} Der Vector mit x und y Position der Maus in der Szene
+ */
+const getWorldMousePos = () => {
+  return createVector((mouseX - cam.x) / zoom, (mouseY - cam.y) / zoom);
 };
 
 function setup() {
