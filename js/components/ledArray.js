@@ -16,7 +16,9 @@ class LedArray {
         )
       );
       this.connectors.push(
-        new Pin(createVector(this.pos.x, this.pos.y + sizes.ledArray.yVersatz * i))
+        new Pin(
+          createVector(this.pos.x, this.pos.y + sizes.ledArray.yVersatz * i)
+        )
       );
       this.connectors.at(-1).connect(this.leds.at(-1));
     }
@@ -53,6 +55,26 @@ class LedArray {
   }
 
   update() {
-    // TODO click
+    if (
+      !inRect(
+        createVector(
+          this.pos.x - sizes.pin.circle / 2,
+          this.pos.y - sizes.pin.circle / 2
+        ),
+        createVector(
+          sizes.pin.circle,
+          sizes.ledArray.yVersatz * (this.connectors.length - 1) +
+            sizes.pin.circle
+        )
+      )
+    ) {
+      return;
+    }
+    for (let i = 0; i < this.connectors.length; i++) {
+      if (this.connectors.at(i).isClicked()) {
+        // TODO Was passiert wenn man auf den Connector clickt
+        return;
+      }
+    }
   }
 }
