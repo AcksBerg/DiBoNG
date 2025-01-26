@@ -13,6 +13,15 @@ let platinElements;
  */
 const inRect = (pos, size) => {
   const worldMouse = getWorldMousePos();
+  if (debug) {
+    noFill();
+    stroke(colors.outline);
+    push();
+    translate(cam.x, cam.y);
+    scale(zoom);
+    rect(pos.x, pos.y, size.x, size.y);
+    pop();
+  }
   return (
     worldMouse.x > pos.x &&
     worldMouse.x < pos.x + size.x &&
@@ -30,7 +39,10 @@ const inRect = (pos, size) => {
  */
 const inCircle = (pos, diameter, offset) => {
   const worldMouse = getWorldMousePos();
-  return dist(pos.x, pos.y, worldMouse.x, worldMouse.y) < (diameter * (1 + offset/100))/2;
+  return (
+    dist(pos.x, pos.y, worldMouse.x, worldMouse.y) <
+    (diameter * (1 + offset / 100)) / 2
+  );
 };
 
 /**
@@ -76,18 +88,42 @@ function setup() {
     new Socket(createVector(250, 200), 24),
   ];
   // TODO nur für debuging/tests
-  platinElements[0].buttons[0].connected[1].connect(platinElements[2].connectors[0]);
-  platinElements[0].buttons[0].connected[2].connect(platinElements[2].connectors[1]);
-  platinElements[0].buttons[1].connected[1].connect(platinElements[2].connectors[2]);
-  platinElements[0].buttons[1].connected[2].connect(platinElements[2].connectors[3]);
-  platinElements[0].buttons[2].connected[1].connect(platinElements[3].connectors[0]);
-  platinElements[0].buttons[2].connected[2].connect(platinElements[3].connectors[1]);
-  platinElements[0].buttons[3].connected[1].connect(platinElements[3].connectors[2]);
-  platinElements[0].buttons[3].connected[2].connect(platinElements[3].connectors[3]);
-  platinElements[1].buttons[0].connected[1].connect(platinElements[4].connectors[0]);
-  platinElements[1].buttons[0].connected[2].connect(platinElements[4].connectors[1]);
-  platinElements[1].buttons[1].connected[1].connect(platinElements[4].connectors[2]);
-  platinElements[1].buttons[1].connected[2].connect(platinElements[4].connectors[3]);
+  platinElements[0].buttons[0].connected[1].connect(
+    platinElements[2].connectors[0]
+  );
+  platinElements[0].buttons[0].connected[2].connect(
+    platinElements[2].connectors[1]
+  );
+  platinElements[0].buttons[1].connected[1].connect(
+    platinElements[2].connectors[2]
+  );
+  platinElements[0].buttons[1].connected[2].connect(
+    platinElements[2].connectors[3]
+  );
+  platinElements[0].buttons[2].connected[1].connect(
+    platinElements[3].connectors[0]
+  );
+  platinElements[0].buttons[2].connected[2].connect(
+    platinElements[3].connectors[1]
+  );
+  platinElements[0].buttons[3].connected[1].connect(
+    platinElements[3].connectors[2]
+  );
+  platinElements[0].buttons[3].connected[2].connect(
+    platinElements[3].connectors[3]
+  );
+  platinElements[1].buttons[0].connected[1].connect(
+    platinElements[4].connectors[0]
+  );
+  platinElements[1].buttons[0].connected[2].connect(
+    platinElements[4].connectors[1]
+  );
+  platinElements[1].buttons[1].connected[1].connect(
+    platinElements[4].connectors[2]
+  );
+  platinElements[1].buttons[1].connected[2].connect(
+    platinElements[4].connectors[3]
+  );
 }
 
 function draw() {
