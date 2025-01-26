@@ -11,7 +11,7 @@ class LedArray {
             this.pos.x + sizes.ledArray.ledVersatz,
             this.pos.y + sizes.ledArray.yVersatz * i
           ),
-          sizes.ledArray.ledCircle,
+          sizes.led.ledArray,
           this.colorSet
         )
       );
