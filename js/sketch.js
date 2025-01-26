@@ -3,7 +3,7 @@ let camBounds;
 let prevMouse; // Vorherige Mausposition
 let zoom = 2; // Zoom-Faktor
 let debug;
-let buttons;
+let platinElements;
 
 /**
  * Bestimmt ob die Maus in einem gegebenen Rechteck ist.
@@ -61,7 +61,7 @@ function setup() {
   prevMouse = createVector(0, 0);
   debug = true;
   // TODO Anders Elemente Speichern
-  buttons = [
+  platinElements = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
     new LedArray(createVector(200, 200)),
@@ -76,18 +76,18 @@ function setup() {
     new Socket(createVector(250, 200), 24),
   ];
   // TODO nur für debuging/tests
-  buttons[0].buttons[0].connected[1].connect(buttons[2].connectors[0]);
-  buttons[0].buttons[0].connected[2].connect(buttons[2].connectors[1]);
-  buttons[0].buttons[1].connected[1].connect(buttons[2].connectors[2]);
-  buttons[0].buttons[1].connected[2].connect(buttons[2].connectors[3]);
-  buttons[0].buttons[2].connected[1].connect(buttons[3].connectors[0]);
-  buttons[0].buttons[2].connected[2].connect(buttons[3].connectors[1]);
-  buttons[0].buttons[3].connected[1].connect(buttons[3].connectors[2]);
-  buttons[0].buttons[3].connected[2].connect(buttons[3].connectors[3]);
-  buttons[1].buttons[0].connected[1].connect(buttons[4].connectors[0]);
-  buttons[1].buttons[0].connected[2].connect(buttons[4].connectors[1]);
-  buttons[1].buttons[1].connected[1].connect(buttons[4].connectors[2]);
-  buttons[1].buttons[1].connected[2].connect(buttons[4].connectors[3]);
+  platinElements[0].buttons[0].connected[1].connect(platinElements[2].connectors[0]);
+  platinElements[0].buttons[0].connected[2].connect(platinElements[2].connectors[1]);
+  platinElements[0].buttons[1].connected[1].connect(platinElements[2].connectors[2]);
+  platinElements[0].buttons[1].connected[2].connect(platinElements[2].connectors[3]);
+  platinElements[0].buttons[2].connected[1].connect(platinElements[3].connectors[0]);
+  platinElements[0].buttons[2].connected[2].connect(platinElements[3].connectors[1]);
+  platinElements[0].buttons[3].connected[1].connect(platinElements[3].connectors[2]);
+  platinElements[0].buttons[3].connected[2].connect(platinElements[3].connectors[3]);
+  platinElements[1].buttons[0].connected[1].connect(platinElements[4].connectors[0]);
+  platinElements[1].buttons[0].connected[2].connect(platinElements[4].connectors[1]);
+  platinElements[1].buttons[1].connected[1].connect(platinElements[4].connectors[2]);
+  platinElements[1].buttons[1].connected[2].connect(platinElements[4].connectors[3]);
 }
 
 function draw() {
@@ -100,7 +100,7 @@ function draw() {
   fill(255, 1, 1);
   noStroke();
   circle(50, 50, 50);
-  buttons.forEach((button) => {
+  platinElements.forEach((button) => {
     button.show();
   });
   if (debug) {
@@ -120,7 +120,7 @@ function draw() {
 mouseClicked = () => {
   // TODO auf unterschiedliche elemente Kontrollieren damit Elemente wie LED nicht zerstört werden.
   if (mouseButton == LEFT) {
-    buttons.forEach((button) => {
+    platinElements.forEach((button) => {
       button.update();
     });
   }
