@@ -23,6 +23,7 @@ class LedArray {
   }
 
   show() {
+    strokeWeight(strokeWeights.medium);
     for (let i = 0; i < 4; i++) {
       stroke(colors.outline);
       line(
