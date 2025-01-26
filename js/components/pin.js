@@ -54,17 +54,16 @@ class Pin {
   isClicked() {
     return (
       (this.type === "circle" &&
-        inCircle(createVector(this.pos.x, this.pos.y), sizes.pin.circle, 0)) ||
+        inCircle(this.pos, sizes.pin.circle, 0)) ||
       (this.type === "rect" &&
         inRect(
-          createVector(this.pos.x, this.pos.y),
+          this.pos,
           createVector(sizes.pin.rect, sizes.pin.rect_versatz * 2)
         ))
     );
   }
 
   update(signal) {
-    // TODO Click hinzufügen
     // TODO Handling vom Loop hinzufügen siehe Signal TODO
     signal.visit(this);
     this.connected
