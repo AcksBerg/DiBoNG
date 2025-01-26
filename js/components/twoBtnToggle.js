@@ -47,6 +47,15 @@ class TwoBtnToggle {
       this.connected[1].update(new Signal(this.active));
       // Unterer Connector
       this.connected[2].update(new Signal(!this.active));
+      return;
+    }
+    if(this.connected[1].isClicked()){
+      console.log("Oben geclicked");
+      return;
+    };
+    if(this.connected[2].isClicked()){
+      console.log("unten gelicked");
+      return;
     }
   }
   show() {

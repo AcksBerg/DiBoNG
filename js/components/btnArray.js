@@ -14,25 +14,32 @@ class BtnArray {
     }
   }
   update() {
-    // Die Transformation von zoom und translate zurückrechnen
-    let worldMouseX = (mouseX - cam.x) / zoom;
-    let worldMouseY = (mouseY - cam.y) / zoom;
-
     if (
-      worldMouseX > this.pos.x &&
-      worldMouseX < this.pos.x + sizes.btnArray.size * 3 &&
-      worldMouseY > this.pos.y &&
-      worldMouseY < this.pos.y + sizes.btnArray.size * 6
+      !inRect(
+        this.pos,
+        createVector(
+          ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5 +
+            sizes.btnArray.size / 4 +
+            sizes.pin.circle,
+          sizes.btnArray.size * 1.5 * this.buttons.length
+        )
+      )
     ) {
-      this.buttons.forEach((button) => {
-        button.update();
-      });
+      return;
+    }
+    for(let i=0; i<this.buttons.length; i++){
+      this.buttons.at(i).update();
     }
   }
   show() {
     noStroke();
     fill(colors.btnInactive);
-    rect(this.pos.x, this.pos.y, sizes.btnArray.size * 3, sizes.btnArray.size * 6);
+    rect(
+      this.pos.x,
+      this.pos.y,
+      sizes.btnArray.size * 3,
+      sizes.btnArray.size * 6
+    );
     this.buttons.forEach((button) => {
       button.show();
     });

@@ -156,8 +156,8 @@ function draw() {
 mouseClicked = () => {
   // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
   if (mouseButton == LEFT) {
-    platinElements.forEach((button) => {
-      button.update();
+    platinElements.forEach((elem) => {
+      elem.update();
     });
   }
 };

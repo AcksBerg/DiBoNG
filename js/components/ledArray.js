@@ -59,13 +59,13 @@ class LedArray {
     if (
       !inRect(
         createVector(
-          this.pos.x - sizes.pin.circle / 2,
-          this.pos.y - sizes.pin.circle / 2
+          this.pos.x - sizes.pin.circle,
+          this.pos.y - sizes.pin.circle
         ),
         createVector(
-          sizes.pin.circle,
+          sizes.pin.circle + sizes.pin.circle,
           sizes.ledArray.yVersatz * (this.connectors.length - 1) +
-            sizes.pin.circle
+            sizes.pin.circle * 2
         )
       )
     ) {
