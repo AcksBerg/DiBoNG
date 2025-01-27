@@ -56,6 +56,7 @@ function setup() {
   buttons[1].buttons[0].connected[2].connect(buttons[4].connectors[1]);
   buttons[1].buttons[1].connected[1].connect(buttons[4].connectors[2]);
   buttons[1].buttons[1].connected[2].connect(buttons[4].connectors[3]);
+  
 }
 
 function draw() {
@@ -71,6 +72,7 @@ function draw() {
   buttons.forEach((button) => {
     button.show();
   });
+
   if (debug) {
     noFill();
     stroke(255);
@@ -82,6 +84,7 @@ function draw() {
     );
     rect(camBounds.min_x, camBounds.min_y, 20);
   }
+  
   pop();
 }
 
