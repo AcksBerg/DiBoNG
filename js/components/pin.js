@@ -29,8 +29,8 @@ class Pin {
       rect(
         this.pos.x - sizes.pin.rect_versatz * 1.5,
         this.pos.y - sizes.pin.rect_versatz * 1.5,
-        sizes.pin.rect_versatz*3,
-        sizes.pin.rect_versatz*3,
+        sizes.pin.rect_versatz * 3,
+        sizes.pin.rect_versatz * 3,
         1
       );
     }
@@ -59,14 +59,24 @@ class Pin {
    * @returns {boolean} true = wenn es angeclickt worden ist, false = wenn es nicht angeklickt worden ist.
    */
   isClicked() {
-    return (
+    const clicked =
       (this.type === "circle" && inCircle(this.pos, sizes.pin.circle, 0)) ||
       (this.type === "rect" &&
         inRect(
           this.pos,
           createVector(sizes.pin.rect, sizes.pin.rect_versatz * 2)
-        ))
-    );
+        ));
+
+    if (clicked && this.type==="circle") {
+      if (currentCable === null) {
+        currentCable = new Cable(this);
+      } else {
+        currentCable.connectTo(this);
+        cables.push(currentCable);
+        currentCable = null;
+      }
+    }
+    return clicked;
   }
 
   update(signal) {

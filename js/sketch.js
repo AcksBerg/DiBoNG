@@ -4,14 +4,16 @@ let prevMouse; // Vorherige Mausposition
 let zoom = 2; // Zoom-Faktor
 let debug;
 let platinElements;
+let currentCable;
+let cables;
 
 /**
  * Findet die passende Schriftgröße für den gegebenen Bereich
  * @param {String} text Der Text welcher in den Bereich passen muss.
  * @param {number} maxWidth Die größe des Bereiches
- * @returns 
+ * @returns
  */
-function findFontSize(text, maxWidth, steps=1) {
+function findFontSize(text, maxWidth, steps = 1) {
   // Start größe
   let fontSize = steps;
   // Schriftgröße setzen
@@ -78,10 +80,12 @@ const getWorldMousePos = () => {
 
 function setup() {
   // Framerate reduziert um meinen Akku nicht ganz so schnell zu leeren.
-  setFrameRate(5);
+  setFrameRate(30);
   angleMode("degrees");
   textFont("Consolas");
   createCanvas(windowWidth, windowHeight, P2D);
+  cables = [];
+  currentCable = null;
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
   // In welchem Gebiet sich die Kamera bewegen kann.
   // Muss später an die Szene angepasst werden.
@@ -110,49 +114,49 @@ function setup() {
     new Ic(
       createVector(
         250 + sizes.socket.xVersatz + sizes.pin.rect / 2,
-        224.5 + sizes.socket.border/2
+        224.5 + sizes.socket.border / 2
       ),
       12,
       "IC9503"
     ),
   ];
   // TODO nur für debuging/tests
-  platinElements[0].buttons[0].connected[1].connect(
-    platinElements[2].connectors[0]
-  );
-  platinElements[0].buttons[0].connected[2].connect(
-    platinElements[2].connectors[1]
-  );
-  platinElements[0].buttons[1].connected[1].connect(
-    platinElements[2].connectors[2]
-  );
-  platinElements[0].buttons[1].connected[2].connect(
-    platinElements[2].connectors[3]
-  );
-  platinElements[0].buttons[2].connected[1].connect(
-    platinElements[3].connectors[0]
-  );
-  platinElements[0].buttons[2].connected[2].connect(
-    platinElements[3].connectors[1]
-  );
-  platinElements[0].buttons[3].connected[1].connect(
-    platinElements[3].connectors[2]
-  );
-  platinElements[0].buttons[3].connected[2].connect(
-    platinElements[3].connectors[3]
-  );
-  platinElements[1].buttons[0].connected[1].connect(
-    platinElements[4].connectors[0]
-  );
-  platinElements[1].buttons[0].connected[2].connect(
-    platinElements[4].connectors[1]
-  );
-  platinElements[1].buttons[1].connected[1].connect(
-    platinElements[4].connectors[2]
-  );
-  platinElements[1].buttons[1].connected[2].connect(
-    platinElements[4].connectors[3]
-  );
+  // platinElements[0].buttons[0].connected[1].connect(
+  //   platinElements[2].connectors[0]
+  // );
+  // platinElements[0].buttons[0].connected[2].connect(
+  //   platinElements[2].connectors[1]
+  // );
+  // platinElements[0].buttons[1].connected[1].connect(
+  //   platinElements[2].connectors[2]
+  // );
+  // platinElements[0].buttons[1].connected[2].connect(
+  //   platinElements[2].connectors[3]
+  // );
+  // platinElements[0].buttons[2].connected[1].connect(
+  //   platinElements[3].connectors[0]
+  // );
+  // platinElements[0].buttons[2].connected[2].connect(
+  //   platinElements[3].connectors[1]
+  // );
+  // platinElements[0].buttons[3].connected[1].connect(
+  //   platinElements[3].connectors[2]
+  // );
+  // platinElements[0].buttons[3].connected[2].connect(
+  //   platinElements[3].connectors[3]
+  // );
+  // platinElements[1].buttons[0].connected[1].connect(
+  //   platinElements[4].connectors[0]
+  // );
+  // platinElements[1].buttons[0].connected[2].connect(
+  //   platinElements[4].connectors[1]
+  // );
+  // platinElements[1].buttons[1].connected[1].connect(
+  //   platinElements[4].connectors[2]
+  // );
+  // platinElements[1].buttons[1].connected[2].connect(
+  //   platinElements[4].connectors[3]
+  // );
 }
 
 function draw() {
@@ -162,38 +166,38 @@ function draw() {
   push();
   translate(cam.x, cam.y);
   scale(zoom);
-  fill(255, 1, 1);
-  noStroke();
-  circle(50, 50, 50);
-  platinElements.forEach((button) => {
-    button.show();
+  platinElements.forEach((elem) => {
+    elem.show();
   });
 
-  if (debug) {
-    noFill();
-    stroke(255);
-    rect(
-      camBounds.min_x,
-      camBounds.min_y,
-      abs(camBounds.min_x) + abs(camBounds.max_x),
-      abs(camBounds.min_y) + abs(camBounds.max_y)
-    );
-    rect(camBounds.min_x, camBounds.min_y, 20);
-  }
-  
+  [...cables, currentCable]
+    .filter((e) => e !== null)
+    .forEach((cable) => {
+      cable.show();
+    });
+
   pop();
 }
 
-mouseClicked = () => {
+function mouseClicked(){
   // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
-  if (mouseButton == LEFT) {
+  if (mouseButton === LEFT) {
+    console.log("Bei dem Rechtsklick");
     platinElements.forEach((elem) => {
       elem.update();
     });
   }
+  
 };
 
-mouseDragged = () => {
+function keyPressed(){
+  // Das Kabelziehen abbrechen
+  if(keyCode === 17 && currentCable){
+    currentCable = null;
+  }
+}
+
+function mouseDragged(){
   if (mouseButton === CENTER) {
     const dx = mouseX - prevMouse.x;
     const dy = mouseY - prevMouse.y;
@@ -207,13 +211,13 @@ mouseDragged = () => {
   }
 };
 
-windowResized = () => {
+function windowResized(){
   // Canvas Größe anpassen, wenn das Fenster verändert wird
   resizeCanvas(windowWidth, windowHeight);
 };
 
 // Mausrad-Zoom
-mouseWheel = (event) => {
+function mouseWheel(event){
   // Berechnet die Weltkoordinaten der Maus mit der Transformation durch Kamera-Bewegung und Zoom.
   let worldMouseX = (mouseX - cam.x) / zoom;
   let worldMouseY = (mouseY - cam.y) / zoom;
