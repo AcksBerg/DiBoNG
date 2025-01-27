@@ -1,45 +1,43 @@
 class TwoBtnToggle {
-  constructor(pos, size = 20) {
+  constructor(pos) {
     this.pos = pos;
     this.active = false;
-    this.size = size;
-    this.spacing = 5;
     this.connected = [
       new Led(
         createVector(
-          this.pos.x + (this.spacing * 3 + this.size * 2) * 1.25,
-          this.pos.y + this.size * 0.25
+          this.pos.x +
+            ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.25,
+          this.pos.y + sizes.btnArray.size * 0.25
         ),
-        4
+        sizes.led.btn
       ),
       new Pin(
         createVector(
-          this.pos.x + (this.spacing * 3 + this.size * 2) * 1.5,
-          this.pos.y + this.size * 0.25
+          this.pos.x +
+            ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5,
+          this.pos.y + sizes.btnArray.size * 0.25
         )
       ),
       new Pin(
         createVector(
-          this.pos.x + (this.spacing * 3 + this.size * 2) * 1.5,
-          this.pos.y + this.size * 0.75
+          this.pos.x +
+            ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5,
+          this.pos.y + sizes.btnArray.size * 0.75
         )
       ),
     ];
     // Den Negierten Ausgang !Q initialisieren.
-   this.connected[2].update(new Signal(!this.active));
+    this.connected[2].update(new Signal(!this.active));
   }
+  
   update() {
-    // Die Transformation von zoom und translate zurückrechnen
-    let worldMouseX = (mouseX - cam.x) / zoom;
-    let worldMouseY = (mouseY - cam.y) / zoom;
     // Versatz der Aktiviert wird wenn der Button aktiv ist.
     // Dadurch muss die Abfrage welcher der Beiden Button gedrückt wird nur einmal geschrieben werden.
-    let versatz = this.active ? 0 : this.spacing + this.size;
+    let versatz = this.active
+      ? 0
+      : sizes.btnArray.size / 4 + sizes.btnArray.size;
     if (
-      worldMouseX > this.pos.x + versatz &&
-      worldMouseX < this.pos.x + this.size + versatz &&
-      worldMouseY > this.pos.y &&
-      worldMouseY < this.pos.y + this.size
+      inRect(createVector(this.pos.x + versatz, this.pos.y),createVector(sizes.btnArray.size,sizes.btnArray.size) )
     ) {
       this.active = !this.active;
       // Die Angeschlossenen Elemente Aktuallisieren um Stromdurchfluss zu Simulieren
@@ -49,37 +47,49 @@ class TwoBtnToggle {
       this.connected[1].update(new Signal(this.active));
       // Unterer Connector
       this.connected[2].update(new Signal(!this.active));
+      return;
+    }
+    if(this.connected[1].isClicked()){
+      console.log("Oben geclicked");
+      return;
+    };
+    if(this.connected[2].isClicked()){
+      console.log("unten gelicked");
+      return;
     }
   }
   show() {
     // Rechtecke
+    strokeWeight(strokeWeights.medium);
     stroke(colors.outline);
     fill(colors.btnActive);
     // Rect links
-    rect(this.pos.x, this.pos.y, this.size, this.size, 5);
+    rect(this.pos.x, this.pos.y, sizes.btnArray.size, sizes.btnArray.size, 5);
     // Rect Rects
     rect(
-      this.pos.x + this.spacing + this.size,
+      this.pos.x + sizes.btnArray.size / 4 + sizes.btnArray.size,
       this.pos.y,
-      this.size,
-      this.size,
+      sizes.btnArray.size,
+      sizes.btnArray.size,
       5
     );
     // Kabel
     noFill();
     // Kabel Oben
     line(
-      this.pos.x + this.spacing * 3 + this.size * 2,
-      this.pos.y + this.size * 0.25,
-      this.pos.x + (this.spacing * 3 + this.size * 2) * 1.5,
-      this.pos.y + this.size * 0.25
+      this.pos.x + (sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2,
+      this.pos.y + sizes.btnArray.size * 0.25,
+      this.pos.x +
+        ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5,
+      this.pos.y + sizes.btnArray.size * 0.25
     );
     // Kabel Unten
     line(
-      this.pos.x + this.spacing * 3 + this.size * 2,
-      this.pos.y + this.size * 0.75,
-      this.pos.x + (this.spacing * 3 + this.size * 2) * 1.5,
-      this.pos.y + this.size * 0.75
+      this.pos.x + (sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2,
+      this.pos.y + sizes.btnArray.size * 0.75,
+      this.pos.x +
+        ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5,
+      this.pos.y + sizes.btnArray.size * 0.75
     );
     // Kabel(Anschlüsse) Enden und LED
     this.connected.forEach((obj) => {
@@ -90,22 +100,26 @@ class TwoBtnToggle {
     // Text größe Speichern um diese wieder zurücksetzten zu können.
     textSize(textSizes.medium);
     textAlign(CENTER, CENTER);
-    text("L", this.pos.x + this.size / 2, this.pos.y + this.size / 2);
+    text(
+      "L",
+      this.pos.x + sizes.btnArray.size / 2,
+      this.pos.y + sizes.btnArray.size / 2
+    );
     text(
       "H",
-      this.pos.x + this.spacing + this.size * 1.5,
-      this.pos.y + this.size / 2
+      this.pos.x + sizes.btnArray.size / 4 + sizes.btnArray.size * 1.5,
+      this.pos.y + sizes.btnArray.size / 2
     );
     textSize(textSizes.small);
     text(
       "Q",
-      this.pos.x + this.spacing * 2 + this.size * 2,
-      this.pos.y + this.size * 0.25
+      this.pos.x + (sizes.btnArray.size / 4) * 2 + sizes.btnArray.size * 2,
+      this.pos.y + sizes.btnArray.size * 0.25
     );
     text(
       "Ǭ",
-      this.pos.x + this.spacing * 2 + this.size * 2,
-      this.pos.y + this.size * 0.75
+      this.pos.x + (sizes.btnArray.size / 4) * 2 + sizes.btnArray.size * 2,
+      this.pos.y + sizes.btnArray.size * 0.75
     );
   }
 }

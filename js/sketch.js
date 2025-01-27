@@ -3,17 +3,83 @@ let camBounds;
 let prevMouse; // Vorherige Mausposition
 let zoom = 2; // Zoom-Faktor
 let debug;
-let buttons;
+let platinElements;
 
-// TODO inRect funktion schreiben worauf alle weiteren Elemente zugreifen können.
-const inRect = (obj, height = -1, width = -1) => {
-  if (height == -1) {
-    height = obj.size;
-    width = obj.size;
+/**
+ * Findet die passende Schriftgröße für den gegebenen Bereich
+ * @param {String} text Der Text welcher in den Bereich passen muss.
+ * @param {number} maxWidth Die größe des Bereiches
+ * @returns 
+ */
+function findFontSize(text, maxWidth, steps=1) {
+  // Start größe
+  let fontSize = steps;
+  // Schriftgröße setzen
+  textSize(fontSize);
+
+  // Solange die Schrift in den Bereich passt.
+  // Am Ende reduzieren wir um eins wegen der Kopfgesteuerten Schleife
+  while (textWidth(text) <= maxWidth) {
+    fontSize += steps;
+    textSize(fontSize);
   }
+  return fontSize - steps;
+}
+
+/**
+ * Bestimmt ob die Maus in einem gegebenen Rechteck ist.
+ * @param {Vector} pos Ein Vector mit der X und Y Koordinaten der zu prüfenden Position
+ * @param {Vector} size Ein Vector mit der X und Y Größe der zu prüfenden Position
+ * @returns {bool} true = im Rechteck, false = außerhalb des Rechtecks
+ */
+const inRect = (pos, size) => {
+  const worldMouse = getWorldMousePos();
+  if (debug) {
+    noFill();
+    stroke(colors.outline);
+    push();
+    translate(cam.x, cam.y);
+    scale(zoom);
+    rect(pos.x, pos.y, size.x, size.y);
+    pop();
+  }
+  return (
+    worldMouse.x > pos.x &&
+    worldMouse.x < pos.x + size.x &&
+    worldMouse.y > pos.y &&
+    worldMouse.y < pos.y + size.y
+  );
+};
+
+/**
+ * Bestimmt ob die Maus in einem gegebenen Kreis ist.
+ * @param {Vector} pos Ein Vector mit der X und Y Koordinaten der zu prüfenden Position
+ * @param {number} diameter Der Durchmesser um die Position.
+ * @param {number} offset Der Offset in Prozent, 10 => der Durchmesser wird um 10% vergrößert.
+ * @returns {bool} true = im Kreis, false = außerhalb des Kreises
+ */
+const inCircle = (pos, diameter, offset) => {
+  const worldMouse = getWorldMousePos();
+  return (
+    dist(pos.x, pos.y, worldMouse.x, worldMouse.y) <
+    (diameter * (1 + offset / 100)) / 2
+  );
+};
+
+/**
+ * Errechnet aus der derzeitigen Position der Maus über dem Canvas die Position
+ * in der Szene indem es die angewandten Transformationen (Move und Zoom)
+ * auf die Maus anwendet.
+ * @returns {Vector} Der Vector mit x und y Position der Maus in der Szene
+ */
+const getWorldMousePos = () => {
+  return createVector((mouseX - cam.x) / zoom, (mouseY - cam.y) / zoom);
 };
 
 function setup() {
+  // Framerate reduziert um meinen Akku nicht ganz so schnell zu leeren.
+  setFrameRate(5);
+  angleMode("degrees");
   textFont("Consolas");
   createCanvas(windowWidth, windowHeight, P2D);
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
@@ -28,8 +94,7 @@ function setup() {
   cam = createVector(-170, -317);
   prevMouse = createVector(0, 0);
   debug = true;
-  // TODO Anders Elemente Speichern
-  buttons = [
+  platinElements = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
     new LedArray(createVector(200, 200)),
@@ -42,21 +107,52 @@ function setup() {
       off: colors.ledGreenOff,
     }),
     new Socket(createVector(250, 200), 24),
+    new Ic(
+      createVector(
+        250 + sizes.socket.xVersatz + sizes.pin.rect / 2,
+        224.5 + sizes.socket.border/2
+      ),
+      12,
+      "IC9503"
+    ),
   ];
   // TODO nur für debuging/tests
-  buttons[0].buttons[0].connected[1].connect(buttons[2].connectors[0]);
-  buttons[0].buttons[0].connected[2].connect(buttons[2].connectors[1]);
-  buttons[0].buttons[1].connected[1].connect(buttons[2].connectors[2]);
-  buttons[0].buttons[1].connected[2].connect(buttons[2].connectors[3]);
-  buttons[0].buttons[2].connected[1].connect(buttons[3].connectors[0]);
-  buttons[0].buttons[2].connected[2].connect(buttons[3].connectors[1]);
-  buttons[0].buttons[3].connected[1].connect(buttons[3].connectors[2]);
-  buttons[0].buttons[3].connected[2].connect(buttons[3].connectors[3]);
-  buttons[1].buttons[0].connected[1].connect(buttons[4].connectors[0]);
-  buttons[1].buttons[0].connected[2].connect(buttons[4].connectors[1]);
-  buttons[1].buttons[1].connected[1].connect(buttons[4].connectors[2]);
-  buttons[1].buttons[1].connected[2].connect(buttons[4].connectors[3]);
-  
+  platinElements[0].buttons[0].connected[1].connect(
+    platinElements[2].connectors[0]
+  );
+  platinElements[0].buttons[0].connected[2].connect(
+    platinElements[2].connectors[1]
+  );
+  platinElements[0].buttons[1].connected[1].connect(
+    platinElements[2].connectors[2]
+  );
+  platinElements[0].buttons[1].connected[2].connect(
+    platinElements[2].connectors[3]
+  );
+  platinElements[0].buttons[2].connected[1].connect(
+    platinElements[3].connectors[0]
+  );
+  platinElements[0].buttons[2].connected[2].connect(
+    platinElements[3].connectors[1]
+  );
+  platinElements[0].buttons[3].connected[1].connect(
+    platinElements[3].connectors[2]
+  );
+  platinElements[0].buttons[3].connected[2].connect(
+    platinElements[3].connectors[3]
+  );
+  platinElements[1].buttons[0].connected[1].connect(
+    platinElements[4].connectors[0]
+  );
+  platinElements[1].buttons[0].connected[2].connect(
+    platinElements[4].connectors[1]
+  );
+  platinElements[1].buttons[1].connected[1].connect(
+    platinElements[4].connectors[2]
+  );
+  platinElements[1].buttons[1].connected[2].connect(
+    platinElements[4].connectors[3]
+  );
 }
 
 function draw() {
@@ -69,7 +165,7 @@ function draw() {
   fill(255, 1, 1);
   noStroke();
   circle(50, 50, 50);
-  buttons.forEach((button) => {
+  platinElements.forEach((button) => {
     button.show();
   });
 
@@ -89,10 +185,10 @@ function draw() {
 }
 
 mouseClicked = () => {
-  // TODO auf unterschiedliche elemente Kontrollieren damit Elemente wie LED nicht zerstört werden.
+  // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
   if (mouseButton == LEFT) {
-    buttons.forEach((button) => {
-      button.update();
+    platinElements.forEach((elem) => {
+      elem.update();
     });
   }
 };
@@ -128,7 +224,7 @@ mouseWheel = (event) => {
     zoom *= zoomFactor;
   }
   // Den Zoom zwischen 0 und 3 begrenzen
-  zoom = constrain(zoom, 0.5, 5);
+  zoom = constrain(zoom, 0.5, 10);
   // Verschieben der Kamera, dadurch zoomt man auf den Mauszeiger zu.
   cam.x = mouseX - worldMouseX * zoom;
   cam.y = mouseY - worldMouseY * zoom;

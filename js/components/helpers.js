@@ -24,4 +24,35 @@ const textSizes = {
   large: 24,
 };
 
-// TODO für die ganzen Maße eine constante erstellen um einen Ort zum anpassen zu haben
+const strokeWeights = {
+  small:0.5,
+  medium: 1,
+  large: 2
+}
+
+const sizes = {
+  pin: {
+    circle: 4,
+    rect: 8,
+    rect_versatz: 1,
+  },
+  led: {
+    btn: 4,
+    ledArray: 8,
+  },
+  ledArray: {
+    ledVersatz: 20,
+    yVersatz: 15
+  },
+  btnArray:{
+    size: 20,
+  },
+  socket:{
+    xVersatz: 15,
+    yVersatz: 10,
+    border: 3,
+    hebelLange: 12,
+    hebelBreite: 1,
+
+  }
+};

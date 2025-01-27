@@ -1,7 +1,7 @@
 class Led {
   constructor(
     pos,
-    size = 6,
+    size = sizes.led.circle,
     colorSet = { on: colors.ledRedOn, off: colors.ledRedOff }
   ) {
     this.pos = pos;
@@ -17,10 +17,6 @@ class Led {
   };
 
   update(signal) {
-    // Check auf undefined, da sonst der foreach call beim mouseClick im mainSketch die LED zerschießt.
-    if(signal.value == undefined){
-      return
-    }
-    this.active = signal.value;
+    signal.visit(this);
   }
 }

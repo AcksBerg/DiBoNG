@@ -1,94 +1,210 @@
 class Socket {
-    constructor(pos, pinCount = 24, doubleH = true) {
-        if (pinCount % 2 !== 0) {
-            throw new Error("Die Pin-Anzahl des Sockels muss durch 2 Teilbar sein!");
-        }
-        this.pos = pos;
-        this.doubleH = doubleH;
-        this.closed =true;
-        this.connectorsCircle = [];
-        this.connectorsRect = [];
-        this.pinCount = pinCount
-        this.versatz = 10;
-        for (let i = 0; i < this.pinCount / 2; i++) {
-            this.connectorsCircle.push(
-                new Pin(createVector(this.pos.x, this.pos.y + this.versatz * i))
-            );
-            this.connectorsRect.push(
-                new Pin(
-                    createVector(this.pos.x + 15, this.pos.y + (this.versatz / 2) * i + (this.versatz / 2) * (this.pinCount / 2 - 1) / 2),
-                    "rect"
-                )
-            );
-            // TODO Simulation so umsetzen das keine Schleifen entstehen
-              this.connectorsCircle
-                .at(-1)
-                .connect(this.connectorsRect.at(-1));
-              this.connectorsRect
-                .at(-1)
-                .connect(this.connectorsCircle.at(-1));
-            this.connectorsCircle.push(
-                new Pin(createVector(this.pos.x + 53, this.pos.y + this.versatz * i))
-            );
-            this.connectorsRect.push(
-                new Pin(
-                    createVector(this.pos.x + 30, this.pos.y + (this.versatz / 2) * i + (this.versatz / 2) * (this.pinCount / 2 - 1) / 2),
-                    "rect"
-                )
-            );
-            // TODO Simulation so umsetzen das keine Schleifen entstehen
-              this.connectorsCircle
-                .at(-1)
-                .connect(this.connectorsRect.at(-1));
-              this.connectorsRect
-                .at(-1)
-                .connect(this.connectorsCircle.at(-1));
-        }
+  constructor(pos, pinCount = 24, doubleH = true) {
+    if (pinCount % 2 !== 0) {
+      throw new Error("Die Pin-Anzahl des Sockels muss durch 2 Teilbar sein!");
+    }
+    this.pos = pos;
+    this.doubleH = doubleH;
+    this.closed = true;
+    this.connectorsCircle = [];
+    this.connectorsRect = [];
+    this.pinCount = pinCount;
+    for (let i = 0; i < this.pinCount / 2; i++) {
+      this.connectorsCircle.push(
+        new Pin(
+          createVector(this.pos.x, this.pos.y + sizes.socket.yVersatz * i)
+        )
+      );
+      this.connectorsRect.push(
+        new Pin(
+          createVector(
+            this.pos.x + sizes.socket.xVersatz,
+            this.pos.y +
+              (sizes.socket.yVersatz / 2) * i +
+              ((sizes.socket.yVersatz / 2) * (this.pinCount / 2 - 1)) / 2
+          ),
+          "rect"
+        )
+      );
+      // TODO Simulation so umsetzen das keine Schleifen entstehen siehe TODO Signal, wenn das implementiert ist sollte es keine schleifen geben können
+      this.connectorsCircle.at(-1).connect(this.connectorsRect.at(-1));
+      this.connectorsRect.at(-1).connect(this.connectorsCircle.at(-1));
+      this.connectorsCircle.push(
+        new Pin(
+          createVector(
+            this.pos.x + sizes.socket.xVersatz * 3 + sizes.pin.rect,
+            this.pos.y + sizes.socket.yVersatz * i
+          )
+        )
+      );
+      this.connectorsRect.push(
+        new Pin(
+          createVector(
+            this.pos.x + sizes.socket.xVersatz * 2,
+            this.pos.y +
+              (sizes.socket.yVersatz / 2) * i +
+              ((sizes.socket.yVersatz / 2) * (this.pinCount / 2 - 1)) / 2
+          ),
+          "rect"
+        )
+      );
+      // TODO Simulation so umsetzen das keine Schleifen entstehen siehe TODO Signal, wenn das implementiert ist sollte es keine schleifen geben können
+      this.connectorsCircle.at(-1).connect(this.connectorsRect.at(-1));
+      this.connectorsRect.at(-1).connect(this.connectorsCircle.at(-1));
+    }
+  }
+
+  show() {
+    noFill();
+    strokeWeight(strokeWeights.small);
+    stroke(colors.outline);
+    for (let i = 0; i < this.pinCount; i++) {
+      let l1 = this.connectorsCircle.at(i).pos;
+      let l2 = this.connectorsRect.at(i).pos;
+      if (l1.x < l2.x) {
+        // Horizontale Linie vom Linken Connector(Circle) nach Rechts
+        line(l1.x, l1.y, l1.x + sizes.socket.xVersatz / 3, l1.y);
+        // Diagonale Linie vom Linken Connector(Circle)
+        line(
+          l1.x + sizes.socket.xVersatz / 3,
+          l1.y,
+          l2.x - sizes.socket.xVersatz / 3,
+          l2.y + sizes.pin.rect_versatz
+        );
+        // Horizontale Linie von der Diagonalen Linie zum Rechten Connector(Rect)
+        line(
+          l2.x - sizes.socket.xVersatz / 3,
+          l2.y + sizes.pin.rect_versatz,
+          l2.x,
+          l2.y + sizes.pin.rect_versatz
+        );
+      } else {
+        // Horizontale Linie vom Rechten Connector(Circle) nach Links
+        line(l1.x, l1.y, l1.x - sizes.socket.xVersatz / 3, l1.y);
+        // Diagonale Linie vom Rechten Connector(Circle)
+        line(
+          l1.x - sizes.socket.xVersatz / 3,
+          l1.y,
+          l2.x + sizes.socket.xVersatz / 3 + sizes.pin.rect,
+          l2.y + sizes.pin.rect_versatz
+        );
+        // Horizontale Linie von der Diagonalen Linie zum Linken Connector(Rect)
+        line(
+          l2.x + sizes.pin.rect,
+          l2.y + sizes.pin.rect_versatz,
+          l2.x + sizes.socket.xVersatz / 3 + sizes.pin.rect,
+          l2.y + sizes.pin.rect_versatz
+        );
+      }
+    }
+    noStroke();
+    fill(colors.btnInactive);
+    rect(
+      this.pos.x + sizes.socket.xVersatz - sizes.socket.border,
+      this.connectorsRect.at(0).pos.y - sizes.socket.border,
+      sizes.socket.xVersatz + sizes.pin.rect + sizes.socket.border * 2,
+      ((sizes.socket.yVersatz / 2) * this.pinCount) / 2 + sizes.socket.border
+    );
+    // Den Hebel malen
+    fill(colors.silver);
+    stroke(colors.silver);
+    if (this.closed) {
+      rect(
+        this.connectorsRect.at(0).pos.x -
+          sizes.socket.border +
+          sizes.socket.hebelBreite,
+        this.connectorsRect.at(0).pos.y - sizes.socket.hebelLange,
+        sizes.socket.hebelBreite,
+        sizes.socket.hebelLange - sizes.socket.border / 2
+      );
+      circle(
+        this.connectorsRect.at(0).pos.x -
+          sizes.socket.border +
+          sizes.socket.hebelBreite * 1.5,
+        this.connectorsRect.at(0).pos.y - sizes.socket.hebelLange,
+        sizes.socket.hebelBreite * 2
+      );
+    } else {
+      circle(
+        this.connectorsRect.at(0).pos.x -
+          sizes.socket.border +
+          sizes.socket.hebelBreite * 1.5,
+        this.connectorsRect.at(0).pos.y - sizes.socket.border / 2,
+        sizes.socket.hebelBreite * 2
+      );
+    }
+    [...this.connectorsCircle, ...this.connectorsRect].forEach((pin) => {
+      pin.show();
+    });
+  }
+
+  update() {
+    // Prüfen ob überhaupt der Sockel geklickt worden ist. Falls nicht update verlassen
+    if (
+      !inRect(
+        createVector(
+          this.pos.x - sizes.pin.circle,
+          this.pos.y - sizes.pin.circle
+        ),
+        createVector(
+          sizes.socket.xVersatz * 3 + sizes.pin.rect + sizes.pin.circle * 2,
+          (sizes.socket.yVersatz * (this.pinCount - 2)) / 2 +
+            sizes.pin.circle * 2
+        )
+      )
+    ) {
+      return;
+    }
+    // Return nach jedem treffer da mit einem klick nur ein Element getroffen werden kann.
+    // Prüfen ob der Hebel getroffen worden ist.
+    if (
+      (this.closed &&
+        inRect(
+          createVector(
+            this.connectorsRect.at(0).pos.x - sizes.socket.border,
+            this.connectorsRect.at(0).pos.y -
+              sizes.socket.hebelLange -
+              sizes.socket.hebelBreite * 1.5
+          ),
+          createVector(
+            sizes.socket.hebelBreite * 3,
+            sizes.socket.hebelLange + sizes.socket.hebelBreite
+          )
+        )) ||
+      (!this.closed &&
+        inCircle(
+          createVector(
+            this.connectorsRect.at(0).pos.x -
+              sizes.socket.border +
+              sizes.socket.hebelBreite * 1.5,
+            this.connectorsRect.at(0).pos.y - sizes.socket.border / 2
+          ),
+          sizes.socket.hebelBreite * 2,
+          0
+        ))
+    ) {
+      this.closed = !this.closed;
+      return;
     }
 
-    show() {
-
-        // TODO StrokeWeight auch an anderen Orten festlegen wo er benötigt wird um später Fehler zu vermeiden
-        // TODO StrokeWeight auch in der setup definieren und später auslagern
-        // In dem Kontext prüfen ob sich die Connectoren verändern wenn man den Hebel umlegt
-        noFill();
-        strokeWeight(0.5);
-        stroke(colors.outline);
-        for (let i = 0; i < this.pinCount; i++) {
-            let l1 = this.connectorsCircle.at(i).pos;
-            let l2 = this.connectorsRect.at(i).pos;
-            if (l1.x < l2.x) {
-                line(l1.x, l1.y, l1.x + 5, l1.y);
-                line(l1.x + 5, l1.y, l2.x - 5, l2.y + 1);
-                line(l2.x - 5, l2.y + 1, l2.x, l2.y + 1);
-
-            } else {
-                line(l1.x, l1.y, l1.x - 5, l1.y);
-                line(l1.x - 5, l1.y, l2.x + 5 + 8, l2.y + 1);
-                line(l2.x + 8, l2.y + 1, l2.x + 5 + 8, l2.y + 1);
-            }
-        }
-        noStroke();
-        fill(colors.btnInactive);
-        rect(this.connectorsRect.at(0).pos.x - 3, this.connectorsRect.at(0).pos.y - 3, 29, (this.versatz / 2) * this.pinCount / 2 + 3);
-        fill(colors.silver);
-        stroke(colors.silver);
-        if (this.closed) {
-            rect(this.connectorsRect.at(0).pos.x - 2, this.connectorsRect.at(0).pos.y - 15, 3, 13);
-            quad(this.connectorsRect.at(0).pos.x - 2, this.connectorsRect.at(0).pos.y - 15,
-                this.connectorsRect.at(0).pos.x + 1, this.connectorsRect.at(0).pos.y - 15,
-                this.connectorsRect.at(0).pos.x + 2, this.connectorsRect.at(0).pos.y - 18,
-                this.connectorsRect.at(0).pos.x - 3, this.connectorsRect.at(0).pos.y - 18);
-            arc(this.connectorsRect.at(0).pos.x - 0.5, this.connectorsRect.at(0).pos.y - 18,5,5,PI,0);
-        } else {
-            circle(this.connectorsRect.at(0).pos.x -1, this.connectorsRect.at(0).pos.y - 3,5)
-        }
-        [...this.connectorsCircle, ...this.connectorsRect].forEach((pin) => {
-            pin.show();
-        });
+    // Prüfen ob die Rect Connectors getroffen worden sind, aber nur die auf der Linken Seite
+    // und auch nur wenn der Hebel nicht geschlossen ist.
+    // Die letzte reihe ist ebenfalls ausgeschlossen da der kleinste IC eine Größe von 4 hat (NOT).
+    for (let i = 0; i < this.pinCount - 2 && !this.closed; i = i + 2) {
+      if (this.connectorsRect.at(i).isClicked()) {
+        // TODO Click auf den RectConnector weiter verarbeiten.
+        console.log(this.connectorsRect.at(i));
+        return;
+      }
     }
 
-    update() {
-        // TODO Hebel Mechanismus klickbar machen, 
+    // Prüfen ob die Circle Connectors getroffen worden sind.
+    for (let i = 0; i < this.pinCount; i++) {
+      if (this.connectorsCircle.at(i).isClicked()) {
+        // TODO Click auf den CircleConnector weiter verarbeiten.
+        console.log(this.connectorsCircle.at(i).pos);
+        return;
+      }
     }
+  }
 }

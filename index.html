@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>P5-Tests</title>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
 
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
@@ -14,12 +14,15 @@
 
   <body>
     <!--
+    TODO:
+    Docstrings mit /** */ für alle Funktionen/Methoden implementieren
      TODO ELEMENTS:
      - Low Single
      - Low Double
      - High Single (Beschriftet H (+5V))
      - High Double (Beschriftet H (+5V))
      - High Double 
+     - IC
      - Bridge
      - Lane 7x Connector
      - Taster Button
@@ -27,13 +30,14 @@
      - Strom Stecker
      - Multi Socket mit Single H und Double H sowie Variabler positionen
      -->
-     <!-- TODO Elemente benötigen eine einzigartige ID um diese richtig Speichern zu können -->
+    <!-- TODO Elemente benötigen eine einzigartige ID um diese richtig Speichern zu können -->
     <script src="js/sketch.js" defer></script>
     <script src="js/components/helpers.js"></script>
     <script src="js/components/signal.js"></script>
     <script src="js/components/pin.js"></script>
-    <script src="js/components/led.js"></script>
+    <script src="js/components/ic.js"></script>
     <script src="js/components/socket.js"></script>
+    <script src="js/components/led.js"></script>
     <script src="js/components/ledArray.js"></script>
     <script src="js/components/twoBtnToggle.js"></script>
     <script src="js/components/btnArray.js"></script>
