@@ -7,9 +7,38 @@ class Ic {
     this.rowCount = rowCount;
     this.name = name;
     this.textSize = findFontSize(this.name, sizes.socket.xVersatz, 0.1);
-    // TODO Pins
+    this.connectorsPlug = [];
+    for (let i = 0; i < this.rowCount; i++) {
+      this.connectorsPlug.push(
+        new Pin(
+          createVector(
+            this.pos.x,
+            this.pos.y +
+              sizes.socket.border / 2 +
+              sizes.pin.rect_versatz +
+              (sizes.socket.yVersatz / 2) * i
+          ),
+          "plug"
+        )
+      );
+      this.connectorsPlug.push(
+        new Pin(
+          createVector(
+            this.pos.x + sizes.socket.xVersatz,
+            this.pos.y +
+              sizes.socket.border / 2 +
+              sizes.pin.rect_versatz +
+              (sizes.socket.yVersatz / 2) * i
+          ),
+          "plug"
+        )
+      );
+    }
   }
   show() {
+    for (let i = 0; i < this.connectorsPlug.length; i++) {
+      this.connectorsPlug.at(i).show();
+    }
     noStroke();
     fill(colors.btnActive);
     rect(
@@ -42,7 +71,6 @@ class Ic {
       text(this.name, sizes.led.btn, 0);
       pop();
     }
-    // TODO Pins
   }
 
   update() {
