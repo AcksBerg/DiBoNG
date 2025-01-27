@@ -6,6 +6,27 @@ let debug;
 let platinElements;
 
 /**
+ * Findet die passende Schriftgröße für den gegebenen Bereich
+ * @param {String} text Der Text welcher in den Bereich passen muss.
+ * @param {number} maxWidth Die größe des Bereiches
+ * @returns 
+ */
+function findFontSize(text, maxWidth, steps=1) {
+  // Start größe
+  let fontSize = steps;
+  // Schriftgröße setzen
+  textSize(fontSize);
+
+  // Solange die Schrift in den Bereich passt.
+  // Am Ende reduzieren wir um eins wegen der Kopfgesteuerten Schleife
+  while (textWidth(text) <= maxWidth) {
+    fontSize += steps;
+    textSize(fontSize);
+  }
+  return fontSize - steps;
+}
+
+/**
  * Bestimmt ob die Maus in einem gegebenen Rechteck ist.
  * @param {Vector} pos Ein Vector mit der X und Y Koordinaten der zu prüfenden Position
  * @param {Vector} size Ein Vector mit der X und Y Größe der zu prüfenden Position
@@ -58,6 +79,7 @@ const getWorldMousePos = () => {
 function setup() {
   // Framerate reduziert um meinen Akku nicht ganz so schnell zu leeren.
   setFrameRate(5);
+  angleMode("degrees");
   textFont("Consolas");
   createCanvas(windowWidth, windowHeight, P2D);
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.

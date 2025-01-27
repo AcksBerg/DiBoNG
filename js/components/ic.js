@@ -5,7 +5,9 @@ class Ic {
     }
     this.pos = pos;
     this.rowCount = rowCount;
-    // TODO pins hinzufügen, dafür design überlegen in pin.js
+    this.text = "IC4903";
+    this.textSize = findFontSize(this.text, sizes.socket.xVersatz,0.5);
+    console.log(textWidth(this.text), sizes.socket.xVersatz, map(this.textSize, 1,40,1,sizes.socket.xVersatz, true));
   }
   show() {
     noStroke();
@@ -25,8 +27,16 @@ class Ic {
       sizes.led.btn,
       sizes.led.btn,
       0,
-      PI
+      180
     );
+    textSize(this.textSize);
+    push();
+    
+    pop();
+    if(this.rowCount<3){
+      textAlign(LEFT,TOP);
+      text(this.text, this.pos.x,this.pos.y+sizes.led.btn)
+    }
   }
 
   update() {}
