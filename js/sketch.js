@@ -168,6 +168,7 @@ function draw() {
   platinElements.forEach((button) => {
     button.show();
   });
+
   if (debug) {
     noFill();
     stroke(255);
@@ -179,6 +180,7 @@ function draw() {
     );
     rect(camBounds.min_x, camBounds.min_y, 20);
   }
+  
   pop();
 }
 
