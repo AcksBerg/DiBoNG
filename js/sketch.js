@@ -221,8 +221,8 @@ mouseWheel = (event) => {
   } else {
     zoom *= zoomFactor;
   }
-  // Den Zoom zwischen 0 und 3 begrenzen
-  zoom = constrain(zoom, 0.5, 10);
+  // Den Zoom zwischen 1 und 10 begrenzen
+  zoom = constrain(zoom, 1, 10);
   // Verschieben der Kamera, dadurch zoomt man auf den Mauszeiger zu.
   cam.x = mouseX - worldMouseX * zoom;
   cam.y = mouseY - worldMouseY * zoom;
