@@ -112,7 +112,8 @@ function setup() {
         250 + sizes.socket.xVersatz + sizes.pin.rect / 2,
         224.5 + sizes.socket.border/2
       ),
-      12
+      12,
+      "IC9503"
     ),
   ];
   // TODO nur für debuging/tests
