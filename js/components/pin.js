@@ -66,8 +66,10 @@ class Pin {
           this.pos,
           createVector(sizes.pin.rect, sizes.pin.rect_versatz * 2)
         ));
-
+    
     if (clicked && this.type==="circle") {
+      // TODO überprüfen ob das wirklich die beste methode ist den letzten geklickten pin zu bekommen
+      pinClickedThisFrame = this;
       if (currentCable === null) {
         currentCable = new Cable(this);
       } else {
@@ -76,6 +78,7 @@ class Pin {
         currentCable = null;
       }
     }
+
     return clicked;
   }
 

@@ -6,6 +6,7 @@ let debug;
 let platinElements;
 let currentCable;
 let cables;
+let pinClickedThisFrame;
 
 /**
  * Findet die passende Schriftgröße für den gegebenen Bereich
@@ -86,6 +87,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight, P2D);
   cables = [];
   currentCable = null;
+  pinClickedThisFrame = null;
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
   // In welchem Gebiet sich die Kamera bewegen kann.
   // Muss später an die Szene angepasst werden.
@@ -120,43 +122,6 @@ function setup() {
       "IC9503"
     ),
   ];
-  // TODO nur für debuging/tests
-  // platinElements[0].buttons[0].connected[1].connect(
-  //   platinElements[2].connectors[0]
-  // );
-  // platinElements[0].buttons[0].connected[2].connect(
-  //   platinElements[2].connectors[1]
-  // );
-  // platinElements[0].buttons[1].connected[1].connect(
-  //   platinElements[2].connectors[2]
-  // );
-  // platinElements[0].buttons[1].connected[2].connect(
-  //   platinElements[2].connectors[3]
-  // );
-  // platinElements[0].buttons[2].connected[1].connect(
-  //   platinElements[3].connectors[0]
-  // );
-  // platinElements[0].buttons[2].connected[2].connect(
-  //   platinElements[3].connectors[1]
-  // );
-  // platinElements[0].buttons[3].connected[1].connect(
-  //   platinElements[3].connectors[2]
-  // );
-  // platinElements[0].buttons[3].connected[2].connect(
-  //   platinElements[3].connectors[3]
-  // );
-  // platinElements[1].buttons[0].connected[1].connect(
-  //   platinElements[4].connectors[0]
-  // );
-  // platinElements[1].buttons[0].connected[2].connect(
-  //   platinElements[4].connectors[1]
-  // );
-  // platinElements[1].buttons[1].connected[1].connect(
-  //   platinElements[4].connectors[2]
-  // );
-  // platinElements[1].buttons[1].connected[2].connect(
-  //   platinElements[4].connectors[3]
-  // );
 }
 
 function draw() {
@@ -180,20 +145,26 @@ function draw() {
 }
 
 function mouseClicked(){
+  console.log(frameCount, pinClickedThisFrame);
   // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
   if (mouseButton === LEFT) {
-    console.log("Bei dem Rechtsklick");
     platinElements.forEach((elem) => {
       elem.update();
     });
+    // weitere Segmente dem Kabel hinzufügen
+    if(currentCable){
+      currentCable.addLinks();
+    }
   }
   
+
+  pinClickedThisFrame = null;
 };
 
 function keyPressed(){
-  // Das Kabelziehen abbrechen
+  // Das Kabelziehen abbrechen mit STRG
   if(keyCode === 17 && currentCable){
-    currentCable = null;
+    currentCable.removeLink();
   }
 }
 

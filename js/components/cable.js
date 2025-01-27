@@ -1,10 +1,5 @@
 class Cable {
-  constructor(
-    startPin,
-    links = [],
-    endPin = null,
-    color = colors.ledRedOn
-  ) {
+  constructor(startPin, links = [], endPin = null, color = colors.ledRedOn) {
     this.startPin = startPin;
     this.links = links;
     this.endPin = endPin;
@@ -15,13 +10,33 @@ class Cable {
     noFill();
     strokeWeight(strokeWeights.small);
     stroke(this.color);
+
+    let lastPos = this.startPin.pos;
+
+    this.links.forEach((link) => {
+      line(lastPos.x, lastPos.y, link.x, link.y);
+      lastPos = link;
+    });
+
     const endPos = this.endPin ? this.endPin.pos : getWorldMousePos();
-    line(
-      this.startPin.pos.x,
-      this.startPin.pos.y,
-      endPos.x,
-      endPos.y
-    );
+
+    line(lastPos.x, lastPos.y, endPos.x, endPos.y);
+  }
+
+  addLinks() {
+    if (pinClickedThisFrame) {
+      return;
+    }
+    this.links.push(getWorldMousePos());
+  }
+
+  removeLink() {
+    if (this.links.length === 0) {
+      currentCable = null;
+      return;
+    }
+
+    this.links.pop();
   }
 
   connectTo(endPin) {
