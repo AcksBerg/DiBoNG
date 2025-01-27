@@ -14,7 +14,7 @@ class Gate {
     }
 }
 
-// Specific gate implementations
+
 class Not extends Gate {
     constructor(input1) {
         super(input1);
@@ -47,11 +47,16 @@ class And extends Gate {
 }
 
 
-// todo: gates mit pins ausstatten
-// Represents an Integrated Circuit (IC) with gates and pins
+// todo: bug fixe, dass gate output wert nicht weitge gibt an ic pin 
+// todo: signal implementiern
+
+
 
 // ic schaltet. pins der output gates funktionieren auch
-// pins die mit pins der output gates verbunden werden bleiben allerdings eineschaltet. muss noch korrigiert werden
+
+
+
+
 class IntegratedCircuit {
     constructor(name, numPins) {
         this.name = name;
