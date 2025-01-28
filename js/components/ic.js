@@ -40,7 +40,7 @@ class Ic {
       this.connectorsPlug.at(i).show();
     }
     noStroke();
-    fill(colors.btnActive);
+    fill(colors.ic);
     rect(
       this.pos.x,
       this.pos.y,
@@ -49,7 +49,7 @@ class Ic {
         (sizes.socket.yVersatz / 2) * (this.rowCount - 1) +
         sizes.pin.rect_versatz * 2
     );
-    fill(colors.btnInactive);
+    fill(colors.panel);
     arc(
       this.pos.x + sizes.socket.xVersatz / 2,
       this.pos.y,
@@ -59,7 +59,7 @@ class Ic {
       180
     );
     textSize(this.textSize);
-    fill(colors.outline);
+    fill(colors.silver);
     if (this.rowCount < 4) {
       textAlign(LEFT, TOP);
       text(this.name, this.pos.x, this.pos.y + sizes.led.btn);

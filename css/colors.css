@@ -1,0 +1,19 @@
+:root {
+    --background: hsl(216, 57%, 35%);
+    --button: hsl(236, 50%, 34%);
+    --outline: hsl(0, 2%, 79%);
+    --ledRedOn:hsl(0, 64%, 60%);
+    --ledRedOff:hsl(0, 64%, 20%);
+    --ledYellowOn:hsl(56, 64%, 60%);
+    --ledYellowOff:hsl(56, 64%, 20%);
+    --ledGreenOn:hsl(110, 64%, 60%);
+    --ledGreenOff:hsl(110, 64%, 20%);
+    --cableRed: hsl(0, 87%, 24%);
+    --cableYellow: hsl(59, 87%, 24%);
+    --cableGreen: hsl(115, 87%, 24%);
+    --cableBlue: hsl(241, 87%, 24%);
+    --pin: hsl(41, 96%, 19%);
+    --silver: hsl(0, 0%, 75%);
+    --ic: hsl(0, 7%, 14%);
+    --panel: hsl(0, 0%, 29%);
+  }

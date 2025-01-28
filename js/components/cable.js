@@ -1,5 +1,5 @@
 class Cable {
-  constructor(startPin, links = [], endPin = null, color = colors.ledRedOn) {
+  constructor(startPin, links = [], endPin = null, color = colors.cableRed) {
     this.startPin = startPin;
     this.links = links;
     this.endPin = endPin;

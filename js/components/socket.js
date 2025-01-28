@@ -98,7 +98,8 @@ class Socket {
       }
     }
     noStroke();
-    fill(colors.btnInactive);
+    // Hintergrund malen
+    fill(colors.panel);
     rect(
       this.pos.x + sizes.socket.xVersatz - sizes.socket.border,
       this.connectorsRect.at(0).pos.y - sizes.socket.border,

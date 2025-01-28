@@ -12,12 +12,12 @@ class Pin {
     // Compute erzeugt neues Siganal am output pin
     noStroke();
     if (this.type == "circle") {
-      fill(colors.connectorPin);
+      fill(colors.pin);
       circle(this.pos.x, this.pos.y, sizes.pin.circle);
     } else if (this.type == "rect") {
-      fill(colors.btnActive);
+      fill(colors.pin);
       rect(this.pos.x, this.pos.y, sizes.pin.rect, sizes.pin.rect_versatz);
-      fill(colors.outline);
+      fill(colors.silver);
       rect(
         this.pos.x,
         this.pos.y + sizes.pin.rect_versatz,

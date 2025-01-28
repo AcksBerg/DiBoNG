@@ -5,8 +5,7 @@ const getCssVariable = (varName) => {
 };
 const colors = {
   background: getCssVariable("--background"),
-  btnInactive: getCssVariable("--buttonInactive"),
-  btnActive: getCssVariable("--buttonActive"),
+  button: getCssVariable("--button"),
   outline: getCssVariable("--outline"),
   ledRedOn: getCssVariable("--ledRedOn"),
   ledRedOff: getCssVariable("--ledRedOff"),
@@ -14,8 +13,14 @@ const colors = {
   ledGreenOff: getCssVariable("--ledGreenOff"),
   ledYellowOn: getCssVariable("--ledYellowOn"),
   ledYellowOff: getCssVariable("--ledYellowOff"),
-  connectorPin: getCssVariable("--connectorPin"),
+  cableRed: getCssVariable("--cableRed"),
+  cableYellow: getCssVariable("--cableYellow"),
+  cableGreen: getCssVariable("--cableGreen"),
+  cableBlue: getCssVariable("--cableBlue"),
+  pin: getCssVariable("--pin"),
   silver: getCssVariable("--silver"),
+  ic: getCssVariable("--ic"),
+  panel: getCssVariable("--panel"),
 };
 
 const textSizes = {

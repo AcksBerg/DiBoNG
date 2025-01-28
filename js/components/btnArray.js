@@ -33,7 +33,7 @@ class BtnArray {
   }
   show() {
     noStroke();
-    fill(colors.btnInactive);
+    fill(colors.panel);
     rect(
       this.pos.x,
       this.pos.y,

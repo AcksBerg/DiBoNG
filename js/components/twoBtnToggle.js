@@ -62,7 +62,7 @@ class TwoBtnToggle {
     // Rechtecke
     strokeWeight(strokeWeights.medium);
     stroke(colors.outline);
-    fill(colors.btnActive);
+    fill(colors.button);
     // Rect links
     rect(this.pos.x, this.pos.y, sizes.btnArray.size, sizes.btnArray.size, 5);
     // Rect Rects
