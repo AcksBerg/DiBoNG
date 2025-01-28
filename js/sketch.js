@@ -7,6 +7,7 @@ let platinElements;
 let currentCable;
 let cables;
 let pinClickedThisFrame;
+let elements;
 
 /**
  * Findet die passende Schriftgröße für den gegebenen Bereich
@@ -122,30 +123,17 @@ function setup() {
       off: colors.ledGreenOff,
     }),
     new Socket(createVector(240, 260), 24),
-    new Ic(
-      createVector(
-        360,250
-      ),
-      12,
-      "IC1234"
-    ),
-    new Ic(
-      createVector(
-        380,250
-      ),
-      4,
-      "IC4321"
-    ),
-    new Ic(
-      createVector(
-        380,275
-      ),
-      7,
-      "IC4444"
-    ),
+  ];
+  elements = [
+    new Ic(createVector(360, 250), 12, "IC1234"),
+    new Ic(createVector(380, 250), 4, "IC4321"),
+    new Ic(createVector(380, 275), 7, "IC4444"),
   ];
 }
 
+/**
+ * Zuständig um das Canvas zu zeichnen.
+ */
 function draw() {
   background(colors.background);
   prevMouse.set(mouseX, mouseY);
@@ -153,7 +141,7 @@ function draw() {
   push();
   translate(cam.x, cam.y);
   scale(zoom);
-  platinElements.forEach((elem) => {
+  [...platinElements, ...elements].forEach((elem) => {
     elem.show();
   });
 
@@ -166,20 +154,35 @@ function draw() {
   pop();
 }
 
+/**
+ * Wird ausgeführt, wenn ein Vollständiger Maus Click ausgeführt worden ist(MousePressed -> MouseReleased -> MouseClicked)
+ * @returns None - Existiert nur um die Funktion frühzeitig abbrechen zu lassen
+ */
 function mouseClicked() {
-  // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
   if (mouseButton === LEFT) {
-    for (let i = 0; i < platinElements.length; i++) {
-      if (platinElements.at(i).isClicked()) {
-        console.log("clicked");
+    // Zuerst kontrollieren ob ein oben liegendes Element angeklickt worden ist.
+    for (let i = 0; i < elements.length && !currentCable; i++) {
+      if (elements.at(i).isClicked()) {
         return;
       }
     }
+
+    // Dann die Platinen-Elemente
+    // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
+    // Hier darf nicht auf !currentCable geprüft werden, da sonst die Prüfung der Pins nicht funktioniert(Diese sind Bestandteil der größeren Elemente).
+    for (let i = 0; i < platinElements.length; i++) {
+      if (platinElements.at(i).isClicked()) {
+        return;
+      }
+    }
+
+
     // weitere Segmente dem Kabel hinzufügen
     if (currentCable) {
       currentCable.addLinks();
     }
 
+    // Zum Schluss ob man versucht ein Kabel anzuklicken. Dies ist die Aufwendigste Berechnung.
     // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen.
     // Dies wird nicht getan wenn man aktuell ein Kabel malt.
     for (let i = 0; i < cables.length && !currentCable; i++) {
@@ -195,13 +198,19 @@ function mouseClicked() {
   pinClickedThisFrame = null;
 }
 
+/**
+ * Wird ausgelöst, wenn die Taste nach unten gedrückt wird.
+ */
 function keyPressed() {
-  // Das Kabelziehen abbrechen mit STRG
+  // Das Kabelziehen abbrechen bzw. Kabel-Links entfernen mit STRG(keyCode 17)
   if (keyCode === 17 && currentCable) {
     currentCable.removeLink();
   }
 }
 
+/**
+ * Wird ausgelöst, wenn ein Maus Button gedrückt gehalten wird und die Maus dann bewegt.
+ */
 function mouseDragged() {
   if (mouseButton === CENTER) {
     const dx = mouseX - prevMouse.x;
@@ -216,13 +225,21 @@ function mouseDragged() {
   }
 }
 
+/**
+ * Wird ausgelöst, wenn das Fenster seine größe verändert, also auch wenn die Dev-Konsole aufgeht oder der Nutzer in den Vollbildmodus wechselt.
+ */
 function windowResized() {
   // Canvas Größe anpassen, wenn das Fenster verändert wird
   resizeCanvas(windowWidth, windowHeight);
 }
 
-// Mausrad-Zoom
+/**
+ * Wird ausgelöst, wenn das Mausrad gedreht wird, drücken zählt nicht.
+ * @param {*} event
+ * @returns false - damit nicht die Standard Scrolling funktionen ausgeführt werden
+ */
 function mouseWheel(event) {
+  console.log("mouse");
   // Berechnet die Weltkoordinaten der Maus mit der Transformation durch Kamera-Bewegung und Zoom.
   let worldMouseX = (mouseX - cam.x) / zoom;
   let worldMouseY = (mouseY - cam.y) / zoom;
