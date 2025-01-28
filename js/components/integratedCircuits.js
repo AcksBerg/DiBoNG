@@ -48,7 +48,7 @@ class And extends Gate {
 }
 
 
-// TODO: bug fixe, dass gate output wert nicht weitge gibt an ic pin 
+
 // TODO: signal implementiern
 
 
