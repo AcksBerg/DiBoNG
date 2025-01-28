@@ -124,11 +124,17 @@ function setup() {
     new Socket(createVector(240, 260), 24),
     new Ic(
       createVector(
-        250 + sizes.socket.xVersatz + sizes.pin.rect / 2,
-        224.5 + sizes.socket.border / 2
+        360,250
       ),
       12,
-      "IC9503"
+      "IC1234"
+    ),
+    new Ic(
+      createVector(
+        380,250
+      ),
+      12,
+      "IC4321"
     ),
   ];
 }

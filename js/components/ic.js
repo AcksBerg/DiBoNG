@@ -88,6 +88,7 @@ class Ic {
       return false;
     }
     // TODO was passiert wenn man ein IC angeklickt hat.
+    // TODO IC verschiebbar machen und das man es auf ein Sockel setzen kann, bzw. wenn das Sockel geschlossen ist das man es nicht bewegen kann.
     console.log("IC wurde angeklickt");
     return true;
   }

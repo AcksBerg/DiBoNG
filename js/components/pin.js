@@ -74,9 +74,10 @@ class Pin {
       if (currentCable === null) {
         currentCable = new Cable(this);
       } else {
-        currentCable.connectTo(this);
-        cables.push(currentCable);
-        currentCable = null;
+        if(currentCable.connectTo(this)){
+          cables.push(currentCable);
+          currentCable = null;
+        }
       }
     }
 

@@ -29,9 +29,11 @@ class Cable {
     // Als Nutzer Feedback wird das Kabel Transparent.
     if (
       !this.endPin &&
-      this.links.filter(
-        (e) => dist(e.x, e.y, pos.x, pos.y) < sizes.cable.minAbstand
-      ).length > 0
+      (dist(this.startPin.pos.x, this.startPin.pos.y, pos.x, pos.y) <
+        sizes.cable.minAbstand ||
+        this.links.filter(
+          (e) => dist(e.x, e.y, pos.x, pos.y) < sizes.cable.minAbstand
+        ).length > 0)
     ) {
       stroke(this.color.trans);
     }
@@ -39,14 +41,15 @@ class Cable {
   }
 
   addLinks() {
-    // TODO nur links hinzufügen die eine distanze von x von den anderen links entfernt sind.
     if (pinClickedThisFrame) {
       return;
     }
     const pos = getWorldMousePos();
-    
+
     // Falls die anderen Links nicht weit genug entfernt sind kann kein neuer Link hinzugefügt werden.
     if (
+      dist(this.startPin.pos.x, this.startPin.pos.y, pos.x, pos.y) <
+        sizes.cable.minAbstand ||
       this.links.filter(
         (e) => dist(e.x, e.y, pos.x, pos.y) < sizes.cable.minAbstand
       ).length > 0
@@ -86,8 +89,12 @@ class Cable {
   }
 
   connectTo(endPin) {
+    if(endPin === this.startPin){
+      return false;
+    }
     this.endPin = endPin;
     this.startPin.connect(this.endPin);
     this.endPin.connect(this.startPin);
+    return true;
   }
 }
