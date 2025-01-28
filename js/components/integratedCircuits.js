@@ -1,7 +1,7 @@
 class Gate {
     constructor(input1 = null, input2 = null) {
-        this.inputs = [new Pin, new Pin];
-        this.output = new Pin;
+        this.inputs = [new Pin(0,0, "any"), new Pin(0,0, "any")];
+        this.output = new Pin(0,0, "any");
     }
 
     update_inputs(input1 = null, input2 = null) {
@@ -9,8 +9,9 @@ class Gate {
     }
 
     compute() {
-        // Default compute logic (to be overridden by subclasses)
+        // default. wird von subklasse überschrieben
         throw new Error("Compute method must be implemented in subclass");
+
     }
 }
 
@@ -32,7 +33,7 @@ class Or extends Gate {
     }
 
     compute() {
-        this.output = this.inputs[0] || this.inputs[1];
+        this.output = this.inputs[0].active || this.inputs[1].active;
     }
 }
 
@@ -47,7 +48,7 @@ class And extends Gate {
 }
 
 
-// TODO: bug fixe, dass gate output wert nicht weitge gibt an ic pin 
+
 // TODO: signal implementiern
 
 
@@ -69,13 +70,31 @@ class IntegratedCircuit {
             this.pins.push(new Pin(0,0, "any"));
         }
     }
-    addGate(gate) {
+//indexes der pins alle bis auf den letzten sind input pins.
+// so kann die logik beliebig viele inputs der gates verarbeiten
+    addGate(gate, pin_indexes) {
+        // input pins verbinden
+        for (let index = 0; index < pin_indexes.length-1; index++) {
+            ic.pins[pin_indexes[index]].connect(gate.inputs[index])        
+        }
+        // output pin verbinden
+       gate.output.connect(ic.pins[pin_indexes[pin_indexes.length-1]]);
+       console.log(ic.pins,pin_indexes[pin_indexes.length-1])
         this.gates.push(gate);
+
     }
 
 
     simulate() {
-        this.gates.forEach((gate) => gate.compute());
+        this.gates.forEach((gate) => {
+            gate.compute();
+        });
+        this.gates.forEach((gate) => {
+            gate.output.connected.forEach((connectedPin) => {
+                connectedPin.active = gate.output.active;
+            });
+        });
+
     }
 
 }
@@ -83,7 +102,8 @@ const ic = new IntegratedCircuit("MyIC", 6);
 const andGate = new And(null, null);
 
 
-ic.addGate(andGate);
+ic.addGate(andGate,[0,1,2]);
+
 
 ic.simulate();
 
