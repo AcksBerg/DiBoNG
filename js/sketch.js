@@ -153,41 +153,43 @@ function draw() {
   pop();
 }
 
-function mouseClicked(){
+function mouseClicked() {
   // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
   if (mouseButton === LEFT) {
-    platinElements.forEach((elem) => {
-      elem.update();
-    });
+    for (let i = 0; i < platinElements.length; i++) {
+      if (platinElements.at(i).isClicked()) {
+        console.log("clicked");
+        return;
+      }
+    }
     // weitere Segmente dem Kabel hinzufügen
-    if(currentCable){
+    if (currentCable) {
       currentCable.addLinks();
     }
 
-    // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen. 
+    // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen.
     // Dies wird nicht getan wenn man aktuell ein Kabel malt.
-    for(let i=0; i<cables.length && !currentCable; i++){
+    for (let i = 0; i < cables.length && !currentCable; i++) {
       let cableLink = cables.at(i).nearCableLink();
-      if(cableLink){
+      if (cableLink) {
         //TODO was soll mit dem Kabel geschehen wenn es ausgewählt worden ist.
         console.log(cableLink);
         return;
       }
     }
   }
-  
 
   pinClickedThisFrame = null;
-};
+}
 
-function keyPressed(){
+function keyPressed() {
   // Das Kabelziehen abbrechen mit STRG
-  if(keyCode === 17 && currentCable){
+  if (keyCode === 17 && currentCable) {
     currentCable.removeLink();
   }
 }
 
-function mouseDragged(){
+function mouseDragged() {
   if (mouseButton === CENTER) {
     const dx = mouseX - prevMouse.x;
     const dy = mouseY - prevMouse.y;
@@ -199,15 +201,15 @@ function mouseDragged(){
     // cam.x = constrain(cam.x, camBounds.min_x, camBounds.max_x);
     // cam.y = constrain(cam.y, camBounds.min_y, camBounds.max_y);
   }
-};
+}
 
-function windowResized(){
+function windowResized() {
   // Canvas Größe anpassen, wenn das Fenster verändert wird
   resizeCanvas(windowWidth, windowHeight);
-};
+}
 
 // Mausrad-Zoom
-function mouseWheel(event){
+function mouseWheel(event) {
   // Berechnet die Weltkoordinaten der Maus mit der Transformation durch Kamera-Bewegung und Zoom.
   let worldMouseX = (mouseX - cam.x) / zoom;
   let worldMouseY = (mouseY - cam.y) / zoom;
@@ -225,4 +227,4 @@ function mouseWheel(event){
 
   // Verhindern, dass p5 das Standard-Scrolling ausführt
   return false;
-};
+}

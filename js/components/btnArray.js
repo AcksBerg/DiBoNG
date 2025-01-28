@@ -13,24 +13,7 @@ class BtnArray {
       );
     }
   }
-  update() {
-    if (
-      !inRect(
-        this.pos,
-        createVector(
-          ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5 +
-            sizes.btnArray.size / 4 +
-            sizes.pin.circle,
-          sizes.btnArray.size * 1.5 * this.buttons.length
-        )
-      )
-    ) {
-      return;
-    }
-    for(let i=0; i<this.buttons.length; i++){
-      this.buttons.at(i).update();
-    }
-  }
+
   show() {
     noStroke();
     fill(colors.panel);
@@ -43,5 +26,30 @@ class BtnArray {
     this.buttons.forEach((button) => {
       button.show();
     });
+  }
+
+  isClicked(){
+    if (
+      !inRect(
+        this.pos,
+        createVector(
+          ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5 +
+            sizes.btnArray.size / 4 +
+            sizes.pin.circle,
+          sizes.btnArray.size * 1.5 * this.buttons.length
+        )
+      )
+    ) {
+      return false;
+    }
+    for (let i = 0; i < this.buttons.length; i++) {
+      if(this.buttons.at(i).isClicked()){
+        return true;
+      };
+    }
+    return false;
+  }
+
+  update() {
   }
 }

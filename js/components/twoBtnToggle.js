@@ -29,35 +29,7 @@ class TwoBtnToggle {
     // Den Negierten Ausgang !Q initialisieren.
     this.connected[2].update(new Signal(!this.active));
   }
-  
-  update() {
-    // Versatz der Aktiviert wird wenn der Button aktiv ist.
-    // Dadurch muss die Abfrage welcher der Beiden Button gedrückt wird nur einmal geschrieben werden.
-    let versatz = this.active
-      ? 0
-      : sizes.btnArray.size / 4 + sizes.btnArray.size;
-    if (
-      inRect(createVector(this.pos.x + versatz, this.pos.y),createVector(sizes.btnArray.size,sizes.btnArray.size) )
-    ) {
-      this.active = !this.active;
-      // Die Angeschlossenen Elemente Aktuallisieren um Stromdurchfluss zu Simulieren
-      // LED
-      this.connected[0].update(new Signal(this.active));
-      // Oberer Connector
-      this.connected[1].update(new Signal(this.active));
-      // Unterer Connector
-      this.connected[2].update(new Signal(!this.active));
-      return;
-    }
-    if(this.connected[1].isClicked()){
-      console.log("Oben geclicked");
-      return;
-    };
-    if(this.connected[2].isClicked()){
-      console.log("unten gelicked");
-      return;
-    }
-  }
+
   show() {
     // Rechtecke
     strokeWeight(strokeWeights.medium);
@@ -122,4 +94,39 @@ class TwoBtnToggle {
       this.pos.y + sizes.btnArray.size * 0.75
     );
   }
+
+  isClicked() {
+    // Versatz der Aktiviert wird wenn der Button aktiv ist.
+    // Dadurch muss die Abfrage welcher der Beiden Button gedrückt wird nur einmal geschrieben werden.
+    let versatz = this.active
+      ? 0
+      : sizes.btnArray.size / 4 + sizes.btnArray.size;
+    if (
+      inRect(
+        createVector(this.pos.x + versatz, this.pos.y),
+        createVector(sizes.btnArray.size, sizes.btnArray.size)
+      )
+    ) {
+      this.active = !this.active;
+      // Die Angeschlossenen Elemente Aktuallisieren um Stromdurchfluss zu Simulieren
+      // LED
+      this.connected[0].update(new Signal(this.active));
+      // Oberer Connector
+      this.connected[1].update(new Signal(this.active));
+      // Unterer Connector
+      this.connected[2].update(new Signal(!this.active));
+      return true;
+    }
+    if (this.connected[1].isClicked()) {
+      console.log("Oben geclicked");
+      return true;
+    }
+    if (this.connected[2].isClicked()) {
+      console.log("unten gelicked");
+      return true;
+    }
+    return false;
+  }
+
+  update() {}
 }

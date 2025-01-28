@@ -73,7 +73,7 @@ class Ic {
     }
   }
 
-  update() {
+  isClicked() {
     if (
       !inRect(
         this.pos,
@@ -85,9 +85,13 @@ class Ic {
         )
       )
     ) {
-      return;
+      return false;
     }
     // TODO was passiert wenn man ein IC angeklickt hat.
     console.log("IC wurde angeklickt");
+    return true;
+  }
+
+  update() {
   }
 }
