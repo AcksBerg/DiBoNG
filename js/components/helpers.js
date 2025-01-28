@@ -3,6 +3,8 @@ const getCssVariable = (varName) => {
     .getPropertyValue(varName)
     .trim();
 };
+
+// TODO schauen ob man die Trans-Colors auch errechnen kann.
 const colors = {
   background: getCssVariable("--background"),
   button: getCssVariable("--button"),
@@ -14,9 +16,13 @@ const colors = {
   ledYellowOn: getCssVariable("--ledYellowOn"),
   ledYellowOff: getCssVariable("--ledYellowOff"),
   cableRed: getCssVariable("--cableRed"),
+  cableRedTrans: getCssVariable("--cableRedTrans"),
   cableYellow: getCssVariable("--cableYellow"),
+  cableYellowTrans: getCssVariable("--cableYellowTrans"),
   cableGreen: getCssVariable("--cableGreen"),
+  cableGreenTrans: getCssVariable("--cableGreenTrans"),
   cableBlue: getCssVariable("--cableBlue"),
+  cableBlueTrans: getCssVariable("--cableBlueTrans"),
   pin: getCssVariable("--pin"),
   silver: getCssVariable("--silver"),
   ic: getCssVariable("--ic"),
@@ -30,10 +36,10 @@ const textSizes = {
 };
 
 const strokeWeights = {
-  small:0.5,
+  small: 0.5,
   medium: 1,
-  large: 2
-}
+  large: 2,
+};
 
 const sizes = {
   pin: {
@@ -47,17 +53,19 @@ const sizes = {
   },
   ledArray: {
     ledVersatz: 20,
-    yVersatz: 15
+    yVersatz: 15,
   },
-  btnArray:{
+  btnArray: {
     size: 20,
   },
-  socket:{
+  socket: {
     xVersatz: 15,
     yVersatz: 10,
     border: 3,
     hebelLange: 12,
     hebelBreite: 1,
-
-  }
+  },
+  cable: {
+    minAbstand: 15,
+  },
 };

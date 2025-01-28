@@ -61,7 +61,7 @@ const inRect = (pos, size) => {
  * @param {number} offset Der Offset in Prozent, 10 => der Durchmesser wird um 10% vergrößert.
  * @returns {bool} true = im Kreis, false = außerhalb des Kreises
  */
-const inCircle = (pos, diameter, offset) => {
+const inCircle = (pos, diameter, offset = 0) => {
   const worldMouse = getWorldMousePos();
   if (debug) {
     noFill();
@@ -112,16 +112,16 @@ function setup() {
   platinElements = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
-    new LedArray(createVector(200, 200)),
-    new LedArray(createVector(200, 260), {
+    new LedArray(createVector(330, 200)),
+    new LedArray(createVector(330, 260), {
       on: colors.ledYellowOn,
       off: colors.ledYellowOff,
     }),
-    new LedArray(createVector(200, 320), {
+    new LedArray(createVector(330, 320), {
       on: colors.ledGreenOn,
       off: colors.ledGreenOff,
     }),
-    new Socket(createVector(250, 200), 24),
+    new Socket(createVector(240, 260), 24),
     new Ic(
       createVector(
         250 + sizes.socket.xVersatz + sizes.pin.rect / 2,
