@@ -41,6 +41,8 @@ class Cable {
   }
 
   addLinks() {
+    // TODO Herrausfinden warum der erste Versuch einen Link zu erstellen ignoriert wird.
+    // Vermutung es hat mit dem pinClickedThisFrame zutun.
     if (pinClickedThisFrame) {
       return;
     }

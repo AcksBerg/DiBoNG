@@ -133,8 +133,15 @@ function setup() {
       createVector(
         380,250
       ),
-      12,
+      4,
       "IC4321"
+    ),
+    new Ic(
+      createVector(
+        380,275
+      ),
+      7,
+      "IC4444"
     ),
   ];
 }
