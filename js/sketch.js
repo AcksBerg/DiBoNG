@@ -63,6 +63,15 @@ const inRect = (pos, size) => {
  */
 const inCircle = (pos, diameter, offset) => {
   const worldMouse = getWorldMousePos();
+  if (debug) {
+    noFill();
+    stroke(colors.outline);
+    push();
+    translate(cam.x, cam.y);
+    scale(zoom);
+    circle(pos.x, pos.y, diameter * (1 + offset / 100));
+    pop();
+  }
   return (
     dist(pos.x, pos.y, worldMouse.x, worldMouse.y) <
     (diameter * (1 + offset / 100)) / 2
@@ -145,7 +154,6 @@ function draw() {
 }
 
 function mouseClicked(){
-  console.log(frameCount, pinClickedThisFrame);
   // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
   if (mouseButton === LEFT) {
     platinElements.forEach((elem) => {
@@ -154,6 +162,17 @@ function mouseClicked(){
     // weitere Segmente dem Kabel hinzufügen
     if(currentCable){
       currentCable.addLinks();
+    }
+
+    // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen. 
+    // Dies wird nicht getan wenn man aktuell ein Kabel malt.
+    for(let i=0; i<cables.length && !currentCable; i++){
+      let cableLink = cables.at(i).nearCableLink();
+      if(cableLink){
+        //TODO was soll mit dem Kabel geschehen wenn es ausgewählt worden ist.
+        console.log(cableLink);
+        return;
+      }
     }
   }
   

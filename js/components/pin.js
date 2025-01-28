@@ -69,6 +69,7 @@ class Pin {
     
     if (clicked && this.type==="circle") {
       // TODO überprüfen ob das wirklich die beste methode ist den letzten geklickten pin zu bekommen
+      // TODO prüfen ob der start und der Endpin unterschiedliche pins sind.
       pinClickedThisFrame = this;
       if (currentCable === null) {
         currentCable = new Cable(this);

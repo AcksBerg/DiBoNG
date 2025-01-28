@@ -24,6 +24,7 @@ class Cable {
   }
 
   addLinks() {
+    // TODO nur links hinzufügen die eine distanze von x von den anderen links entfernt sind.
     if (pinClickedThisFrame) {
       return;
     }
@@ -37,6 +38,27 @@ class Cable {
     }
 
     this.links.pop();
+  }
+
+  nearCableLink() {
+    const offset = 100;
+    // in der nähe vom StartPin
+    if (inCircle(this.startPin.pos, sizes.pin.circle, offset)) {
+      return this.startPin.pos;
+    }
+
+    // in der nähe von einem der Segmente
+    for (let i = 0; i < this.links.length; i++) {
+      if (inCircle(this.links.at(i), sizes.pin.circle, offset)) {
+        return this.links.at(i);
+      }
+    }
+
+    // in der nähe vom EndPin
+    if (inCircle(this.endPin.pos, sizes.pin.circle, offset)) {
+      return this.endPin.pos;
+    }
+    return null;
   }
 
   connectTo(endPin) {
