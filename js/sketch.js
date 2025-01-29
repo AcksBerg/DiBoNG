@@ -7,6 +7,7 @@ let platinElements;
 let currentCable;
 let cables;
 let pinClickedThisFrame;
+let elements;
 
 /**
  * Findet die passende Schriftgröße für den gegebenen Bereich
@@ -61,7 +62,7 @@ const inRect = (pos, size) => {
  * @param {number} offset Der Offset in Prozent, 10 => der Durchmesser wird um 10% vergrößert.
  * @returns {bool} true = im Kreis, false = außerhalb des Kreises
  */
-const inCircle = (pos, diameter, offset) => {
+const inCircle = (pos, diameter, offset = 0) => {
   const worldMouse = getWorldMousePos();
   if (debug) {
     noFill();
@@ -112,27 +113,27 @@ function setup() {
   platinElements = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
-    new LedArray(createVector(200, 200)),
-    new LedArray(createVector(200, 260), {
+    new LedArray(createVector(330, 200)),
+    new LedArray(createVector(330, 260), {
       on: colors.ledYellowOn,
       off: colors.ledYellowOff,
     }),
-    new LedArray(createVector(200, 320), {
+    new LedArray(createVector(330, 320), {
       on: colors.ledGreenOn,
       off: colors.ledGreenOff,
     }),
-    new Socket(createVector(250, 200), 24),
-    new Ic(
-      createVector(
-        250 + sizes.socket.xVersatz + sizes.pin.rect / 2,
-        224.5 + sizes.socket.border / 2
-      ),
-      12,
-      "IC9503"
-    ),
+    new Socket(createVector(240, 260), 24),
+  ];
+  elements = [
+    new Ic(createVector(360, 250), 12, "IC1234"),
+    new Ic(createVector(380, 250), 4, "IC4321"),
+    new Ic(createVector(380, 275), 7, "IC4444"),
   ];
 }
 
+/**
+ * Zuständig um das Canvas zu zeichnen.
+ */
 function draw() {
   background(colors.background);
   prevMouse.set(mouseX, mouseY);
@@ -140,7 +141,7 @@ function draw() {
   push();
   translate(cam.x, cam.y);
   scale(zoom);
-  platinElements.forEach((elem) => {
+  [...platinElements, ...elements].forEach((elem) => {
     elem.show();
   });
 
@@ -153,41 +154,64 @@ function draw() {
   pop();
 }
 
-function mouseClicked(){
-  // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
+/**
+ * Wird ausgeführt, wenn ein Vollständiger Maus Click ausgeführt worden ist(MousePressed -> MouseReleased -> MouseClicked)
+ * @returns None - Existiert nur um die Funktion frühzeitig abbrechen zu lassen
+ */
+function mouseClicked() {
   if (mouseButton === LEFT) {
-    platinElements.forEach((elem) => {
-      elem.update();
-    });
+    // Zuerst kontrollieren ob ein oben liegendes Element angeklickt worden ist.
+    for (let i = 0; i < elements.length && !currentCable; i++) {
+      if (elements.at(i).isClicked()) {
+        return;
+      }
+    }
+
+    // Dann die Platinen-Elemente
+    // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
+    // Hier darf nicht auf !currentCable geprüft werden, da sonst die Prüfung der Pins nicht funktioniert(Diese sind Bestandteil der größeren Elemente).
+    for (let i = 0; i < platinElements.length; i++) {
+      if (platinElements.at(i).isClicked()) {
+        return;
+      }
+    }
+
+
     // weitere Segmente dem Kabel hinzufügen
-    if(currentCable){
+    if (currentCable) {
       currentCable.addLinks();
     }
 
-    // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen. 
+    // Zum Schluss ob man versucht ein Kabel anzuklicken. Dies ist die Aufwendigste Berechnung.
+    // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen.
     // Dies wird nicht getan wenn man aktuell ein Kabel malt.
-    for(let i=0; i<cables.length && !currentCable; i++){
+    for (let i = 0; i < cables.length && !currentCable; i++) {
       let cableLink = cables.at(i).nearCableLink();
-      if(cableLink){
+      if (cableLink) {
         //TODO was soll mit dem Kabel geschehen wenn es ausgewählt worden ist.
         console.log(cableLink);
         return;
       }
     }
   }
-  
 
   pinClickedThisFrame = null;
-};
+}
 
-function keyPressed(){
-  // Das Kabelziehen abbrechen mit STRG
-  if(keyCode === 17 && currentCable){
+/**
+ * Wird ausgelöst, wenn die Taste nach unten gedrückt wird.
+ */
+function keyPressed() {
+  // Das Kabelziehen abbrechen bzw. Kabel-Links entfernen mit STRG(keyCode 17)
+  if (keyCode === 17 && currentCable) {
     currentCable.removeLink();
   }
 }
 
-function mouseDragged(){
+/**
+ * Wird ausgelöst, wenn ein Maus Button gedrückt gehalten wird und die Maus dann bewegt.
+ */
+function mouseDragged() {
   if (mouseButton === CENTER) {
     const dx = mouseX - prevMouse.x;
     const dy = mouseY - prevMouse.y;
@@ -199,15 +223,23 @@ function mouseDragged(){
     // cam.x = constrain(cam.x, camBounds.min_x, camBounds.max_x);
     // cam.y = constrain(cam.y, camBounds.min_y, camBounds.max_y);
   }
-};
+}
 
-function windowResized(){
+/**
+ * Wird ausgelöst, wenn das Fenster seine größe verändert, also auch wenn die Dev-Konsole aufgeht oder der Nutzer in den Vollbildmodus wechselt.
+ */
+function windowResized() {
   // Canvas Größe anpassen, wenn das Fenster verändert wird
   resizeCanvas(windowWidth, windowHeight);
-};
+}
 
-// Mausrad-Zoom
-function mouseWheel(event){
+/**
+ * Wird ausgelöst, wenn das Mausrad gedreht wird, drücken zählt nicht.
+ * @param {*} event
+ * @returns false - damit nicht die Standard Scrolling funktionen ausgeführt werden
+ */
+function mouseWheel(event) {
+  console.log("mouse");
   // Berechnet die Weltkoordinaten der Maus mit der Transformation durch Kamera-Bewegung und Zoom.
   let worldMouseX = (mouseX - cam.x) / zoom;
   let worldMouseY = (mouseY - cam.y) / zoom;
@@ -225,4 +257,4 @@ function mouseWheel(event){
 
   // Verhindern, dass p5 das Standard-Scrolling ausführt
   return false;
-};
+}

@@ -98,7 +98,8 @@ class Socket {
       }
     }
     noStroke();
-    fill(colors.btnInactive);
+    // Hintergrund malen
+    fill(colors.panel);
     rect(
       this.pos.x + sizes.socket.xVersatz - sizes.socket.border,
       this.connectorsRect.at(0).pos.y - sizes.socket.border,
@@ -138,7 +139,7 @@ class Socket {
     });
   }
 
-  update() {
+  isClicked() {
     // Prüfen ob überhaupt der Sockel geklickt worden ist. Falls nicht update verlassen
     if (
       !inRect(
@@ -153,7 +154,7 @@ class Socket {
         )
       )
     ) {
-      return;
+      return false;
     }
     // Return nach jedem treffer da mit einem klick nur ein Element getroffen werden kann.
     // Prüfen ob der Hebel getroffen worden ist.
@@ -184,7 +185,7 @@ class Socket {
         ))
     ) {
       this.closed = !this.closed;
-      return;
+      return true;
     }
 
     // Prüfen ob die Rect Connectors getroffen worden sind, aber nur die auf der Linken Seite
@@ -194,7 +195,7 @@ class Socket {
       if (this.connectorsRect.at(i).isClicked()) {
         // TODO Click auf den RectConnector weiter verarbeiten.
         console.log(this.connectorsRect.at(i));
-        return;
+        return true;
       }
     }
 
@@ -203,8 +204,11 @@ class Socket {
       if (this.connectorsCircle.at(i).isClicked()) {
         // TODO Click auf den CircleConnector weiter verarbeiten.
         console.log(this.connectorsCircle.at(i).pos);
-        return;
+        return true;
       }
     }
+    return false;
   }
+
+  update() {}
 }

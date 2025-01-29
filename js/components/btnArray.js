@@ -13,7 +13,22 @@ class BtnArray {
       );
     }
   }
-  update() {
+
+  show() {
+    noStroke();
+    fill(colors.panel);
+    rect(
+      this.pos.x,
+      this.pos.y,
+      sizes.btnArray.size * 3,
+      sizes.btnArray.size * 6
+    );
+    this.buttons.forEach((button) => {
+      button.show();
+    });
+  }
+
+  isClicked(){
     if (
       !inRect(
         this.pos,
@@ -25,23 +40,16 @@ class BtnArray {
         )
       )
     ) {
-      return;
+      return false;
     }
-    for(let i=0; i<this.buttons.length; i++){
-      this.buttons.at(i).update();
+    for (let i = 0; i < this.buttons.length; i++) {
+      if(this.buttons.at(i).isClicked()){
+        return true;
+      };
     }
+    return false;
   }
-  show() {
-    noStroke();
-    fill(colors.btnInactive);
-    rect(
-      this.pos.x,
-      this.pos.y,
-      sizes.btnArray.size * 3,
-      sizes.btnArray.size * 6
-    );
-    this.buttons.forEach((button) => {
-      button.show();
-    });
+
+  update() {
   }
 }

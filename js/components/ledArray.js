@@ -54,7 +54,7 @@ class LedArray {
     });
   }
 
-  update() {
+  isClicked(){
     // Return in Statement damit es direkt gecancelt wird nachdem etwas getroffen worden ist. Man kann ja nur ein Element pro click auswählen
     if (
       !inRect(
@@ -69,13 +69,17 @@ class LedArray {
         )
       )
     ) {
-      return;
+      return false;
     }
     for (let i = 0; i < this.connectors.length; i++) {
       if (this.connectors.at(i).isClicked()) {
         // TODO Was passiert wenn man auf den Connector clickt
-        return;
+        return true;
       }
     }
+    return false;
+  }
+
+  update() {
   }
 }

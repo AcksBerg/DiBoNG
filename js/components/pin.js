@@ -12,12 +12,12 @@ class Pin {
     // Compute erzeugt neues Siganal am output pin
     noStroke();
     if (this.type == "circle") {
-      fill(colors.connectorPin);
+      fill(colors.pin);
       circle(this.pos.x, this.pos.y, sizes.pin.circle);
     } else if (this.type == "rect") {
-      fill(colors.btnActive);
+      fill(colors.pin);
       rect(this.pos.x, this.pos.y, sizes.pin.rect, sizes.pin.rect_versatz);
-      fill(colors.outline);
+      fill(colors.silver);
       rect(
         this.pos.x,
         this.pos.y + sizes.pin.rect_versatz,
@@ -69,14 +69,14 @@ class Pin {
     
     if (clicked && this.type==="circle") {
       // TODO überprüfen ob das wirklich die beste methode ist den letzten geklickten pin zu bekommen
-      // TODO prüfen ob der start und der Endpin unterschiedliche pins sind.
       pinClickedThisFrame = this;
       if (currentCable === null) {
         currentCable = new Cable(this);
       } else {
-        currentCable.connectTo(this);
-        cables.push(currentCable);
-        currentCable = null;
+        if(currentCable.connectTo(this)){
+          cables.push(currentCable);
+          currentCable = null;
+        }
       }
     }
 
