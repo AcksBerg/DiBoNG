@@ -1,8 +1,6 @@
 
-
-
 // TODO: signal implementiern
-
+// TODO: merge with ic von stücki.
 
 
 // ic schaltet. pins der output gates funktionieren auch
