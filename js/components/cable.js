@@ -51,8 +51,6 @@ class Cable {
    * @returns Ist nur dafür da um die Funktion frühzeitig zu beenden. Gibt None zurück.
   */
  addLinks() {
-   // TODO Herrausfinden warum der erste Versuch einen Link zu erstellen ignoriert wird.
-   // Vermutung es hat mit dem pinClickedThisFrame zutun.
    if (pinClickedThisFrame) {
      return;
     }

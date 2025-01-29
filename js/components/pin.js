@@ -72,10 +72,10 @@ class Pin {
         ));
 
     if (clicked && this.type === "circle") {
-      // TODO überprüfen ob das wirklich die beste methode ist den letzten geklickten pin zu bekommen
       pinClickedThisFrame = this;
       if (currentCable === null) {
         currentCable = new Cable(this);
+        pinClickedThisFrame = null;
       } else {
         if (currentCable.connectTo(this)) {
           cables.push(currentCable);
