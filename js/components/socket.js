@@ -202,7 +202,6 @@ class Socket {
     // Prüfen ob die Circle Connectors getroffen worden sind.
     for (let i = 0; i < this.pinCount; i++) {
       if (this.connectorsCircle.at(i).isClicked()) {
-        // TODO Click auf den CircleConnector weiter verarbeiten.
         console.log(this.connectorsCircle.at(i).pos);
         return true;
       }

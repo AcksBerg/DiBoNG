@@ -1,3 +1,6 @@
+/**
+ * Die Klasse LedArray welche 4x Pins beinhaltet, welche mit 4x LEDs verbunden sind.
+ */
 class LedArray {
   constructor(pos, colorSet = { on: colors.ledRedOn, off: colors.ledRedOff }) {
     this.pos = pos;
@@ -24,9 +27,14 @@ class LedArray {
     }
   }
 
+
+  /**
+   * Zeichnet die Connectoren und LEDs
+   */
   show() {
     strokeWeight(strokeWeights.medium);
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.leds.length; i++) {
+      // Linie zwischen Led und Connector
       stroke(colors.outline);
       line(
         this.connectors[i].pos.x,
@@ -34,6 +42,7 @@ class LedArray {
         this.leds[i].pos.x,
         this.leds[i].pos.y
       );
+      // Die Nummerierung
       fill(colors.outline);
       noStroke();
       textSize(textSizes.small);
@@ -43,17 +52,15 @@ class LedArray {
           (this.leds[i].pos.x - this.connectors[i].pos.x) / 2,
         this.connectors[i].pos.y - 5
       );
-      this.leds[i].show();
-      this.connectors[i].show();
+      this.leds.at(i).show();
+      this.connectors.at(i).show();
     }
-    this.connectors.forEach((pin) => {
-      pin.show();
-    });
-    this.leds.forEach((led) => {
-      led.show();
-    });
   }
 
+  /**
+   * Kontrolliert ob ein Connector angeklickt worden ist, prüft auch nur im Bereich der Connectoren auf den Click.
+   * @returns {boolean} true = Ein Element welches eine Funktion auslöst wurde geklickt, false = das Element wurde verfehlt oder nichts von relevanz angeklickt.
+   */
   isClicked(){
     // Return in Statement damit es direkt gecancelt wird nachdem etwas getroffen worden ist. Man kann ja nur ein Element pro click auswählen
     if (
@@ -73,7 +80,6 @@ class LedArray {
     }
     for (let i = 0; i < this.connectors.length; i++) {
       if (this.connectors.at(i).isClicked()) {
-        // TODO Was passiert wenn man auf den Connector clickt
         return true;
       }
     }

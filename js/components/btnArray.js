@@ -1,3 +1,6 @@
+/**
+ * Die Klasse BtnArray beinhaltet 4x Elemente der Klasse TwoBtnToggle und zeigt diese Untereinander.
+ */
 class BtnArray {
   constructor(pos) {
     this.pos = pos;
@@ -14,7 +17,11 @@ class BtnArray {
     }
   }
 
+  /**
+   * Zeichnet die twoBtnToggle Elemente und das Rechteck welches diese umfasst.
+   */
   show() {
+    // Das umfassende Rechteck
     noStroke();
     fill(colors.panel);
     rect(
@@ -23,11 +30,17 @@ class BtnArray {
       sizes.btnArray.size * 3,
       sizes.btnArray.size * 6
     );
+    // TwoBtnToggle Elemente
     this.buttons.forEach((button) => {
       button.show();
     });
   }
 
+
+  /**
+   * Kontrolliert ob der Klick in seiner näheren Umgebung ausgeführt worden ist, falls ja werden die TwoBtnToggle Elemente geprüft.
+   * @returns {boolean} true = Ein Element welches eine Funktion auslöst wurde geklickt, false = das Element wurde verfehlt oder nichts von relevanz angeklickt.
+   */
   isClicked(){
     if (
       !inRect(
@@ -50,6 +63,7 @@ class BtnArray {
     return false;
   }
 
+  
   update() {
   }
 }

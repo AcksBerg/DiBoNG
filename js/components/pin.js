@@ -1,3 +1,7 @@
+/**
+ * Ein Pin der als Circle/Rect/Plug dagestellt werden kann, aber immer die gleiche funktion beinhaltet.
+ * Die Klasse dient immer als Connector für Kabel und um Signale weiterzuleiten.
+ */
 class Pin {
   constructor(pos, type = "circle") {
     this.pos = pos;
@@ -6,10 +10,10 @@ class Pin {
     this.type = type;
   }
 
+  /**
+   * Show zeichnet die verschiedenen Pin-Typen.
+   */
   show() {
-    // TODO: types Circle(Normales Board), Rect(Auf dem Sockel), Plug(An dem IC), PlugNoGUI(In dem IC)
-    // TODO: Update vom IC wird aufgerufen vom Pin update
-    // Compute erzeugt neues Siganal am output pin
     noStroke();
     if (this.type == "circle") {
       fill(colors.pin);
@@ -66,14 +70,14 @@ class Pin {
           this.pos,
           createVector(sizes.pin.rect, sizes.pin.rect_versatz * 2)
         ));
-    
-    if (clicked && this.type==="circle") {
+
+    if (clicked && this.type === "circle") {
       // TODO überprüfen ob das wirklich die beste methode ist den letzten geklickten pin zu bekommen
       pinClickedThisFrame = this;
       if (currentCable === null) {
         currentCable = new Cable(this);
       } else {
-        if(currentCable.connectTo(this)){
+        if (currentCable.connectTo(this)) {
           cables.push(currentCable);
           currentCable = null;
         }
@@ -83,8 +87,14 @@ class Pin {
     return clicked;
   }
 
+  /**
+   * Update wird aufgerufen wenn das Signal den Pin erreicht. 
+   * @param {Signal} signal Ein Objekt zur Signalverarbeitung
+   */
   update(signal) {
     // TODO Handling vom Loop hinzufügen siehe Signal TODO
+    // Compute erzeugt neues Siganal am output pin
+    // TODO: Update vom IC wird aufgerufen vom Pin update
     signal.visit(this);
     this.connected
       .filter((item) => !signal.visited.includes(item))
