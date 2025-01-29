@@ -8,6 +8,7 @@ class Ic {
     this.name = name;
     this.textSize = findFontSize(this.name, sizes.socket.xVersatz, 0.1);
     this.connectorsPlug = [];
+    this.gates= []
     for (let i = 0; i < this.rowCount; i++) {
       this.connectorsPlug.push(
         new Pin(
@@ -35,6 +36,26 @@ class Ic {
       );
     }
   }
+  addGate(gate, pin_indexes) {
+    // input pins verbinden
+    for (let index = 0; index < pin_indexes.length-1; index++) {
+        this.connectorsPlug[pin_indexes[index]].connect(gate.inputs[index])        
+    }
+    // output pin verbinden
+   gate.output.connect(this.connectorsPlug[pin_indexes[pin_indexes.length-1]]);
+    this.gates.push(gate);
+
+}
+  simulate() {
+        this.gates.forEach((gate) => {
+            gate.compute();
+        });
+        this.gates.forEach((gate) => {
+            gate.output.connected.forEach((connectedPin) => {
+                connectedPin.active = gate.output.active;
+            });
+        });}
+
   show() {
     for (let i = 0; i < this.connectorsPlug.length; i++) {
       this.connectorsPlug.at(i).show();
