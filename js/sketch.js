@@ -6,7 +6,6 @@ let debug;
 let platinElements;
 let currentCable;
 let cables;
-let pinClickedThisFrame;
 let elements;
 
 /**
@@ -97,7 +96,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight, P2D);
   cables = [];
   currentCable = null;
-  pinClickedThisFrame = null;
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
   // In welchem Gebiet sich die Kamera bewegen kann.
   // Muss später an die Szene angepasst werden.
@@ -194,8 +192,6 @@ function mouseClicked() {
       }
     }
   }
-
-  pinClickedThisFrame = null;
 }
 
 /**

@@ -1,5 +1,5 @@
 /**
- * Die Klasse Kabel arbeitet zusammen mit den globalen Variablen currentCable, pinClickedThisFrame und cables und ermöglicht das Zeichnen von Kabeln
+ * Die Klasse Kabel arbeitet zusammen mit den globalen Variablen currentCable und cables und ermöglicht das Zeichnen von Kabeln
  */
 class Cable {
   constructor(
@@ -49,17 +49,14 @@ class Cable {
   /**
    * Neue Segmente dem Kabel hinzufügen
    * @returns Ist nur dafür da um die Funktion frühzeitig zu beenden. Gibt None zurück.
-  */
- addLinks() {
-   if (pinClickedThisFrame) {
-     return;
-    }
+   */
+  addLinks() {
     const pos = getWorldMousePos();
-    
+
     // Falls die anderen Links nicht weit genug entfernt sind kann kein neuer Link hinzugefügt werden.
     if (
       dist(this.startPin.pos.x, this.startPin.pos.y, pos.x, pos.y) <
-      sizes.cable.minAbstand ||
+        sizes.cable.minAbstand ||
       this.links.filter(
         (e) => dist(e.x, e.y, pos.x, pos.y) < sizes.cable.minAbstand
       ).length > 0
@@ -68,8 +65,7 @@ class Cable {
     }
     this.links.push(pos);
   }
-  
-  
+
   /**
    * Entfernt das letzte Element von dem Kabel
    * @returns Ist nur dafür da um die Funktion frühzeitig zu beenden. Gibt None zurück.
@@ -111,7 +107,7 @@ class Cable {
    * Verbindet ein Kabel mit seinem Start und EndPin.
    */
   connectTo(endPin) {
-    if(endPin === this.startPin){
+    if (endPin === this.startPin) {
       return false;
     }
     this.endPin = endPin;
