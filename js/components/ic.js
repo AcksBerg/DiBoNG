@@ -34,6 +34,9 @@ class Ic {
           "plug"
         )
       );
+      // TODO für debug zwecke, schleift die signale von horizontal durch.
+      this.connectorsPlug.at(-1).connect(this.connectorsPlug.at(-2));
+      this.connectorsPlug.at(-2).connect(this.connectorsPlug.at(-1));
     }
   }
   

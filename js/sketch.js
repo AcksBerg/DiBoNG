@@ -153,49 +153,7 @@ function draw() {
 }
 
 /**
- * Wird ausgeführt, wenn ein Vollständiger Maus Click ausgeführt worden ist(MousePressed -> MouseReleased -> MouseClicked)
- * @returns None - Existiert nur um die Funktion frühzeitig abbrechen zu lassen
- */
-function mouseClicked() {
-  if (mouseButton === LEFT) {
-    // Zuerst kontrollieren ob ein oben liegendes Element angeklickt worden ist.
-    for (let i = 0; i < elements.length && !currentCable; i++) {
-      if (elements.at(i).isClicked()) {
-        return;
-      }
-    }
-
-    // Dann die Platinen-Elemente
-    // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
-    // Hier darf nicht auf !currentCable geprüft werden, da sonst die Prüfung der Pins nicht funktioniert(Diese sind Bestandteil der größeren Elemente).
-    for (let i = 0; i < platinElements.length; i++) {
-      if (platinElements.at(i).isClicked()) {
-        return;
-      }
-    }
-
-
-    // weitere Segmente dem Kabel hinzufügen
-    if (currentCable) {
-      currentCable.addLinks();
-    }
-
-    // Zum Schluss ob man versucht ein Kabel anzuklicken. Dies ist die Aufwendigste Berechnung.
-    // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen.
-    // Dies wird nicht getan wenn man aktuell ein Kabel malt.
-    for (let i = 0; i < cables.length && !currentCable; i++) {
-      let cableLink = cables.at(i).nearCableLink();
-      if (cableLink) {
-        //TODO was soll mit dem Kabel geschehen wenn es ausgewählt worden ist.
-        console.log(cableLink);
-        return;
-      }
-    }
-  }
-}
-
-/**
- * Wird ausgelöst, wenn die Taste nach unten gedrückt wird.
+ * Wird ausgelöst, wenn eine Taste auf der Tastatur nach unten gedrückt wird.
  */
 function keyPressed() {
   // Das Kabelziehen abbrechen bzw. Kabel-Links entfernen mit STRG(keyCode 17)
@@ -204,10 +162,22 @@ function keyPressed() {
   }
 }
 
+// ********************************
+// Mausevents nach der Auslösungsreihenfolge sortiert.
+// ********************************
+
+/**
+ * Wird ausgelöst, wenn ein Maus Button nach unten gedrückt wird
+ */
+function mousePressed(){
+  console.log("MousePressed");
+}
+
 /**
  * Wird ausgelöst, wenn ein Maus Button gedrückt gehalten wird und die Maus dann bewegt.
  */
 function mouseDragged() {
+  console.log("MouseDragged");
   if (mouseButton === CENTER) {
     const dx = mouseX - prevMouse.x;
     const dy = mouseY - prevMouse.y;
@@ -221,12 +191,8 @@ function mouseDragged() {
   }
 }
 
-/**
- * Wird ausgelöst, wenn das Fenster seine größe verändert, also auch wenn die Dev-Konsole aufgeht oder der Nutzer in den Vollbildmodus wechselt.
- */
-function windowResized() {
-  // Canvas Größe anpassen, wenn das Fenster verändert wird
-  resizeCanvas(windowWidth, windowHeight);
+function mouseReleased() {
+  console.log("MouseReleased");
 }
 
 /**
@@ -253,4 +219,54 @@ function mouseWheel(event) {
 
   // Verhindern, dass p5 das Standard-Scrolling ausführt
   return false;
+}
+
+/**
+ * Wird ausgeführt, wenn ein Vollständiger Maus Click ausgeführt worden ist(MousePressed -> MouseReleased -> MouseClicked)
+ * @returns None - Existiert nur um die Funktion frühzeitig abbrechen zu lassen
+ */
+function mouseClicked() {
+  console.log("MouseClicked");
+  if (mouseButton === LEFT) {
+    // Zuerst kontrollieren ob ein oben liegendes Element angeklickt worden ist.
+    for (let i = 0; i < elements.length && !currentCable; i++) {
+      if (elements.at(i).isClicked()) {
+        return;
+      }
+    }
+
+    // Dann die Platinen-Elemente
+    // Platinen Elemente werden geprüft, sub elemente wie connectoren werden in den jeweiligen update methoden weiterverarbeitet.
+    // Hier darf nicht auf !currentCable geprüft werden, da sonst die Prüfung der Pins nicht funktioniert(Diese sind Bestandteil der größeren Elemente).
+    for (let i = 0; i < platinElements.length; i++) {
+      if (platinElements.at(i).isClicked()) {
+        return;
+      }
+    }
+
+    // weitere Segmente dem Kabel hinzufügen
+    if (currentCable) {
+      currentCable.addLinks();
+    }
+
+    // Zum Schluss ob man versucht ein Kabel anzuklicken. Dies ist die Aufwendigste Berechnung.
+    // Schauen ob man grade versucht ein Kabel anzuklicken, diese sind nur an den "Ecken" zu packen.
+    // Dies wird nicht getan wenn man aktuell ein Kabel malt.
+    for (let i = 0; i < cables.length && !currentCable; i++) {
+      let cableLink = cables.at(i).nearCableLink();
+      if (cableLink) {
+        //TODO was soll mit dem Kabel geschehen wenn es ausgewählt worden ist.
+        console.log(cableLink);
+        return;
+      }
+    }
+  }
+}
+
+/**
+ * Wird ausgelöst, wenn das Fenster seine größe verändert, also auch wenn die Dev-Konsole aufgeht oder der Nutzer in den Vollbildmodus wechselt.
+ */
+function windowResized() {
+  // Canvas Größe anpassen, wenn das Fenster verändert wird
+  resizeCanvas(windowWidth, windowHeight);
 }
