@@ -2,9 +2,9 @@
  * Die Klasse LedArray welche 4x Pins beinhaltet, welche mit 4x LEDs verbunden sind.
  */
 class LedArray {
-  constructor(pos, colorSet = { on: colors.ledRedOn, off: colors.ledRedOff }) {
+  constructor(pos, color = colors.ledRed) {
     this.pos = pos;
-    this.colorSet = colorSet;
+    this.color = color;
     this.leds = [];
     this.connectors = [];
     for (let i = 0; i < 4; i++) {
@@ -15,7 +15,7 @@ class LedArray {
             this.pos.y + sizes.ledArray.yVersatz * i
           ),
           sizes.led.ledArray,
-          this.colorSet
+          this.color
         )
       );
       this.connectors.push(

@@ -9,6 +9,25 @@ let cables;
 let elements;
 
 /**
+ * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
+ * @param {*} Objekt die parameter als Objekt übergeben im Format {color:dieFarbe, lightness:dieLightness, trans:dieTrans} dabei sind Lightness und Transparence Optional.
+ * @returns
+ */
+function setHSLALightAndTrans({ color, lightness = -1, trans = -1 }) {
+  return color
+    .replace(
+      new RegExp(/(\d|0\.\d)(?=\))/),
+      trans !== -1 ? trans : color.match(new RegExp(/(\d|0\.\d)(?=\))/))[0]
+    )
+    .replace(
+      new RegExp(/(?<=%, )\d+(?=%,)/),
+      lightness !== -1
+        ? lightness
+        : color.match(new RegExp(/(?<=%, )\d+(?=%,)/))
+    );
+}
+
+/**
  * Findet die passende Schriftgröße für den gegebenen Bereich
  * @param {String} text Der Text welcher in den Bereich passen muss.
  * @param {number} maxWidth Die größe des Bereiches
@@ -112,14 +131,8 @@ function setup() {
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
     new LedArray(createVector(330, 200)),
-    new LedArray(createVector(330, 260), {
-      on: colors.ledYellowOn,
-      off: colors.ledYellowOff,
-    }),
-    new LedArray(createVector(330, 320), {
-      on: colors.ledGreenOn,
-      off: colors.ledGreenOff,
-    }),
+    new LedArray(createVector(330, 260), colors.ledYellow),
+    new LedArray(createVector(330, 320), colors.ledGreen),
     new Socket(createVector(240, 260), 24),
   ];
   elements = [
@@ -169,7 +182,7 @@ function keyPressed() {
 /**
  * Wird ausgelöst, wenn ein Maus Button nach unten gedrückt wird
  */
-function mousePressed(){
+function mousePressed() {
   console.log("MousePressed");
 }
 

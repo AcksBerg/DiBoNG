@@ -2,12 +2,7 @@
  * Die Klasse Kabel arbeitet zusammen mit den globalen Variablen currentCable und cables und ermöglicht das Zeichnen von Kabeln
  */
 class Cable {
-  constructor(
-    startPin,
-    links = [],
-    endPin = null,
-    color = { norm: colors.cableRed, trans: colors.cableRedTrans }
-  ) {
+  constructor(startPin, links = [], endPin = null, color = colors.cableRed) {
     this.startPin = startPin;
     this.links = links;
     this.endPin = endPin;
@@ -20,7 +15,7 @@ class Cable {
   show() {
     noFill();
     strokeWeight(strokeWeights.small);
-    stroke(this.color.norm);
+    stroke(this.color);
 
     let lastPos = this.startPin.pos;
 
@@ -41,7 +36,9 @@ class Cable {
           (e) => dist(e.x, e.y, pos.x, pos.y) < sizes.cable.minAbstand
         ).length > 0)
     ) {
-      stroke(this.color.trans);
+      stroke(
+        setHSLALightAndTrans({ color: this.color, trans: colors.cableTrans })
+      );
     }
     line(lastPos.x, lastPos.y, endPos.x, endPos.y);
   }

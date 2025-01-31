@@ -4,29 +4,24 @@ const getCssVariable = (varName) => {
     .trim();
 };
 
-// TODO schauen ob man die Trans-Colors auch errechnen kann.
 const colors = {
   background: getCssVariable("--background"),
   button: getCssVariable("--button"),
   outline: getCssVariable("--outline"),
-  ledRedOn: getCssVariable("--ledRedOn"),
-  ledRedOff: getCssVariable("--ledRedOff"),
-  ledGreenOn: getCssVariable("--ledGreenOn"),
-  ledGreenOff: getCssVariable("--ledGreenOff"),
-  ledYellowOn: getCssVariable("--ledYellowOn"),
-  ledYellowOff: getCssVariable("--ledYellowOff"),
+  ledRed: getCssVariable("--ledRed"),
+  ledGreen: getCssVariable("--ledGreen"),
+  ledYellow: getCssVariable("--ledYellow"),
   cableRed: getCssVariable("--cableRed"),
-  cableRedTrans: getCssVariable("--cableRedTrans"),
   cableYellow: getCssVariable("--cableYellow"),
-  cableYellowTrans: getCssVariable("--cableYellowTrans"),
   cableGreen: getCssVariable("--cableGreen"),
-  cableGreenTrans: getCssVariable("--cableGreenTrans"),
   cableBlue: getCssVariable("--cableBlue"),
-  cableBlueTrans: getCssVariable("--cableBlueTrans"),
   pin: getCssVariable("--pin"),
   silver: getCssVariable("--silver"),
   ic: getCssVariable("--ic"),
   panel: getCssVariable("--panel"),
+  ledOn:60,
+  ledOff:20,
+  cableTrans:0.3
 };
 
 const textSizes = {

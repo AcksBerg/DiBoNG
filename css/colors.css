@@ -1,23 +1,16 @@
 :root {
-  --background: hsl(216, 57%, 35%);
-  --button: hsl(236, 50%, 34%);
-  --outline: hsl(0, 2%, 79%);
-  --ledRedOn: hsl(0, 64%, 60%);
-  --ledRedOff: hsl(0, 64%, 20%);
-  --ledYellowOn: hsl(56, 64%, 60%);
-  --ledYellowOff: hsl(56, 64%, 20%);
-  --ledGreenOn: hsl(110, 64%, 60%);
-  --ledGreenOff: hsl(110, 64%, 20%);
-  --cableRed: hsl(0, 87%, 24%);
-  --cableRedTrans: hsla(0, 87%, 24%, 0.3);
-  --cableYellow: hsl(59, 87%, 24%);
-  --cableYellowTrans: hsl(59, 87%, 24%, 0.3);
-  --cableGreen: hsl(115, 87%, 24%);
-  --cableGreenTrans: hsl(115, 87%, 24%, 0.3);
-  --cableBlue: hsl(241, 87%, 24%);
-  --cableBlueTrans: hsl(241, 87%, 24%, 0.3);
-  --pin: hsl(41, 96%, 19%);
-  --silver: hsl(0, 0%, 75%);
-  --ic: hsl(0, 7%, 14%);
-  --panel: hsl(0, 0%, 29%);
+  --background: hsla(216, 57%, 35%, 1);
+  --button: hsla(236, 50%, 34%, 1);
+  --outline: hsla(0, 2%, 79%, 1);
+  --ledRed: hsla(0, 64%, 60%, 1);
+  --ledYellow: hsla(56, 64%, 60%, 1);
+  --ledGreen: hsla(110, 64%, 60%, 1);
+  --cableRed: hsla(0, 87%, 24%, 1);
+  --cableYellow: hsla(59, 87%, 24%, 1);
+  --cableGreen: hsla(115, 87%, 24%, 1);
+  --cableBlue: hsla(241, 87%, 24%, 1);
+  --pin: hsla(41, 96%, 19%, 1);
+  --silver: hsla(0, 0%, 75%, 1);
+  --ic: hsla(0, 7%, 14%, 1);
+  --panel: hsla(0, 0%, 29%, 1);
 }
