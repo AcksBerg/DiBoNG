@@ -7,6 +7,7 @@ let platinElements;
 let currentCable;
 let cables;
 let elements;
+let powerButton;
 
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
@@ -115,6 +116,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight, P2D);
   cables = [];
   currentCable = null;
+  powerButton = new PowerButton(createVector(400, 400));
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
   // In welchem Gebiet sich die Kamera bewegen kann.
   // Muss später an die Szene angepasst werden.
@@ -152,6 +154,8 @@ function draw() {
   push();
   translate(cam.x, cam.y);
   scale(zoom);
+  powerButton.show();
+
   [...platinElements, ...elements].forEach((elem) => {
     elem.show();
   });
@@ -241,7 +245,12 @@ function mouseWheel(event) {
 function mouseClicked() {
   console.log("MouseClicked");
   if (mouseButton === LEFT) {
-    // Zuerst kontrollieren ob ein oben liegendes Element angeklickt worden ist.
+    // Zuerst kontrollieren ob der PowerButton angeklickt worden ist.
+    if (powerButton.isClicked()) {
+      return;
+    }
+
+    // Dann kontrollieren ob ein oben liegendes Element angeklickt worden ist.
     for (let i = 0; i < elements.length && !currentCable; i++) {
       if (elements.at(i).isClicked()) {
         return;

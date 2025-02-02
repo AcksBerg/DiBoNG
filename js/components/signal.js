@@ -4,10 +4,12 @@
 class Signal {
   constructor(value) {
     this.visited = [];
+    // Logische UND-Verknüpfung mit dem Powerbutton um sicherzustellen,
+    // dass das alles auf aus gesetzt wird wenn der Powerbutton ausgeschaltet ist.
     if (typeof value === "boolean") {
-      this.value = value;
+      this.value = value && powerButton.active;
     } else {
-      this.value = value.active;
+      this.value = value.active && powerButton.active;
       this.visit(value);
     }
   }

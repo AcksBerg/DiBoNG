@@ -19,9 +19,9 @@ const colors = {
   silver: getCssVariable("--silver"),
   ic: getCssVariable("--ic"),
   panel: getCssVariable("--panel"),
-  ledOn:60,
-  ledOff:20,
-  cableTrans:0.3
+  ledOn: 60,
+  ledOff: 20,
+  cableTrans: 0.3,
 };
 
 const textSizes = {
@@ -62,5 +62,12 @@ const sizes = {
   },
   cable: {
     minAbstand: 15,
+  },
+  powerButton: {
+    mainsDisplacement: 2,
+    width: 20,
+    height: 40,
+    border: 2,
+    circle: 5,
   },
 };
