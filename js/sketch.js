@@ -8,6 +8,7 @@ let currentCable;
 let cables;
 let elements;
 let powerButton;
+let id_obj = []; // array für die pin-id zuodnung
 
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
