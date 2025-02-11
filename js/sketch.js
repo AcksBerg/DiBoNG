@@ -9,6 +9,7 @@ let cables;
 let elements;
 let powerButton;
 let id_obj = []; // array für die pin-id zuodnung
+let menu;
 
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
@@ -143,6 +144,7 @@ function setup() {
     new Ic(createVector(380, 250), 4, "IC4321"),
     new Ic(createVector(380, 275), 7, "IC4444"),
   ];
+  menu = new Menu(createVector(20, 20)); // Menü erstellen
 }
 
 /**
@@ -166,8 +168,9 @@ function draw() {
     .forEach((cable) => {
       cable.show();
     });
-
-  pop();
+    pop()
+    menu.show()
+;
 }
 
 /**
@@ -248,6 +251,9 @@ function mouseClicked() {
   if (mouseButton === LEFT) {
     // Zuerst kontrollieren ob der PowerButton angeklickt worden ist.
     if (powerButton.isClicked()) {
+      return;
+    }    
+    if (menu.isClicked()) {
       return;
     }
 

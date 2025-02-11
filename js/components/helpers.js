@@ -70,4 +70,8 @@ const sizes = {
     border: 2,
     circle: 5,
   },
+  menu:{
+    width: 20,
+    height: 20,
+  }
 };
