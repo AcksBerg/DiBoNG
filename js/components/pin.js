@@ -2,7 +2,7 @@
  * Ein Pin der als Circle/Rect/Plug dagestellt werden kann, aber immer die gleiche funktion beinhaltet.
  * Die Klasse dient immer als Connector für Kabel und um Signale weiterzuleiten.
  */
-let pin_id = 0 //zähler der als pin id fungiert
+
 class Pin {
   constructor(pos, type = "circle") {
     

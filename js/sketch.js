@@ -10,6 +10,7 @@ let elements;
 let powerButton;
 let id_obj = []; // array für die pin-id zuodnung
 let menu;
+let pin_id = 0 //zähler der als pin id fungiert
 
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
