@@ -12,6 +12,9 @@ let id_obj = []; // array für die pin-id zuodnung
 let menu;
 let pin_id = 0 //zähler der als pin id fungiert
 
+window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert
+  return "really wanna reload, bruv?";
+}
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
  * @param {*} Objekt die parameter als Objekt übergeben im Format {color:dieFarbe, lightness:dieLightness, trans:dieTrans} dabei sind Lightness und Transparence Optional.
