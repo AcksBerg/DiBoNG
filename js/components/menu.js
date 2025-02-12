@@ -41,10 +41,10 @@ class Menu {
           text(this.options[i], this.pos.x + 10, this.pos.y + this.size.y + 30 + i * 30);
         }noFill();
         stroke(255, 0, 0, 150);
-        for (let i = 0; i < this.options.length; i++) {
-          let yStart = this.pos.y + this.size.y +   i * 30;
-          rect(this.pos.x, yStart, 110, 30);
-        }
+        // for (let i = 0; i < this.options.length; i++) {
+        //   let yStart = this.pos.y + this.size.y +   i * 30;
+        //   rect(this.pos.x, yStart, 110, 30);
+        // }
       }
       
 
