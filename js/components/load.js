@@ -1,8 +1,4 @@
 class Load {
-  // beim laden muss man noch den json als string mitr angeben.
-  // TODO: load mit file implementieren
-
-//   TODO: beim laden müssen die "links" der kabel neu angelegt werden und auch so ghespeichert werden, das es geht.
   constructor() {
     this.fileInput = createFileInput(this.handleFile.bind(this));
     this.fileInput.elt.addEventListener("click", function (e) {
@@ -38,8 +34,9 @@ class Load {
       });
       console.log(this.start_pin, this.links, this.end_pin, this.color);
       cables.push(
-        new Cable(this.start_pin, this.links, this.end_pin, this.color).connectTo()
-      );      
+        new Cable(this.start_pin, this.links, this.end_pin, this.color));
+        this.start_pin.connect(this.end_pin);
+        this.end_pin.connect(this.start_pin);
     });
   }
 }

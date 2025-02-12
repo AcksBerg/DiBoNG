@@ -1,6 +1,5 @@
+
 class Save{
-    // handling: neues save anlegen und dann mit downlaod json die json datei runterladen
-    // TODO: in button auf website implementieren
 
 constructor(){
 
