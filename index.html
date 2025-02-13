@@ -6,7 +6,7 @@
 
     <title>P5-Tests</title>
 
-    <link rel="stylesheet" type="text/css" href="css/colors.css" />
+    <link rel="stylesheet" type="text/css" href="css/variables.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 
     <script src="libraries/p5.min.js"></script>
@@ -14,6 +14,18 @@
   </head>
 
   <body>
+    <nav>
+      <div class="dropdown">
+        <button class="dropdown-btn">Datei</button>
+        <div class="dropdown-content">
+          <button id="btn_datei_laden">Laden</button>
+          <button id="btn_datei_speichern">Speichern</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button id="btn_hilfe" class="dropdown-btn">Hilfe</button>
+      </div>
+    </nav>
     <!--
     TODO:
     Docstrings mit /** */ für alle Funktionen/Methoden implementieren
@@ -33,6 +45,7 @@
      -->
     <!-- TODO Elemente benötigen eine einzigartige ID um diese richtig Speichern zu können -->
     <script src="js/sketch.js" defer></script>
+    <script src="js/navbar.js" defer></script>
     <script src="js/components/helpers.js"></script>
     <script src="js/components/powerButton.js"></script>
     <script src="js/components/signal.js"></script>

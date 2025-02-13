@@ -10,28 +10,26 @@ let elements;
 let powerButton;
 let id_obj = []; // array für die pin-id zuodnung
 let menu;
-let pin_id = 0 //zähler der als pin id fungiert
+let pin_id = 0; //zähler der als pin id fungiert
 
-window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert
-  return "really wanna reload, bruv?";
-}
+// TODO für einen Release wie einkommentieren, zum Testen Problematisch
+// window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert
+//   return "really wanna reload, bruv?";
+// }
+
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
  * @param {*} Objekt die parameter als Objekt übergeben im Format {color:dieFarbe, lightness:dieLightness, trans:dieTrans} dabei sind Lightness und Transparence Optional.
  * @returns
  */
 function setHSLALightAndTrans({ color, lightness = -1, trans = -1 }) {
-  return color
-    .replace(
-      new RegExp(/(\d|0\.\d)(?=\))/),
-      trans !== -1 ? trans : color.match(new RegExp(/(\d|0\.\d)(?=\))/))[0]
-    )
-    .replace(
-      new RegExp(/(?<=%, )\d+(?=%,)/),
-      lightness !== -1
-        ? lightness
-        : color.match(new RegExp(/(?<=%, )\d+(?=%,)/))
-    );
+  return color.replace(
+    /(\d+)%\s*,\s*(\d+)%\s*,\s*([\d.]+)\)/,
+    (_, h, s, a) =>
+      `${h}%, ${lightness !== -1 ? lightness : s}%, ${
+        trans !== -1 ? trans : a
+      })`
+  );
 }
 
 /**
@@ -119,7 +117,11 @@ function setup() {
   setFrameRate(30);
   angleMode("degrees");
   textFont("Consolas");
-  createCanvas(windowWidth, windowHeight, P2D);
+  createCanvas(
+    windowWidth,
+    windowHeight - getCssNumberVariable("--height"),
+    P2D
+  );
   cables = [];
   currentCable = null;
   powerButton = new PowerButton(createVector(400, 400));
@@ -148,7 +150,6 @@ function setup() {
     new Ic(createVector(380, 250), 4, "IC4321"),
     new Ic(createVector(380, 275), 7, "IC4444"),
   ];
-  menu = new Menu(createVector(20, 20)); // Menü erstellen
 }
 
 /**
@@ -172,9 +173,7 @@ function draw() {
     .forEach((cable) => {
       cable.show();
     });
-    pop()
-    menu.show()
-;
+  pop();
 }
 
 /**
@@ -256,9 +255,6 @@ function mouseClicked() {
     // Zuerst kontrollieren ob der PowerButton angeklickt worden ist.
     if (powerButton.isClicked()) {
       return;
-    }    
-    if (menu.isClicked()) {
-      return;
     }
 
     // Dann kontrollieren ob ein oben liegendes Element angeklickt worden ist.
@@ -301,5 +297,5 @@ function mouseClicked() {
  */
 function windowResized() {
   // Canvas Größe anpassen, wenn das Fenster verändert wird
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight - getCssNumberVariable("--height"));
 }

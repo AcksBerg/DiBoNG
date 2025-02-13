@@ -1,8 +1,67 @@
-html, body {
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Consolas";
 }
+
 
 canvas {
   display: block;
+  z-index: -1;
+}
+
+nav {
+  display: flex;
+  position: relative;
+  height: var(--height);
+  background-color: var(--panel);
+  box-shadow: 0px 2px 6px 3px var(--ic);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-btn {
+  text-align: center;
+  background-color: var(--ic);
+  color: var(--outline);
+  padding: 4px;
+  /* padding-left: 20px; */
+  width: 80px;
+  height: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px var(--ic);
+  z-index: 1;
+}
+
+.dropdown-content button{
+  width: 100%;
+  height: var(--height);
+  background-color: var(--ic);
+  color: var(--outline);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.dropdown:hover .dropdown-btn, .dropdown button:hover{
+  background-color: var(--panel);
 }
