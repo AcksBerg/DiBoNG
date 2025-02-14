@@ -65,3 +65,45 @@ nav {
 .dropdown:hover .dropdown-btn, .dropdown button:hover{
   background-color: var(--panel);
 }
+
+#help{
+  display: none;
+  position: absolute;
+  left:0;
+  right: 0;
+  top: 10%;
+  margin-inline: auto;
+  width: 300px;
+  background-color: red;
+  color: var(--outline);
+  background-color: var(--panel);
+  box-shadow: 0px 8px 16px 0px var(--ic);
+}
+
+#help header{
+  background-color: var(--ic);
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 30px;
+}
+
+#help article{
+  padding: 10px 20px;
+}
+
+#help hr{
+  border: 2px solid var(--ic);
+}
+
+#help button{
+  display: block;
+  background-color: var(--ic);
+  color: var(--outline);
+  border: none;
+  padding: 5px;
+  margin: 5px auto;
+}
+
+#help button:hover{
+  background-color: var(--panel);
+}
