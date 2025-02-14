@@ -21,6 +21,15 @@ document
 
 // Hilfe
 document.querySelector("#btn_hilfe").addEventListener("click", (e) => {
-  console.log("Hilfe Fenster Aufrufen");
+  document.querySelector("#help").style.display = "block";
+  e.stopPropagation();
+});
+
+document.querySelector("#help").addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+
+document.querySelector("#help button").addEventListener("click", (e) => {
+  document.querySelector("#help").style.display = "none";
   e.stopPropagation();
 });
