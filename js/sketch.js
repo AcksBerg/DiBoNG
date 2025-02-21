@@ -2,11 +2,15 @@ let cam; // Kamera-Position
 let camBounds;
 let prevMouse; // Vorherige Mausposition
 let zoom = 2; // Zoom-Faktor
-let debug;
-let platinElements;
-let currentCable;
-let cables;
-let elements;
+let debug = true;
+let platinElements = [];
+let platinElementsInput = [];
+let platinElementsOutput = [];
+let platinElementsSocket = [];
+let currentCable = null;
+let currentElement = null;
+let cables = [];
+let elements = [];
 let powerButton;
 
 /**
@@ -114,8 +118,6 @@ function setup() {
   angleMode("degrees");
   textFont("Consolas");
   createCanvas(windowWidth, windowHeight, P2D);
-  cables = [];
-  currentCable = null;
   powerButton = new PowerButton(createVector(400, 400));
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
   // In welchem Gebiet sich die Kamera bewegen kann.
@@ -128,14 +130,20 @@ function setup() {
   };
   cam = createVector(-170, -317);
   prevMouse = createVector(0, 0);
-  debug = true;
-  platinElements = [
+  platinElementsInput = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
     new LedArray(createVector(330, 200)),
+  ];
+  platinElementsOutput = [
     new LedArray(createVector(330, 260), colors.ledYellow),
     new LedArray(createVector(330, 320), colors.ledGreen),
-    new Socket(createVector(240, 260), 24),
+  ];
+  platinElementsSocket = [new Socket(createVector(240, 260), 24)];
+  platinElements = [
+    ...platinElementsInput,
+    ...platinElementsOutput,
+    ...platinElementsSocket,
   ];
   elements = [
     new Ic(createVector(360, 250), 12, "IC1234"),
@@ -154,16 +162,11 @@ function draw() {
   push();
   translate(cam.x, cam.y);
   scale(zoom);
-  powerButton.show();
 
-  [...platinElements, ...elements].forEach((elem) => {
-    elem.show();
-  });
-
-  [...cables, currentCable]
-    .filter((e) => e !== null)
-    .forEach((cable) => {
-      cable.show();
+  [powerButton, ...platinElements, ...elements, ...cables, currentCable]
+    .filter((elem) => elem !== null)
+    .forEach((elem) => {
+      elem.show();
     });
 
   pop();
@@ -188,6 +191,19 @@ function keyPressed() {
  */
 function mousePressed() {
   console.log("MousePressed");
+  for (let i = 0; i < elements.length && !currentElement; i++) {
+    // TODO Verbindung mit dem Sockel Lösen wenn eine bestanden hat.
+    // TODO Nur Lösen wenn der Sockel den Hebel oben hat.
+    if (elements.at(i).isClicked()) {
+      currentElement = { elem: elements.at(i) };
+      currentElement = {
+        ...currentElement,
+        offset: getWorldMousePos().sub(
+          currentElement.elem.connectorsPlug.at(0).pos
+        ),
+      };
+    }
+  }
 }
 
 /**
@@ -206,10 +222,53 @@ function mouseDragged() {
     // cam.x = constrain(cam.x, camBounds.min_x, camBounds.max_x);
     // cam.y = constrain(cam.y, camBounds.min_y, camBounds.max_y);
   }
+  if (mouseButton === LEFT && currentElement) {
+    currentElement.elem.move(currentElement.offset);
+  }
 }
 
 function mouseReleased() {
   console.log("MouseReleased");
+  if (currentElement) {
+    for (let i = 0; i < platinElementsSocket.length; i++) {
+      // Wurde der IC über Sockel-Konntektoren (Rect) losgelassen, falls ja, prüfe ob die Pins überlappen.
+      if (platinElementsSocket.at(i).isClicked(currentElement.elem)) {
+        for (
+          let j = 0;
+          j < platinElementsSocket.at(i).connectorsRect.length;
+          j += 2
+        ) {
+          if (
+            platinElementsSocket.at(i).connectorsRect.at(j).pos.x -
+              sizes.pin.plug_breite <
+              currentElement.elem.connectorsPlug.at(0).pos.x &&
+            currentElement.elem.connectorsPlug.at(0).pos.x <
+              platinElementsSocket.at(i).connectorsRect.at(j).pos.x +
+                sizes.pin.rect &&
+            platinElementsSocket.at(i).connectorsRect.at(j).pos.y -
+              sizes.pin.plug_breite <
+              currentElement.elem.connectorsPlug.at(0).pos.y &&
+            currentElement.elem.connectorsPlug.at(0).pos.y <
+              platinElementsSocket.at(i).connectorsRect.at(j).pos.y +
+                sizes.pin.rect_versatz * 2
+          ) {
+            // Den IC Ausrichten und mit dem Sockel verbinden
+            // TODO kontrollieren ob einer der Sockel-Pins schon eine Verbindung hat.
+            currentElement.elem.move(
+              createVector(0, 0).add(),
+              platinElementsSocket.at(i).connectorsRect.at(j)
+            );
+            for(let k=0; k<currentElement.elem.connectorsPlug.length;k++){
+              currentElement.elem.connectorsPlug.at(k).connect(platinElementsSocket.at(i).connectorsRect.at(j+k));
+              platinElementsSocket.at(i).connectorsRect.at(j+k).connect(currentElement.elem.connectorsPlug.at(k));
+            }
+            break;
+          }
+        }
+      }
+    }
+    currentElement = null;
+  }
 }
 
 /**
@@ -218,7 +277,7 @@ function mouseReleased() {
  * @returns false - damit nicht die Standard Scrolling funktionen ausgeführt werden
  */
 function mouseWheel(event) {
-  console.log("mouse");
+  console.log("mouseWheel");
   // Berechnet die Weltkoordinaten der Maus mit der Transformation durch Kamera-Bewegung und Zoom.
   let worldMouseX = (mouseX - cam.x) / zoom;
   let worldMouseY = (mouseY - cam.y) / zoom;

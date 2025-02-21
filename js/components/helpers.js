@@ -41,6 +41,8 @@ const sizes = {
     circle: 4,
     rect: 8,
     rect_versatz: 1,
+    plug_rundung: 1,
+    plug_breite: 3,
   },
   led: {
     btn: 4,

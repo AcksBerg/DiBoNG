@@ -139,7 +139,7 @@ class Socket {
     });
   }
 
-  isClicked() {
+  isClicked(ic) {
     // Prüfen ob überhaupt der Sockel geklickt worden ist. Falls nicht update verlassen
     if (
       !inRect(
@@ -155,6 +155,20 @@ class Socket {
       )
     ) {
       return false;
+    }
+    // Wird aktuell ein IC gezogen/Übergeben?
+    if (ic !== undefined) {
+      // Ist der IC mit allen Konnectoren über den Konnektoren vom Sockel und ist der Hebel geöffnet?
+      // In Rect kann nicht genutzt werden, weil es nur die Maus-Koordinaten vergleicht, hier sind aber zwei Rechtecke zu vergleichen.
+      return (
+        !this.closed &&
+        ic.connectorsPlug.at(0).pos.x >= this.connectorsRect.at(0).pos.x &&
+        ic.connectorsPlug.at(1).pos.x <=
+          this.connectorsRect.at(1).pos.x + sizes.pin.rect &&
+        ic.connectorsPlug.at(0).pos.y >= this.connectorsRect.at(0).pos.y &&
+        ic.connectorsPlug.at(-1).pos.y <=
+          this.connectorsRect.at(-1).pos.y + sizes.pin.rect_versatz * 2
+      );
     }
     // Return nach jedem treffer da mit einem klick nur ein Element getroffen werden kann.
     // Prüfen ob der Hebel getroffen worden ist.

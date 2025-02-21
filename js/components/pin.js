@@ -33,9 +33,9 @@ class Pin {
       rect(
         this.pos.x - sizes.pin.rect_versatz * 1.5,
         this.pos.y - sizes.pin.rect_versatz * 1.5,
-        sizes.pin.rect_versatz * 3,
-        sizes.pin.rect_versatz * 3,
-        1
+        sizes.pin.plug_breite,
+        sizes.pin.plug_breite,
+        sizes.pin.plug_rundung
       );
     }
   }

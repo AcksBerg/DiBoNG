@@ -39,7 +39,7 @@ class Ic {
       this.connectorsPlug.at(-2).connect(this.connectorsPlug.at(-1));
     }
   }
-  
+
   addGate(gate, pin_indexes) {
     // input pins verbinden
     for (let index = 0; index < pin_indexes.length - 1; index++) {
@@ -115,10 +115,35 @@ class Ic {
     ) {
       return false;
     }
-    // TODO was passiert wenn man ein IC angeklickt hat.
-    // TODO IC verschiebbar machen und das man es auf ein Sockel setzen kann, bzw. wenn das Sockel geschlossen ist das man es nicht bewegen kann.
-    console.log("IC wurde angeklickt");
     return true;
+  }
+
+  move(offset, target) {
+    if (target !== undefined) {
+      this.pos = createVector(target.pos.x,target.pos.y).add(createVector(sizes.pin.rect/2,-sizes.pin.plug_breite/2));
+    } else {
+      this.pos = getWorldMousePos().sub(offset);
+    }
+    this.movePins();
+  }
+
+  movePins() {
+    for (let i = 0; i < this.connectorsPlug.length; i += 2) {
+      this.connectorsPlug.at(i).pos = createVector(
+        this.pos.x,
+        this.pos.y +
+          sizes.socket.border / 2 +
+          sizes.pin.rect_versatz +
+          ((sizes.socket.yVersatz / 2) * i) / 2
+      );
+      this.connectorsPlug.at(i + 1).pos = createVector(
+        this.pos.x + sizes.socket.xVersatz,
+        this.pos.y +
+          sizes.socket.border / 2 +
+          sizes.pin.rect_versatz +
+          ((sizes.socket.yVersatz / 2) * i) / 2
+      );
+    }
   }
 
   update() {}
