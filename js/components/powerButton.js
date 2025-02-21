@@ -5,7 +5,7 @@
 class PowerButton {
   constructor(pos) {
     this.pos = pos;
-    this.active = false;
+    this.active = true;
   }
 
   /**

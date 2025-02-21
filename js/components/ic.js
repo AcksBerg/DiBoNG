@@ -147,13 +147,25 @@ class Ic {
       );
     }
   }
+  
   connectWithSocketAtPin(socket, at) {
-    // TODO kontrollieren ob einer der Sockel-Pins schon eine Verbindung hat.
+    // Falls einer der Pins schon eine Verbindung mit einem Plug hat kann er nicht Verbunden werden.
+    if (
+      socket.connectorsRect
+        .slice(at, at + this.connectorsPlug.length)
+        .filter(
+          (pin) =>
+            pin.connected.filter((con) => con.type === "plug").length === 0
+        ).length !== this.connectorsPlug.length
+    ) {
+      return false;
+    }
     this.move(createVector(0, 0).add(), socket.connectorsRect.at(at));
     for (let k = 0; k < this.connectorsPlug.length; k++) {
       this.connectorsPlug.at(k).connect(socket.connectorsRect.at(at + k));
       socket.connectorsRect.at(at + k).connect(this.connectorsPlug.at(k));
     }
+    return true;
   }
   update() {}
 }

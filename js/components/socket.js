@@ -5,7 +5,7 @@ class Socket {
     }
     this.pos = pos;
     this.doubleH = doubleH;
-    this.closed = true;
+    this.closed = false;
     this.connectorsCircle = [];
     this.connectorsRect = [];
     this.pinCount = pinCount;
