@@ -1,24 +1,30 @@
-const getCssVariable = (varName) => {
+const getCssColorVariable = (varName) => {
   return getComputedStyle(document.documentElement)
     .getPropertyValue(varName)
     .trim();
 };
 
+const getCssNumberVariable = (varName) => {
+  return getComputedStyle(document.documentElement)
+  .getPropertyValue(varName)
+  .trim().replace(/[a-zA-Z]+/,"");
+};
+
 const colors = {
-  background: getCssVariable("--background"),
-  button: getCssVariable("--button"),
-  outline: getCssVariable("--outline"),
-  ledRed: getCssVariable("--ledRed"),
-  ledGreen: getCssVariable("--ledGreen"),
-  ledYellow: getCssVariable("--ledYellow"),
-  cableRed: getCssVariable("--cableRed"),
-  cableYellow: getCssVariable("--cableYellow"),
-  cableGreen: getCssVariable("--cableGreen"),
-  cableBlue: getCssVariable("--cableBlue"),
-  pin: getCssVariable("--pin"),
-  silver: getCssVariable("--silver"),
-  ic: getCssVariable("--ic"),
-  panel: getCssVariable("--panel"),
+  background: getCssColorVariable("--background"),
+  button: getCssColorVariable("--button"),
+  outline: getCssColorVariable("--outline"),
+  ledRed: getCssColorVariable("--ledRed"),
+  ledGreen: getCssColorVariable("--ledGreen"),
+  ledYellow: getCssColorVariable("--ledYellow"),
+  cableRed: getCssColorVariable("--cableRed"),
+  cableYellow: getCssColorVariable("--cableYellow"),
+  cableGreen: getCssColorVariable("--cableGreen"),
+  cableBlue: getCssColorVariable("--cableBlue"),
+  pin: getCssColorVariable("--pin"),
+  silver: getCssColorVariable("--silver"),
+  ic: getCssColorVariable("--ic"),
+  panel: getCssColorVariable("--panel"),
   ledOn: 60,
   ledOff: 20,
   cableTrans: 0.3,
@@ -71,5 +77,9 @@ const sizes = {
     height: 40,
     border: 2,
     circle: 5,
+  },
+  menu: {
+    width: 20,
+    height: 20,
   },
 };

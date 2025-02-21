@@ -2,12 +2,17 @@
  * Ein Pin der als Circle/Rect/Plug dagestellt werden kann, aber immer die gleiche funktion beinhaltet.
  * Die Klasse dient immer als Connector für Kabel und um Signale weiterzuleiten.
  */
+
 class Pin {
   constructor(pos, type = "circle") {
+    
+    this.id = pin_id;
+    pin_id ++
     this.pos = pos;
     this.connected = [];
     this.active = false;
     this.type = type;
+    id_obj.push([this,this.id])  
   }
 
   /**
