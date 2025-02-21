@@ -120,7 +120,9 @@ class Ic {
 
   move(offset, target) {
     if (target !== undefined) {
-      this.pos = createVector(target.pos.x,target.pos.y).add(createVector(sizes.pin.rect/2,-sizes.pin.plug_breite/2));
+      this.pos = createVector(target.pos.x, target.pos.y).add(
+        createVector(sizes.pin.rect / 2, -sizes.pin.plug_breite / 2)
+      );
     } else {
       this.pos = getWorldMousePos().sub(offset);
     }
@@ -145,6 +147,13 @@ class Ic {
       );
     }
   }
-
+  connectWithSocketAtPin(socket, at) {
+    // TODO kontrollieren ob einer der Sockel-Pins schon eine Verbindung hat.
+    this.move(createVector(0, 0).add(), socket.connectorsRect.at(at));
+    for (let k = 0; k < this.connectorsPlug.length; k++) {
+      this.connectorsPlug.at(k).connect(socket.connectorsRect.at(at + k));
+      socket.connectorsRect.at(at + k).connect(this.connectorsPlug.at(k));
+    }
+  }
   update() {}
 }

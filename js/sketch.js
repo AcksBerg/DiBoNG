@@ -256,15 +256,10 @@ function mouseReleased() {
                 sizes.pin.rect_versatz * 2
           ) {
             // Den IC Ausrichten und mit dem Sockel verbinden
-            // TODO kontrollieren ob einer der Sockel-Pins schon eine Verbindung hat.
-            currentElement.elem.move(
-              createVector(0, 0).add(),
-              platinElementsSocket.at(i).connectorsRect.at(j)
+            currentElement.elem.connectWithSocketAtPin(
+              platinElementsSocket.at(i),
+              j
             );
-            for(let k=0; k<currentElement.elem.connectorsPlug.length;k++){
-              currentElement.elem.connectorsPlug.at(k).connect(platinElementsSocket.at(i).connectorsRect.at(j+k));
-              platinElementsSocket.at(i).connectorsRect.at(j+k).connect(currentElement.elem.connectorsPlug.at(k));
-            }
             break;
           }
         }
