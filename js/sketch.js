@@ -200,10 +200,12 @@ function mousePressed() {
       currentElement.elem.disconnectFromSocket();
       currentElement = {
         ...currentElement,
-        offset: getWorldMousePos().sub(
-          currentElement.elem.pos
-        ),
+        offset: getWorldMousePos().sub(currentElement.elem.pos),
       };
+      elements = [
+        ...elements.filter((e) => e !== currentElement.elem),
+        currentElement.elem,
+      ];
     }
   }
 }
@@ -259,6 +261,17 @@ function mouseReleased() {
               platinElementsSocket.at(i),
               j
             );
+            // Das Elements Array neu sortieren, damit Verbundene ICs unterhalb von nicht verbundenen ICs sind.
+            elements.sort((a, b) => {
+              const aHasSocket = a.socket !== null;
+              const bHasSocket = b.socket !== null;
+              // A und B haben oder haben keinen Socket, keine Veränderung
+              if (aHasSocket === bHasSocket) return 0;
+              // A hat einen Socket und B hat keinen Socket, A kommt vor B
+              if (aHasSocket && !bHasSocket) return -1;
+              // B hat einen Socket und A hat keinen Socket, B kommt vor A
+              return 1;
+            });
             break;
           }
         }
