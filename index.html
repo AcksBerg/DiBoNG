@@ -29,17 +29,35 @@
     <section id="hilfe_popup">
       <header>Die Überschrift</header>
       <article>Der Hilfe Text</article>
-      <hr>
+      <hr />
       <button>Schließen</button>
     </section>
 
     <section id="burgermenu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="19mm" height="16mm" viewBox="0 0 19.000454 16.000122">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="19mm"
+        height="16mm"
+        viewBox="0 0 19.000454 16.000122"
+      >
         <g transform="translate(-52.355934,-41.368765)">
-          <path class="outline" 
-                d="m 54.35662,41.868762 v 2.489254 h -0.500228 c -0.554,0 -1.000456,0.445939 -1.000456,0.999939 v 0.999939 c 0,0.554 0.446456,0.999939 1.000456,0.999939 h 0.500228 v 4.011125 h -0.500228 c -0.554,0 -1.000456,0.445938 -1.000456,0.999938 v 0.999939 c 0,0.554 0.446456,0.999939 1.000456,0.999939 h 0.500228 v 2.500106 h 14.999601 v -2.500106 h 0.499711 c 0.554,0 1.000456,-0.445939 1.000456,-0.999939 v -0.999939 c 0,-0.554 -0.446456,-0.999938 -1.000456,-0.999938 h -0.499711 v -4.011125 h 0.499711 c 0.554,0 1.000456,-0.445939 1.000456,-0.999939 v -0.999939 c 0,-0.554 -0.446456,-0.999939 -1.000456,-0.999939 h -0.499711 v -2.489254 h -5.499923 a 2,2 0 0 1 -1.999878,2.000395 2,2 0 0 1 -1.999878,-2.000395 z"/>
+          <path
+            class="outline"
+            d="m 54.35662,41.868762 v 2.489254 h -0.500228 c -0.554,0 -1.000456,0.445939 -1.000456,0.999939 v 0.999939 c 0,0.554 0.446456,0.999939 1.000456,0.999939 h 0.500228 v 4.011125 h -0.500228 c -0.554,0 -1.000456,0.445938 -1.000456,0.999938 v 0.999939 c 0,0.554 0.446456,0.999939 1.000456,0.999939 h 0.500228 v 2.500106 h 14.999601 v -2.500106 h 0.499711 c 0.554,0 1.000456,-0.445939 1.000456,-0.999939 v -0.999939 c 0,-0.554 -0.446456,-0.999938 -1.000456,-0.999938 h -0.499711 v -4.011125 h 0.499711 c 0.554,0 1.000456,-0.445939 1.000456,-0.999939 v -0.999939 c 0,-0.554 -0.446456,-0.999939 -1.000456,-0.999939 h -0.499711 v -2.489254 h -5.499923 a 2,2 0 0 1 -1.999878,2.000395 2,2 0 0 1 -1.999878,-2.000395 z"
+          />
         </g>
-      </svg>      
+      </svg>
+      <div id="burgermenu-content">
+        <div class="ueberschrift">Kabelfarbe wählen:</div>
+        <div class="container">
+          <div class="auswahl rot"></div>
+          <div class="auswahl gruen"></div>
+          <div class="auswahl blau"></div>
+          <div class="auswahl weiss"></div>
+          <div class="auswahl braun"></div>
+          <div class="auswahl gelb"></div>
+        </div>
+      </div>
     </section>
     <!--
     TODO:
@@ -74,6 +92,5 @@
     <script src="js/components/save.js"></script>
     <script src="js/components/load.js"></script>
     <script src="js/components/menu.js"></script>
-
   </body>
 </html>

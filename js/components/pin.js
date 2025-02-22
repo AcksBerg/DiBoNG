@@ -78,7 +78,7 @@ class Pin {
 
     if (clicked && this.type === "circle") {
       if (currentCable === null) {
-        currentCable = new Cable(this);
+        currentCable = new Cable(this, [], null, cableColor);
       } else {
         if (currentCable.connectTo(this)) {
           cables.push(currentCable);

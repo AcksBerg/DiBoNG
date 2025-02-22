@@ -9,6 +9,8 @@
   --cableYellow: hsla(59, 87%, 24%, 1);
   --cableGreen: hsla(115, 87%, 24%, 1);
   --cableBlue: hsla(241, 87%, 24%, 1);
+  --cableWhite: rgb(217, 252, 254);
+  --cableBrown: rgb(66, 51, 1);
   --pin: hsla(41, 96%, 19%, 1);
   --silver: hsla(0, 0%, 75%, 1);
   --ic: hsla(0, 7%, 14%, 1);

@@ -15,6 +15,7 @@ let powerButton;
 let id_obj = []; // array für die pin-id zuodnung
 let menu;
 let pin_id = 0; //zähler der als pin id fungiert
+let cableColor = getCssColorVariable("--cableRed");
 
 // TODO für einen Release wie einkommentieren, zum Testen Problematisch
 // window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert

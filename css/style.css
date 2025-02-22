@@ -5,7 +5,6 @@
   font-family: "Consolas";
 }
 
-
 canvas {
   display: block;
   z-index: -1;
@@ -45,13 +44,12 @@ nav {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
   min-width: 140px;
   box-shadow: 0px 8px 16px 0px var(--ic);
-  z-index: 1;
+  z-index: 2;
 }
 
-.dropdown-content button{
+.dropdown-content button {
   width: 100%;
   height: var(--height);
   background-color: var(--ic);
@@ -62,14 +60,15 @@ nav {
   padding-left: 20px;
 }
 
-.dropdown:hover .dropdown-btn, .dropdown button:hover{
+.dropdown:hover .dropdown-btn,
+.dropdown button:hover {
   background-color: var(--panel);
 }
 
-#hilfe_popup{
+#hilfe_popup {
   display: none;
   position: absolute;
-  left:0;
+  left: 0;
   right: 0;
   top: 10%;
   margin-inline: auto;
@@ -80,22 +79,22 @@ nav {
   box-shadow: 0px 8px 16px 0px var(--ic);
 }
 
-#hilfe_popup header{
+#hilfe_popup header {
   background-color: var(--ic);
   padding: 10px 20px;
   text-align: center;
   font-size: 30px;
 }
 
-#hilfe_popup article{
+#hilfe_popup article {
   padding: 10px 20px;
 }
 
-#hilfe_popup hr{
+#hilfe_popup hr {
   border: 2px solid var(--ic);
 }
 
-#hilfe_popup button{
+#hilfe_popup button {
   display: block;
   background-color: var(--ic);
   color: var(--outline);
@@ -104,7 +103,7 @@ nav {
   margin: 5px auto;
 }
 
-#hilfe_popup button:hover{
+#hilfe_popup button:hover {
   background-color: var(--panel);
 }
 
@@ -113,18 +112,18 @@ nav {
   width: 30px;
   height: 30px;
   background-color: var(--ic);
-  padding: 3px;
   top: 35px;
   left: 10px;
   box-shadow: 0px 8px 16px 0px var(--ic);
 }
 
-#burgermenu:hover{
+#burgermenu:hover {
   background-color: var(--panel);
 }
 
-#burgermenu svg{
+#burgermenu svg {
   transition: transform 0.3s ease;
+  padding: 3px;
   width: 100%;
   height: 100%;
 }
@@ -133,15 +132,84 @@ nav {
   transform: rotate(90deg);
 }
 
+#burgermenu-content {
+  display: none;
+  position: absolute;
+  color: var(--outline);
+  background-color: var(--ic);
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px var(--ic);
+  z-index: 1;
+  padding: 10px;
+  left: 0px;
+  top: 40px;
+}
+
+#burgermenu.rotated #burgermenu-content {
+  display: block;
+}
+
+#burgermenu-content .ueberschrift {
+}
+
+#burgermenu-content .rot {
+  background-color: var(--cableRed);
+}
+
+#burgermenu-content .gruen {
+  background-color: var(--cableGreen);
+}
+
+#burgermenu-content .gelb {
+  background-color: var(--cableYellow);
+}
+
+#burgermenu-content .blau {
+  background-color: var(--cableBlue);
+}
+
+#burgermenu-content .weiss {
+  background-color: var(--cableWhite);
+}
+
+#burgermenu-content .braun {
+  background-color: var(--cableBrown);
+}
+
+#burgermenu-content .container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#burgermenu-content .auswahl {
+  aspect-ratio: 1/1;
+  width: 30%;
+  margin: 2px 0;
+  border: 0px solid var(--ic);
+  transition: border 0.2s linear;
+}
+
+#burgermenu-content .auswahl:hover {
+  border: 2px solid var(--ic);
+}
+#burgermenu-content .ausgewaehlt:hover {
+  border: 4px solid var(--ic);
+}
+
+#burgermenu-content .ausgewaehlt {
+  border: red 2px solid;
+}
+
 .ic {
   fill: var(--outline);
-  fill-opacity:1;
-  stroke-width:0.264583;
+  fill-opacity: 1;
+  stroke-width: 0.264583;
 }
 .plug {
-  fill:var(--outline);
-  fill-opacity:1;
-  stroke-width:0.264583;
+  fill: var(--outline);
+  fill-opacity: 1;
+  stroke-width: 0.264583;
 }
 .outline {
   fill: none;
