@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18mm" height="15mm" viewBox="0 0 18 15">
+  <g transform="translate(-52.856138,-41.868763)">
+    <rect class="plug" x="67.85614" y="51.368999" width="3" height="3" rx="1" ry="1"/>
+    <rect class="plug" x="52.85614" y="51.368999" width="3" height="3" rx="1" ry="1"/>
+    <rect class="plug" x="67.85614" y="44.358002" width="3" height="3" rx="1" ry="1"/>
+    <rect class="plug" x="52.85614" y="44.358002" width="3" height="3" rx="1" ry="1"/>
+    <path class="ic" d="M54.356372,41.868762 V56.86888 H69.355973 V41.868762 h -5.499922 a 2,2 0 0 1 -1.999878,2.000395 2,2 0 0 1 -1.999878,-2.000395 z"/>
+  </g>
+</svg>
