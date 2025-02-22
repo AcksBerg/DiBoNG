@@ -195,8 +195,6 @@ function keyPressed() {
 function mousePressed() {
   console.log("MousePressed");
   for (let i = 0; i < elements.length && !currentElement; i++) {
-    // TODO Verbindung mit dem Sockel Lösen wenn eine bestanden hat.
-    // TODO Nur Lösen wenn der Sockel den Hebel oben hat.
     if (elements.at(i).isClicked()) {
       currentElement = { elem: elements.at(i) };
       currentElement.elem.disconnectFromSocket();

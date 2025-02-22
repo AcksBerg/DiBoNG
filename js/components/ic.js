@@ -9,6 +9,7 @@ class Ic {
     this.textSize = findFontSize(this.name, sizes.socket.xVersatz, 0.1);
     this.connectorsPlug = [];
     this.gates = [];
+    this.socket = null;
     for (let i = 0; i < this.rowCount; i++) {
       this.connectorsPlug.push(
         new Pin(
@@ -115,7 +116,8 @@ class Ic {
     ) {
       return false;
     }
-    return true;
+    
+    return !this.socket || !this.socket.closed;
   }
 
   move(offset, target) {
@@ -165,6 +167,7 @@ class Ic {
       this.connectorsPlug.at(k).connect(socket.connectorsRect.at(at + k));
       socket.connectorsRect.at(at + k).connect(this.connectorsPlug.at(k));
     }
+    this.socket = socket;
     return true;
   }
 
@@ -185,6 +188,7 @@ class Ic {
           pin_rect.disconnect(plug);
         });
     });
+    this.socket = null;
     return true;
   }
 
