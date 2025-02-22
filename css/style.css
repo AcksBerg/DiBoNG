@@ -149,9 +149,6 @@ nav {
   display: block;
 }
 
-#burgermenu-content .ueberschrift {
-}
-
 #burgermenu-content .rot {
   background-color: var(--cableRed);
 }
