@@ -1,4 +1,4 @@
-
+// TODO docstrings und kommentare @Morris
 class Load {
   constructor() {
     this.fileInput = createFileInput(this.handleFile.bind(this));

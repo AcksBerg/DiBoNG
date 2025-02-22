@@ -1,3 +1,4 @@
+// TODO docstring und kommentare @Morris
 class Menu {
   constructor(pos) {
     this.pos = pos;

@@ -1,4 +1,6 @@
-// Die Aktionen der Menüleiste
+/**
+ * Alle Funktionen und Events welche die Navbar betreffen.
+ */
 // Namensconverntion btn_reiter_aktion
 // Click auf Navbar unterbinden damit man nicht hinter das HTML Element Clicken kann
 const nav = document.querySelector("nav");

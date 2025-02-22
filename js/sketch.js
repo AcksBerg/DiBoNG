@@ -161,7 +161,7 @@ function setup() {
 }
 
 /**
- * Zuständig um das Canvas zu zeichnen.
+ * Zuständig um das Canvas zu zeichnen. Wird jeden Frame ausgeführt.
  */
 function draw() {
   background(colors.background);
@@ -195,6 +195,7 @@ function keyPressed() {
 
 /**
  * Wird ausgelöst, wenn ein Maus Button nach unten gedrückt wird
+ * @returns false - damit nicht die Standard Maus-Event ausgeführt wird.
  */
 function mousePressed() {
   console.log("MousePressed");
@@ -212,10 +213,12 @@ function mousePressed() {
       ];
     }
   }
+  return false;
 }
 
 /**
  * Wird ausgelöst, wenn ein Maus Button gedrückt gehalten wird und die Maus dann bewegt.
+ * @returns false - damit nicht die Standard Maus-Event ausgeführt wird.
  */
 function mouseDragged() {
   console.log("MouseDragged");
@@ -233,8 +236,13 @@ function mouseDragged() {
   if (mouseButton === LEFT && currentElement) {
     currentElement.elem.move(currentElement.offset);
   }
+  return false;
 }
 
+/**
+ * Wird ausgelöst, wenn ein Maus Button losgelassen wird.
+ * @returns false - damit nicht die Standard Maus-Event ausgeführt wird.
+ */
 function mouseReleased() {
   console.log("MouseReleased");
   if (currentElement) {
@@ -260,11 +268,12 @@ function mouseReleased() {
               platinElementsSocket.at(i).connectorsRect.at(j).pos.y +
                 sizes.pin.rect_versatz * 2
           ) {
-            // Den IC Ausrichten und mit dem Sockel verbinden
+            // Den IC Ausrichten und mit dem Sockel an dem ersten Überlappenden Pin verbinden
             currentElement.elem.connectWithSocketAtPin(
               platinElementsSocket.at(i),
               j
             );
+            
             // Das Elements Array neu sortieren, damit Verbundene ICs unterhalb von nicht verbundenen ICs sind.
             elements.sort((a, b) => {
               const aHasSocket = a.socket !== null;
@@ -283,6 +292,7 @@ function mouseReleased() {
     }
     currentElement = null;
   }
+  return false;
 }
 
 /**

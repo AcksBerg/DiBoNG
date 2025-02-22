@@ -1,15 +1,26 @@
+/**
+ * Holt sich die CSS-Farb-Variable mit dem angegebenen Namen.
+ * @param {*} varName Die CSS-Farb-Variable die geholt werden soll, im Format mit -- (z.B. --panel)
+ * @returns Die Farbe wie sie genutzt werden kann.
+ */
 const getCssColorVariable = (varName) => {
   return getComputedStyle(document.documentElement)
     .getPropertyValue(varName)
     .trim();
 };
 
+/**
+ * Holt sich die CSS-Zahl-Variable mit dem angegebenen Namen. Schneidet dabei mit RegEx zusätze wie px, mm und co. weg.
+ * @param {*} varName Die CSS-Zahl-Variable die geholt werden soll, im Format mit -- (z.B. --height)
+ * @returns Die Zahl wie sie genutzt werden kann.
+ */
 const getCssNumberVariable = (varName) => {
   return getComputedStyle(document.documentElement)
   .getPropertyValue(varName)
   .trim().replace(/[a-zA-Z]+/,"");
 };
 
+// Die Vordefinierten Farben und dazugehörige Werte wie Helligkeit und Transperenz gespeichert in hsla
 const colors = {
   background: getCssColorVariable("--background"),
   button: getCssColorVariable("--button"),
@@ -30,18 +41,21 @@ const colors = {
   cableTrans: 0.3,
 };
 
+// TextSizes die im Projekt zu Nutzen sind.
 const textSizes = {
   small: 6,
   medium: 12,
   large: 24,
 };
 
+// StrokeWeights die im Projekt zu Nutzen sind.
 const strokeWeights = {
   small: 0.5,
   medium: 1,
   large: 2,
 };
 
+// Die Verschienden Größen aus denen alle Objekte zusammengesetzt werden.
 const sizes = {
   pin: {
     circle: 4,

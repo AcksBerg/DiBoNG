@@ -102,6 +102,7 @@ class Cable {
 
   /**
    * Verbindet ein Kabel mit seinem Start und EndPin.
+   * @returns bool - true, Verbindung wurde hergestellt. false, Verbindung wurde nicht hergestellt.
    */
   connectTo(endPin) {
     if (endPin === this.startPin) {

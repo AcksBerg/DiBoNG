@@ -1,3 +1,7 @@
+/**
+ * Alle Funktionen und Events die das Burgermenü betreffen.
+ */
+
 const burger = document.querySelector("#burgermenu");
 burger.addEventListener("click", (e) => {
   burger.classList.toggle("rotated");

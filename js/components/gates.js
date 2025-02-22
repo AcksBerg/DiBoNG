@@ -1,3 +1,4 @@
+// TODO Kommentare und Docstring hinzufügen @Morris
 class Gate {
   constructor(input1 = null, input2 = null) {
     this.inputs = [new Pin(0, 0, "any"), new Pin(0, 0, "any")];

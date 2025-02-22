@@ -1,5 +1,5 @@
 /**
- * Ein Pin der als Circle/Rect/Plug dagestellt werden kann, aber immer die gleiche funktion beinhaltet.
+ * Ein Pin der als Circle(für Normale Verbinder auf dem DigiBoard)/Rect(Für Verbinder auf einem Sockel)/Plug(Für Verbinder an einem IC) dagestellt werden kann, aber immer die gleiche funktion beinhaltet.
  * Die Klasse dient immer als Connector für Kabel und um Signale weiterzuleiten.
  */
 

@@ -1,15 +1,18 @@
+/**
+ * Die Klasse Socket besteht aus einem Hebel und den Außenliegenden (Circle) und Innenliegenden Konnektoren(Pins)
+ */
 class Socket {
-  constructor(pos, pinCount = 24, doubleH = true) {
+  constructor(pos, pinCount = 24) {
     if (pinCount % 2 !== 0) {
       throw new Error("Die Pin-Anzahl des Sockels muss durch 2 Teilbar sein!");
     }
     this.pos = pos;
-    this.doubleH = doubleH;
     this.closed = false;
     this.connectorsCircle = [];
     this.connectorsRect = [];
     this.pinCount = pinCount;
     for (let i = 0; i < this.pinCount / 2; i++) {
+      //Linke Seite der Konnektoren
       this.connectorsCircle.push(
         new Pin(
           createVector(this.pos.x, this.pos.y + sizes.socket.yVersatz * i)
@@ -29,6 +32,8 @@ class Socket {
       // TODO Simulation so umsetzen das keine Schleifen entstehen siehe TODO Signal, wenn das implementiert ist sollte es keine schleifen geben können
       this.connectorsCircle.at(-1).connect(this.connectorsRect.at(-1));
       this.connectorsRect.at(-1).connect(this.connectorsCircle.at(-1));
+
+      // Rechte Seite der Konnenktoren
       this.connectorsCircle.push(
         new Pin(
           createVector(
@@ -54,6 +59,9 @@ class Socket {
     }
   }
 
+  /**
+   * Zeichnet alle Konnektoren, den Helbel abhängig seines Zustandes und die Verbinder zwischen den Konnektoren.
+   */
   show() {
     noFill();
     strokeWeight(strokeWeights.small);
@@ -139,6 +147,12 @@ class Socket {
     });
   }
 
+  /**
+   * Prüft ob die Maus über dem Sockel ist bzw. einem ihrer Elemente. Wenn ein IC übergeben wird, prüft er ob der IC passend über den Rect-Pins liegt zum Verbinden.
+   * @param {*} ic? Der IC welcher Optional übergeben werden kann.
+   * @returns bool - true = (ohne IC) Maus liegt über Connector oder Hebel. Beim Hebel wird hier direkt der Status des Hebels gesetzt. false = Maus liegt nicht über dem Sockel, seinen Pins oder seinem Hebel.
+   * @returns bool - true/false (Mit IC) Ob der IC über den Rect-Pins liegt.
+   */
   isClicked(ic) {
     // Prüfen ob überhaupt der Sockel geklickt worden ist. Falls nicht update verlassen
     if (
@@ -207,8 +221,6 @@ class Socket {
     // Die letzte reihe ist ebenfalls ausgeschlossen da der kleinste IC eine Größe von 4 hat (NOT).
     for (let i = 0; i < this.pinCount - 2 && !this.closed; i = i + 2) {
       if (this.connectorsRect.at(i).isClicked()) {
-        // TODO Click auf den RectConnector weiter verarbeiten.
-        console.log(this.connectorsRect.at(i));
         return true;
       }
     }
@@ -216,7 +228,6 @@ class Socket {
     // Prüfen ob die Circle Connectors getroffen worden sind.
     for (let i = 0; i < this.pinCount; i++) {
       if (this.connectorsCircle.at(i).isClicked()) {
-        console.log(this.connectorsCircle.at(i).pos);
         return true;
       }
     }

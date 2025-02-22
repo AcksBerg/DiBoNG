@@ -1,3 +1,6 @@
+/**
+ * Die Klasse IC beinhaltet sich selbst und die Verbundenen Pins vom Type Plug.
+ */
 class Ic {
   constructor(pos, rowCount, name) {
     if (rowCount <= 1) {
@@ -10,6 +13,8 @@ class Ic {
     this.connectorsPlug = [];
     this.gates = [];
     this.socket = null;
+
+    // Die Plugs werden immer im wechsel Links Rechts hinzugefügt
     for (let i = 0; i < this.rowCount; i++) {
       this.connectorsPlug.push(
         new Pin(
@@ -35,12 +40,13 @@ class Ic {
           "plug"
         )
       );
-      // TODO für debug zwecke, schleift die signale von horizontal durch.
+      // TODO für debug zwecke, schleift die signale von horizontal durch. Später entfernen
       this.connectorsPlug.at(-1).connect(this.connectorsPlug.at(-2));
       this.connectorsPlug.at(-2).connect(this.connectorsPlug.at(-1));
     }
   }
 
+  // TODO Docstring @Morris
   addGate(gate, pin_indexes) {
     // input pins verbinden
     for (let index = 0; index < pin_indexes.length - 1; index++) {
@@ -53,6 +59,7 @@ class Ic {
     this.gates.push(gate);
   }
 
+  // TODO Docstring @Morris
   simulate() {
     this.gates.forEach((gate) => {
       gate.compute();
@@ -64,6 +71,9 @@ class Ic {
     });
   }
 
+  /**
+   * Zeichnet den IC und dessen Plugs welche das IC umfassen.
+   */
   show() {
     for (let i = 0; i < this.connectorsPlug.length; i++) {
       this.connectorsPlug.at(i).show();
@@ -102,7 +112,12 @@ class Ic {
     }
   }
 
+  /**
+   * Prüft, ob die Maus über dem IC liegt und falls ja, ob es mit einem Sockel verbunden ist der geöffnet oder geschlossen ist.
+   * @returns bool - true = das IC wurde angeklickt und kann bewegt werden. false = das IC wurde verfehlt oder kann nicht bewegt werden.
+   */
   isClicked() {
+    // Ist die Maus über dem IC
     if (
       !inRect(
         this.pos,
@@ -116,22 +131,27 @@ class Ic {
     ) {
       return false;
     }
-    
+
+    // Steckt das IC grade in einem Sockel und falls ja ist der Sockel geöffnet.
     return !this.socket || !this.socket.closed;
   }
 
-  move(offset, target) {
-    if (target !== undefined) {
-      this.pos = createVector(target.pos.x, target.pos.y).add(
+  /**
+   * Methode zum bewegen des IC
+   * @param {*} offset Der Abstand zur Maus über dem IC, damit sich das Bewegen natürlicher anfühlt und nicht immer von der oberen Linken Ecke aus durchgeführt wird.
+   * @param {*} socket? Wenn ein Sockel angegeben ist, wird der IC auf diesem Ordentlich ausgerichtet.
+   */
+  move(offset, socket) {
+    // 
+    if (socket !== undefined) {
+      this.pos = createVector(socket.pos.x, socket.pos.y).add(
         createVector(sizes.pin.rect / 2, -sizes.pin.plug_breite / 2)
       );
     } else {
       this.pos = getWorldMousePos().sub(offset);
     }
-    this.movePins();
-  }
 
-  movePins() {
+    // Die Pins zum IC bewegen.
     for (let i = 0; i < this.connectorsPlug.length; i += 2) {
       this.connectorsPlug.at(i).pos = createVector(
         this.pos.x,
@@ -150,6 +170,12 @@ class Ic {
     }
   }
 
+  /**
+   * Den IC mit dem Sockel Verbinden
+   * @param {*} socket Der Sockel mit dem der IC verbunden werden soll
+   * @param {*} at Ab dem wievielten Pin des Sockels der IC Verbunden werden soll
+   * @returns bool - true = IC wurde erfolgreich verbunden. false = IC konnte nicht verbunden werden.
+   */
   connectWithSocketAtPin(socket, at) {
     // Falls einer der Pins schon eine Verbindung mit einem Plug hat kann er nicht Verbunden werden.
     if (
@@ -162,7 +188,9 @@ class Ic {
     ) {
       return false;
     }
-    this.move(createVector(0, 0).add(), socket.connectorsRect.at(at));
+
+    // Verbinde den IC
+    this.move(createVector(0, 0), socket.connectorsRect.at(at));
     for (let k = 0; k < this.connectorsPlug.length; k++) {
       this.connectorsPlug.at(k).connect(socket.connectorsRect.at(at + k));
       socket.connectorsRect.at(at + k).connect(this.connectorsPlug.at(k));
@@ -171,6 +199,10 @@ class Ic {
     return true;
   }
 
+  /**
+   * Löst den IC von dem Sockel
+   * @returns bool - true = IC wurde erfolgreich gelöst. false = IC konnte nicht gelöst werden.
+   */
   disconnectFromSocket() {
     // Check ob die Pins überhaupt eine Verbindung haben
     if (
