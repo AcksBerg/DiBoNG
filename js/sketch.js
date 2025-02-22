@@ -121,7 +121,11 @@ function setup() {
   setFrameRate(30);
   angleMode("degrees");
   textFont("Consolas");
-  createCanvas(windowWidth, windowHeight, P2D);
+  createCanvas(
+    windowWidth,
+    windowHeight - getCssNumberVariable("--height"),
+    P2D
+  );
   powerButton = new PowerButton(createVector(400, 400));
   // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
   // In welchem Gebiet sich die Kamera bewegen kann.
