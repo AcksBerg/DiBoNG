@@ -199,11 +199,11 @@ function mousePressed() {
     // TODO Nur Lösen wenn der Sockel den Hebel oben hat.
     if (elements.at(i).isClicked()) {
       currentElement = { elem: elements.at(i) };
-      // TODO Offset kontrollieren. Er scheint minimal falsch zu sein.
+      currentElement.elem.disconnectFromSocket();
       currentElement = {
         ...currentElement,
         offset: getWorldMousePos().sub(
-          currentElement.elem.connectorsPlug.at(0).pos
+          currentElement.elem.pos
         ),
       };
     }

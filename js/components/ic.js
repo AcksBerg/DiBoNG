@@ -147,7 +147,7 @@ class Ic {
       );
     }
   }
-  
+
   connectWithSocketAtPin(socket, at) {
     // Falls einer der Pins schon eine Verbindung mit einem Plug hat kann er nicht Verbunden werden.
     if (
@@ -167,5 +167,26 @@ class Ic {
     }
     return true;
   }
+
+  disconnectFromSocket() {
+    // Check ob die Pins überhaupt eine Verbindung haben
+    if (
+      this.connectorsPlug.filter((plug) =>
+        plug.connected.filter((pin) => pin.type === "rect")
+      ).length === 0
+    ) {
+      return false;
+    }
+    this.connectorsPlug.forEach((plug) => {
+      plug.connected
+        .filter((pin) => pin.type === "rect")
+        .forEach((pin_rect) => {
+          plug.disconnect(pin_rect);
+          pin_rect.disconnect(plug);
+        });
+    });
+    return true;
+  }
+
   update() {}
 }
