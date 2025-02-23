@@ -16,11 +16,16 @@ class Cable {
     noFill();
     strokeWeight(strokeWeights.small);
     stroke(this.color);
+    fill(this.color);
 
     let lastPos = this.startPin.pos;
-
     this.links.forEach((link) => {
       line(lastPos.x, lastPos.y, link.x, link.y);
+      rect(
+        link.x - sizes.cable.link_rect / 2,
+        link.y - sizes.cable.link_rect / 2,
+        sizes.cable.link_rect
+      );
       lastPos = link;
     });
 

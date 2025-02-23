@@ -16,8 +16,9 @@ const getCssColorVariable = (varName) => {
  */
 const getCssNumberVariable = (varName) => {
   return getComputedStyle(document.documentElement)
-  .getPropertyValue(varName)
-  .trim().replace(/[a-zA-Z]+/,"");
+    .getPropertyValue(varName)
+    .trim()
+    .replace(/[a-zA-Z]+/, "");
 };
 
 // Die Vordefinierten Farben und dazugehörige Werte wie Helligkeit und Transperenz gespeichert in hsla
@@ -84,6 +85,7 @@ const sizes = {
   },
   cable: {
     minAbstand: 15,
+    link_rect: 3,
   },
   powerButton: {
     mainsDisplacement: 2,
