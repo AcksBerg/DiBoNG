@@ -23,6 +23,7 @@ class Not extends Gate {
 
   compute() {
     this.output.active = !this.inputs[0].active;
+    this.output.update(new Signal(!this.inputs[0].active))
   }
 }
 
@@ -32,6 +33,7 @@ class Or extends Gate {
   }
 
   compute() {
+    this.output.update(new Signal(this.inputs[0].active || this.inputs[1].active))
     this.output = this.inputs[0].active || this.inputs[1].active;
   }
 }
@@ -43,5 +45,6 @@ class And extends Gate {
 
   compute() {
     this.output.active = this.inputs[0].active && this.inputs[1].active;
+    this.output.update(new Signal(this.inputs[0].active && this.inputs[1].active))
   }
 }
