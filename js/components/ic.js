@@ -15,6 +15,7 @@ class Ic {
     this.connectorsPlug = [];
     this.gates = [];
     this.socket = null;
+    this.connectorsPlugInvisible= [];
 
     // Die Plugs werden immer im wechsel Links Rechts hinzugefügt
     for (let i = 0; i < this.rowCount; i++) {
@@ -42,27 +43,33 @@ class Ic {
           "plug"
         )
       );
+      // jeder ic hat 100 unsichtbare pins für interne verschaltungen
+      for (let index = 0; index < 100; index++) {
+        this.connectorsPlugInvisible.push(new Pin())
+        
+      }
+
+
       // TODO für debug zwecke, schleift die signale von horizontal durch. Später entfernen
-      this.connectorsPlug.at(-1).connect(this.connectorsPlug.at(-2));
-      this.connectorsPlug.at(-2).connect(this.connectorsPlug.at(-1));
+      // this.connectorsPlug.at(-1).connect(this.connectorsPlug.at(-2));
+      // this.connectorsPlug.at(-2).connect(this.connectorsPlug.at(-1));
     }
   }
 
-  // TODO Docstring @Morris
   /**
   *Hinzufügen von Gates zum IC.
   1. Parameter ist das hinzuzufügende Gate,
   2. Parameter sind die Pins auf dem IC an denen das Gate angeschlossen ist. letzter Pin des Arrays ist Output,
-  Bsp: ic.addGate(new And,[0,2,4])
+  Bsp: ic.addGate(new And,[ICPIN0,ICPIN1,ICPIN3])
   */
-  addGate(gate, pin_indexes) {
+  addGate(gate, pins) {
     // input pins verbinden
-    for (let index = 0; index < pin_indexes.length - 1; index++) {
-      this.connectorsPlug[pin_indexes[index]].connect(gate.inputs[index]);
+    for (let index = 0; index < pins.length - 1; index++) {
+      pins[index].connect(gate.inputs[index]);
     }
     // output pin verbinden
     gate.output.connect(
-      this.connectorsPlug[pin_indexes[pin_indexes.length - 1]]
+      pins[pins.length - 1]
     );
     this.gates.push(gate);
   }
