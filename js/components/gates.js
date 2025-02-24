@@ -48,3 +48,14 @@ class And extends Gate {
     this.output.update(new Signal(this.inputs[0].active && this.inputs[1].active))
   }
 }
+class Xor extends Gate {
+  constructor(input1, input2) {
+    super(input1, input2);
+  }
+
+  compute() {
+    this.output.active = this.inputs[0].active && !this.inputs[1].active || this.inputs[1].active && !this.inputs[0].active;
+    this.output.update(new Signal(this.inputs[0].active && !this.inputs[1].active || this.inputs[1].active && !this.inputs[0].active))
+  }
+}
+
