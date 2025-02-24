@@ -159,6 +159,12 @@ function setup() {
     new Ic(createVector(380, 250), 4, "IC4321"),
     new Ic(createVector(380, 275), 7, "IC4444"),
   ];
+
+  // default gate für testzwecke:
+  // (pin0 and pin2) xor (pin4 and pin6) => pin1
+  elements[0].addGate(new And(),[elements[0].connectorsPlug[0],elements[0].connectorsPlug[2],elements[0].connectorsPlugInvisible[0]]);
+  elements[0].addGate(new And(),[elements[0].connectorsPlug[4],elements[0].connectorsPlug[6],elements[0].connectorsPlugInvisible[1]]);
+  elements[0].addGate(new Xor(),[elements[0].connectorsPlugInvisible[0],elements[0].connectorsPlugInvisible[1],elements[0].connectorsPlug[1]]);
 }
 
 /**
