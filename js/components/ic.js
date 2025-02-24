@@ -1,6 +1,8 @@
 /**
  * Die Klasse IC beinhaltet sich selbst und die Verbundenen Pins vom Type Plug.
  */
+
+
 class Ic {
   constructor(pos, rowCount, name) {
     if (rowCount <= 1) {
@@ -47,6 +49,12 @@ class Ic {
   }
 
   // TODO Docstring @Morris
+  /**
+  *Hinzufügen von Gates zum IC.
+  1. Parameter ist das hinzuzufügende Gate,
+  2. Parameter sind die Pins auf dem IC an denen das Gate angeschlossen ist. letzter Pin des Arrays ist Output,
+  Bsp: ic.addGate(new And,[0,2,4])
+  */
   addGate(gate, pin_indexes) {
     // input pins verbinden
     for (let index = 0; index < pin_indexes.length - 1; index++) {
@@ -59,7 +67,10 @@ class Ic {
     this.gates.push(gate);
   }
 
-  // TODO Docstring @Morris
+  /**
+   * Simuliert alle gates auf einem IC durch. 
+   * Muss aufgerufen werden, damit Gates schalten.
+   */
   simulate() {
     this.gates.forEach((gate) => {
       gate.compute();
@@ -225,4 +236,5 @@ class Ic {
   }
 
   update() {}
+  
 }
