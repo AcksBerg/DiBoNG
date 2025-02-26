@@ -15,6 +15,7 @@ class Ic {
     this.connectorsPlug = [];
     this.gates = [];
     this.socket = null;
+    this.socket_at = null;
     this.connectorsPlugInvisible= [];
 
     // Die Plugs werden immer im wechsel Links Rechts hinzugefügt
@@ -214,6 +215,7 @@ class Ic {
       socket.connectorsRect.at(at + k).connect(this.connectorsPlug.at(k));
     }
     this.socket = socket;
+    this.socket_at = at;
     return true;
   }
 
