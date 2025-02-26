@@ -13,8 +13,7 @@ class Cable {
    * Das Kabel zeichnen
    */
   show() {
-    noFill();
-    strokeWeight(strokeWeights.small);
+    strokeWeight(strokeWeights.medium);
     stroke(this.color);
     fill(this.color);
 
@@ -87,19 +86,27 @@ class Cable {
    */
   nearCableLink() {
     // in der nähe vom StartPin
-    if (inCircle(this.startPin.pos, sizes.cable.minAbstand)) {
+    if (inCircle(this.startPin.pos, sizes.pin.circle, 100)) {
       return this.startPin.pos;
     }
 
     // in der nähe von einem der Segmente
     for (let i = 0; i < this.links.length; i++) {
-      if (inCircle(this.links.at(i), sizes.cable.minAbstand)) {
+      if (
+        inRect(
+          createVector(
+            this.links.at(i).x - sizes.cable.link_rect/1.5,
+            this.links.at(i).y - sizes.cable.link_rect/1.5
+          ),
+          createVector(sizes.cable.link_rect*1.5, sizes.cable.link_rect*1.5)
+        )
+      ) {
         return this.links.at(i);
       }
     }
 
     // in der nähe vom EndPin
-    if (inCircle(this.endPin.pos, sizes.cable.minAbstand)) {
+    if (inCircle(this.startPin.pos, sizes.pin.circle, 100)) {
       return this.endPin.pos;
     }
     return null;
