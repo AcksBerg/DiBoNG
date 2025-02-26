@@ -196,6 +196,7 @@ function draw() {
       elem.show();
     });
   pop();
+  simulate_ics(); // ics rechnen lassen
 }
 
 /**
