@@ -142,9 +142,9 @@ function setup() {
   platinElementsInput = [
     new BtnArray(createVector(100, 200)),
     new BtnArray(createVector(100, 330)),
-    new LedArray(createVector(330, 200)),
   ];
   platinElementsOutput = [
+    new LedArray(createVector(330, 200)),
     new LedArray(createVector(330, 260), colors.ledYellow),
     new LedArray(createVector(330, 320), colors.ledGreen),
   ];
@@ -162,9 +162,21 @@ function setup() {
 
   // default gate für testzwecke:
   // (pin0 and pin2) xor (pin4 and pin6) => pin1
-  elements[0].addGate(new And(),[elements[0].connectorsPlug[0],elements[0].connectorsPlug[2],elements[0].connectorsPlugInvisible[0]]);
-  elements[0].addGate(new And(),[elements[0].connectorsPlug[4],elements[0].connectorsPlug[6],elements[0].connectorsPlugInvisible[1]]);
-  elements[0].addGate(new Xor(),[elements[0].connectorsPlugInvisible[0],elements[0].connectorsPlugInvisible[1],elements[0].connectorsPlug[1]]);
+  elements[0].addGate(new And(), [
+    elements[0].connectorsPlug[0],
+    elements[0].connectorsPlug[2],
+    elements[0].connectorsPlugInvisible[0],
+  ]);
+  elements[0].addGate(new And(), [
+    elements[0].connectorsPlug[4],
+    elements[0].connectorsPlug[6],
+    elements[0].connectorsPlugInvisible[1],
+  ]);
+  elements[0].addGate(new Xor(), [
+    elements[0].connectorsPlugInvisible[0],
+    elements[0].connectorsPlugInvisible[1],
+    elements[0].connectorsPlug[1],
+  ]);
 }
 
 /**
@@ -206,7 +218,11 @@ function keyPressed() {
  */
 function mousePressed() {
   console.log("MousePressed");
-  for (let i = 0; i < elements.length && !currentElement; i++) {
+  for (
+    let i = 0;
+    i < elements.length && !currentElement && !currentCable;
+    i++
+  ) {
     if (elements.at(i).isClicked()) {
       currentElement = { elem: elements.at(i) };
       currentElement.elem.disconnectFromSocket();
@@ -218,8 +234,19 @@ function mousePressed() {
         ...elements.filter((e) => e !== currentElement.elem),
         currentElement.elem,
       ];
+      return false;
     }
   }
+  for (
+    let i = 0;
+    i < platinElements.length && !currentElement && !currentCable;
+    i++
+  ) {
+    if (platinElements.at(i).isClicked()) {
+      return false;
+    }
+  }
+
   return false;
 }
 
@@ -280,7 +307,7 @@ function mouseReleased() {
               platinElementsSocket.at(i),
               j
             );
-            
+
             // Das Elements Array neu sortieren, damit Verbundene ICs unterhalb von nicht verbundenen ICs sind.
             elements.sort((a, b) => {
               const aHasSocket = a.socket !== null;
