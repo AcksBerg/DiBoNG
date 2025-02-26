@@ -10,7 +10,7 @@ let platinElementsSocket = [];
 let currentCable = null;
 let currentElement = null;
 let cables = [];
-let elements = [];
+let ics = [];
 let powerButton;
 let id_obj = []; // array für die pin-id zuodnung
 let menu;
@@ -154,7 +154,7 @@ function setup() {
     ...platinElementsOutput,
     ...platinElementsSocket,
   ];
-  elements = [
+  ics = [
     new Ic(createVector(360, 250), 12, "IC1234"),
     new Ic(createVector(380, 250), 4, "IC4321"),
     new Ic(createVector(380, 275), 7, "IC4444"),
@@ -162,20 +162,20 @@ function setup() {
 
   // default gate für testzwecke:
   // (pin0 and pin2) xor (pin4 and pin6) => pin1
-  elements[0].addGate(new And(), [
-    elements[0].connectorsPlug[0],
-    elements[0].connectorsPlug[2],
-    elements[0].connectorsPlugInvisible[0],
+  ics[0].addGate(new And(), [
+    ics[0].connectorsPlug[0],
+    ics[0].connectorsPlug[2],
+    ics[0].connectorsPlugInvisible[0],
   ]);
-  elements[0].addGate(new And(), [
-    elements[0].connectorsPlug[4],
-    elements[0].connectorsPlug[6],
-    elements[0].connectorsPlugInvisible[1],
+  ics[0].addGate(new And(), [
+    ics[0].connectorsPlug[4],
+    ics[0].connectorsPlug[6],
+    ics[0].connectorsPlugInvisible[1],
   ]);
-  elements[0].addGate(new Xor(), [
-    elements[0].connectorsPlugInvisible[0],
-    elements[0].connectorsPlugInvisible[1],
-    elements[0].connectorsPlug[1],
+  ics[0].addGate(new Xor(), [
+    ics[0].connectorsPlugInvisible[0],
+    ics[0].connectorsPlugInvisible[1],
+    ics[0].connectorsPlug[1],
   ]);
 }
 
@@ -190,7 +190,7 @@ function draw() {
   translate(cam.x, cam.y);
   scale(zoom);
 
-  [powerButton, ...platinElements, ...elements, ...cables, currentCable]
+  [powerButton, ...platinElements, ...ics, ...cables, currentCable]
     .filter((elem) => elem !== null)
     .forEach((elem) => {
       elem.show();
@@ -220,18 +220,18 @@ function mousePressed() {
   console.log("MousePressed");
   for (
     let i = 0;
-    i < elements.length && !currentElement && !currentCable;
+    i < ics.length && !currentElement && !currentCable;
     i++
   ) {
-    if (elements.at(i).isClicked()) {
-      currentElement = { elem: elements.at(i) };
+    if (ics.at(i).isClicked()) {
+      currentElement = { elem: ics.at(i) };
       currentElement.elem.disconnectFromSocket();
       currentElement = {
         ...currentElement,
         offset: getWorldMousePos().sub(currentElement.elem.pos),
       };
-      elements = [
-        ...elements.filter((e) => e !== currentElement.elem),
+      ics = [
+        ...ics.filter((e) => e !== currentElement.elem),
         currentElement.elem,
       ];
       return false;
@@ -309,7 +309,7 @@ function mouseReleased() {
             );
 
             // Das Elements Array neu sortieren, damit Verbundene ICs unterhalb von nicht verbundenen ICs sind.
-            elements.sort((a, b) => {
+            ics.sort((a, b) => {
               const aHasSocket = a.socket !== null;
               const bHasSocket = b.socket !== null;
               // A und B haben oder haben keinen Socket, keine Veränderung
@@ -368,8 +368,8 @@ function mouseClicked() {
     }
 
     // Dann kontrollieren ob ein oben liegendes Element angeklickt worden ist.
-    for (let i = 0; i < elements.length && !currentCable; i++) {
-      if (elements.at(i).isClicked()) {
+    for (let i = 0; i < ics.length && !currentCable; i++) {
+      if (ics.at(i).isClicked()) {
         return;
       }
     }
