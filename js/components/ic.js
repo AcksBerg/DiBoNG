@@ -245,3 +245,12 @@ class Ic {
   update() {}
   
 }
+
+function simulate_ics(){
+  /**
+   * Lässt bei Aufruf alle ICs rechnen, damit die gates aktualisiert werden
+   */
+  ics.forEach(ic => {
+    ic.simulate();
+  });
+}
