@@ -14,15 +14,21 @@ nav.addEventListener("mousedown", (e) => {
 
 // Datei
 document.querySelector("#btn_datei_laden").addEventListener("click", (e) => {
-  new Load().triggerFileDialog();
   e.stopPropagation();
+  if (currentCable) {
+    return;
+  }
+  new Load().triggerFileDialog();
 });
 
 document
   .querySelector("#btn_datei_speichern")
   .addEventListener("click", (e) => {
-    new Save().downloadJSON();
+    if (currentCable) {
+      return;
+    }
     e.stopPropagation();
+    new Save().downloadJSON();
   });
 
 // Hilfe
@@ -30,8 +36,11 @@ const hilfe_popup = document.querySelector("#hilfe_popup");
 const hilfe_popup_btn = document.querySelector("#hilfe_popup button");
 
 document.querySelector("#btn_hilfe").addEventListener("click", (e) => {
-  hilfe_popup.style.display = "block";
   e.stopPropagation();
+  if (currentCable) {
+    return;
+  }
+  hilfe_popup.style.display = "block";
 });
 
 hilfe_popup.addEventListener("click", (e) => {
@@ -43,8 +52,11 @@ hilfe_popup.addEventListener("mousedown", (e) => {
 });
 
 hilfe_popup_btn.addEventListener("click", (e) => {
-  hilfe_popup.style.display = "none";
+  if (currentCable) {
+    return;
+  }
   e.stopPropagation();
+  hilfe_popup.style.display = "none";
 });
 
 hilfe_popup_btn.addEventListener("mousedown", (e) => {

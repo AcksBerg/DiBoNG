@@ -4,8 +4,11 @@
 
 const burger = document.querySelector("#burgermenu");
 burger.querySelector("svg").addEventListener("click", (e) => {
-  burger.classList.toggle("rotated");
   e.stopPropagation();
+  if (currentCable) {
+    return;
+  }
+  burger.classList.toggle("rotated");
 });
 
 burger.addEventListener("click", (e) => {
@@ -19,6 +22,9 @@ burger.addEventListener("mousedown", (e) => {
 // TODO Denk dir eine bessere Methode aus :D
 Array.from(burger.querySelectorAll(".auswahl")).forEach((elem) => {
   elem.addEventListener("click", (e) => {
+    if (currentCable) {
+      return;
+    }
     burger.querySelector(".ausgewaehlt")?.classList.toggle("ausgewaehlt");
     e.target.classList.toggle("ausgewaehlt");
     switch (e.target.classList[1]) {
