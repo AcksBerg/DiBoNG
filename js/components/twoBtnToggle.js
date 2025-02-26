@@ -106,18 +106,18 @@ class TwoBtnToggle {
     );
   }
 
-
   /**
    * Kontrolliert ob ein Button oder Connector angeklickt worden ist.
    * @returns {boolean} true = Ein Element welches eine Funktion auslöst wurde geklickt, false = das Element wurde verfehlt oder nichts von relevanz angeklickt.
    */
-  isClicked() {
+  isClicked({ click_type = "click" } = {}) {
     // Versatz der Aktiviert wird wenn der Button aktiv ist.
     // Dadurch muss die Abfrage welcher der Beiden Button gedrückt wird nur einmal geschrieben werden.
     let versatz = this.active
       ? 0
       : sizes.btnArray.size / 4 + sizes.btnArray.size;
     if (
+      click_type === "click" &&
       inRect(
         createVector(this.pos.x + versatz, this.pos.y),
         createVector(sizes.btnArray.size, sizes.btnArray.size)

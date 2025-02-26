@@ -218,12 +218,8 @@ function keyPressed() {
  */
 function mousePressed() {
   console.log("MousePressed");
-  for (
-    let i = 0;
-    i < ics.length && !currentElement && !currentCable;
-    i++
-  ) {
-    if (ics.at(i).isClicked()) {
+  for (let i = 0; i < ics.length && !currentElement && !currentCable; i++) {
+    if (ics.at(i).isClicked({ click_type: "press" })) {
       currentElement = { elem: ics.at(i) };
       currentElement.elem.disconnectFromSocket();
       currentElement = {
@@ -242,7 +238,7 @@ function mousePressed() {
     i < platinElements.length && !currentElement && !currentCable;
     i++
   ) {
-    if (platinElements.at(i).isClicked()) {
+    if (platinElements.at(i).isClicked({ click_type: "press" })) {
       return false;
     }
   }
@@ -282,7 +278,11 @@ function mouseReleased() {
   if (currentElement) {
     for (let i = 0; i < platinElementsSocket.length; i++) {
       // Wurde der IC über Sockel-Konntektoren (Rect) losgelassen, falls ja, prüfe ob die Pins überlappen.
-      if (platinElementsSocket.at(i).isClicked(currentElement.elem)) {
+      if (
+        platinElementsSocket
+          .at(i)
+          .isClicked({ click_type: "release", ic: currentElement.elem })
+      ) {
         for (
           let j = 0;
           j < platinElementsSocket.at(i).connectorsRect.length;

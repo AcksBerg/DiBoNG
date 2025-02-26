@@ -61,7 +61,7 @@ class LedArray {
    * Kontrolliert ob ein Connector angeklickt worden ist, prüft auch nur im Bereich der Connectoren auf den Click.
    * @returns {boolean} true = Ein Element welches eine Funktion auslöst wurde geklickt, false = das Element wurde verfehlt oder nichts von relevanz angeklickt.
    */
-  isClicked(){
+  isClicked({ click_type = "click" } = {}){
     // Return in Statement damit es direkt gecancelt wird nachdem etwas getroffen worden ist. Man kann ja nur ein Element pro click auswählen
     if (
       !inRect(

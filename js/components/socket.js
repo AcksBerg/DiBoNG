@@ -153,7 +153,7 @@ class Socket {
    * @returns bool - true = (ohne IC) Maus liegt über Connector oder Hebel. Beim Hebel wird hier direkt der Status des Hebels gesetzt. false = Maus liegt nicht über dem Sockel, seinen Pins oder seinem Hebel.
    * @returns bool - true/false (Mit IC) Ob der IC über den Rect-Pins liegt.
    */
-  isClicked(ic) {
+  isClicked({ click_type = "click", ic = undefined } = {}) {
     // Prüfen ob überhaupt der Sockel geklickt worden ist. Falls nicht update verlassen
     if (
       !inRect(
@@ -171,7 +171,7 @@ class Socket {
       return false;
     }
     // Wird aktuell ein IC gezogen/Übergeben?
-    if (ic !== undefined) {
+    if (click_type === "release" && ic !== undefined) {
       // Ist der IC mit allen Konnectoren über den Konnektoren vom Sockel und ist der Hebel geöffnet?
       // In Rect kann nicht genutzt werden, weil es nur die Maus-Koordinaten vergleicht, hier sind aber zwei Rechtecke zu vergleichen.
       return (
@@ -187,7 +187,8 @@ class Socket {
     // Return nach jedem treffer da mit einem klick nur ein Element getroffen werden kann.
     // Prüfen ob der Hebel getroffen worden ist.
     if (
-      (this.closed &&
+      click_type === "click" &&
+      ((this.closed &&
         inRect(
           createVector(
             this.connectorsRect.at(0).pos.x - sizes.socket.border,
@@ -200,17 +201,17 @@ class Socket {
             sizes.socket.hebelLange + sizes.socket.hebelBreite
           )
         )) ||
-      (!this.closed &&
-        inCircle(
-          createVector(
-            this.connectorsRect.at(0).pos.x -
-              sizes.socket.border +
-              sizes.socket.hebelBreite * 1.5,
-            this.connectorsRect.at(0).pos.y - sizes.socket.border / 2
-          ),
-          sizes.socket.hebelBreite * 2,
-          0
-        ))
+        (!this.closed &&
+          inCircle(
+            createVector(
+              this.connectorsRect.at(0).pos.x -
+                sizes.socket.border +
+                sizes.socket.hebelBreite * 1.5,
+              this.connectorsRect.at(0).pos.y - sizes.socket.border / 2
+            ),
+            sizes.socket.hebelBreite * 2,
+            0
+          )))
     ) {
       this.closed = !this.closed;
       return true;

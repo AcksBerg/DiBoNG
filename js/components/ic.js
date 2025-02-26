@@ -134,7 +134,7 @@ class Ic {
    * Prüft, ob die Maus über dem IC liegt und falls ja, ob es mit einem Sockel verbunden ist der geöffnet oder geschlossen ist.
    * @returns bool - true = das IC wurde angeklickt und kann bewegt werden. false = das IC wurde verfehlt oder kann nicht bewegt werden.
    */
-  isClicked() {
+  isClicked({ click_type = "click"} = {}) {
     // Ist die Maus über dem IC
     if (
       !inRect(

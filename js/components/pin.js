@@ -67,7 +67,7 @@ class Pin {
    * Aufzurufen wenn ein Click ausgeführt worden ist und geprüft werden soll on der Connector getroffen worden ist.
    * @returns {boolean} true = wenn es angeclickt worden ist, false = wenn es nicht angeklickt worden ist.
    */
-  isClicked() {
+  isClicked({ click_type = "click" } = {}) {
     const clicked =
       (this.type === "circle" && inCircle(this.pos, sizes.pin.circle, 0)) ||
       (this.type === "rect" &&

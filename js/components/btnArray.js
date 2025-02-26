@@ -41,7 +41,7 @@ class BtnArray {
    * Kontrolliert ob der Klick in seiner näheren Umgebung ausgeführt worden ist, falls ja werden die TwoBtnToggle Elemente geprüft.
    * @returns {boolean} true = Ein Element welches eine Funktion auslöst wurde geklickt, false = das Element wurde verfehlt oder nichts von relevanz angeklickt.
    */
-  isClicked(){
+  isClicked({ click_type = "click" } = {}){
     if (
       !inRect(
         this.pos,

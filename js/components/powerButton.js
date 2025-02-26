@@ -71,8 +71,9 @@ class PowerButton {
    * Aufzurufen wenn ein Click ausgeführt worden ist und geprüft werden soll on der PowerButton getroffen worden ist.
    * @returns {boolean} true = wenn es angeclickt worden ist, false = wenn es nicht angeklickt worden ist.
    */
-  isClicked() {
+  isClicked({ click_type = "click" } = {}) {
     if (
+      click_type === "click" &&
       inRect(
         createVector(
           this.pos.x + sizes.powerButton.border,
