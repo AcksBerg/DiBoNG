@@ -37,6 +37,8 @@ const colors = {
   silver: getCssColorVariable("--silver"),
   ic: getCssColorVariable("--ic"),
   panel: getCssColorVariable("--panel"),
+  activeSignal: getCssColorVariable("--activeSignal"),
+  deactiveSignal: getCssColorVariable("--deactiveSignal"),
   ledOn: 60,
   ledOff: 20,
   cableTrans: 0.3,

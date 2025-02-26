@@ -5,14 +5,13 @@
 
 class Pin {
   constructor(pos, type = "circle") {
-    
     this.id = pin_id;
-    pin_id ++
+    pin_id++;
     this.pos = pos;
     this.connected = [];
     this.active = false;
     this.type = type;
-    id_obj.push([this,this.id])  
+    id_obj.push([this, this.id]);
   }
 
   /**
@@ -23,6 +22,10 @@ class Pin {
     if (this.type == "circle") {
       fill(colors.pin);
       circle(this.pos.x, this.pos.y, sizes.pin.circle);
+      if (showMoreInfo) {
+        fill(this.active ? colors.activeSignal : colors.deactiveSignal);
+        circle(this.pos.x, this.pos.y, sizes.pin.circle / 2);
+      }
     } else if (this.type == "rect") {
       fill(colors.pin);
       rect(this.pos.x, this.pos.y, sizes.pin.rect, sizes.pin.rect_versatz);
@@ -33,6 +36,15 @@ class Pin {
         sizes.pin.rect,
         sizes.pin.rect_versatz
       );
+      if (showMoreInfo) {
+        fill(this.active ? colors.activeSignal : colors.deactiveSignal);
+        rect(
+          this.pos.x + sizes.pin.rect * 0.165,
+          this.pos.y + sizes.pin.rect_versatz / 2,
+          sizes.pin.rect * 0.66,
+          sizes.pin.rect_versatz
+        );
+      }
     } else if (this.type == "plug") {
       fill(colors.silver);
       rect(
@@ -42,6 +54,16 @@ class Pin {
         sizes.pin.plug_breite,
         sizes.pin.plug_rundung
       );
+      if (showMoreInfo) {
+        fill(this.active ? colors.activeSignal : colors.deactiveSignal);
+        rect(
+          this.pos.x - sizes.pin.rect_versatz * 1.5,
+          this.pos.y - sizes.pin.rect_versatz,
+          sizes.pin.plug_breite,
+          sizes.pin.plug_breite * 0.66,
+          sizes.pin.plug_rundung
+        );
+      }
     }
   }
 
@@ -91,7 +113,7 @@ class Pin {
   }
 
   /**
-   * Update wird aufgerufen wenn das Signal den Pin erreicht. 
+   * Update wird aufgerufen wenn das Signal den Pin erreicht.
    * @param {Signal} signal Ein Objekt zur Signalverarbeitung
    */
   update(signal) {

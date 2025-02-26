@@ -16,6 +16,7 @@ let id_obj = []; // array für die pin-id zuodnung
 let menu;
 let pin_id = 0; //zähler der als pin id fungiert
 let cableColor = getCssColorVariable("--cableRed");
+let showMoreInfo = false;
 
 // TODO für einen Release wie einkommentieren, zum Testen Problematisch
 // window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert
@@ -206,6 +207,10 @@ function keyPressed() {
   // Das Kabelziehen abbrechen bzw. Kabel-Links entfernen mit STRG(keyCode 17)
   if (keyCode === 17 && currentCable) {
     currentCable.removeLink();
+  }
+  // Toggle info shown
+  if (keyCode === 16) {
+    showMoreInfo = !showMoreInfo;
   }
 }
 
