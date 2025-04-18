@@ -21,34 +21,57 @@ const getCssNumberVariable = (varName) => {
     .replace(/[a-zA-Z]+/, "");
 };
 
-// Die Daten der Verschiedenen ICs. 
+// Die Daten der Verschiedenen ICs.
 // TODO Sinnvolle Daten hinterlegen
 const icInfos = {
-  "1234": {
-    name: "IC 1234",
-    description: "Ein einfacher Logikbaustein.",
-    pins: 24
+  12: {
+    name: "IC 12",
+    description: "0 & 2 → 1",
+    pins: 4,
+    gates: [
+      {
+        type: "AND",
+        connectors: [0, 2, 1],
+      },
+    ],
   },
-  "4321": {
-    name: "IC 4321",
-    description: "Ein 2xAND3",
-    pins: 8
+  13: {
+    name: "IC 13",
+    description: "0 | 2 → 1",
+    pins: 4,
+    gates: [
+      {
+        type: "OR",
+        connectors: [0, 2, 1],
+      },
+    ],
   },
-  "4444": {
-    name: "IC 4444",
-    description: "Ein 3xAND4",
-    pins: 14
+  14: {
+    name: "IC 14",
+    description: "0 ^ 2 → 1",
+    pins: 4,
+    gates: [
+      {
+        type: "XOR",
+        connectors: [0, 2, 1],
+      },
+    ],
   },
-  "456789": {
-    name: "IC 456789",
-    description: "Ein 100xOR1",
-    pins: 100
+  15: {
+    name: "IC 15",
+    description: "!0 → 1; !2 → 3",
+    pins: 4,
+    gates: [
+      {
+        type: "NOT",
+        connectors: [0, -1, 1],
+      },
+      {
+        type: "NOT",
+        connectors: [2, -1, 3],
+      },
+    ],
   },
-  "4511687": {
-    name: "IC 4511687",
-    description: "Ein kleiner Baustein",
-    pins: 6
-  }
 };
 
 // Die Vordefinierten Farben und dazugehörige Werte wie Helligkeit und Transperenz gespeichert in hsla

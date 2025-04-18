@@ -37,7 +37,7 @@ burger.querySelector(".ics").innerHTML = "";
 Object.keys(icInfos).forEach((id) => {
   burger.querySelector(
     ".ics"
-  ).innerHTML += `<div class="auswahl weiss" data-name="${icInfos[id].name}" data-description="${icInfos[id].description}" data-pins="${icInfos[id].pins}">${id}</div>`;
+  ).innerHTML += `<div class="auswahl weiss" data-id="${id}" data-name="${icInfos[id].name}" data-description="${icInfos[id].description}" data-pins="${icInfos[id].pins}">${id}</div>`;
 });
 
 // Die Schriftgröße der ICs anpassen jenachdem wie lang der Text ist.
@@ -59,11 +59,11 @@ burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
     const elem = e.currentTarget;
 
     tooltip.innerHTML = `
-        <strong>${elem.dataset.name}</strong><br>
-        <hr>
-        ${elem.dataset.description}<br>
-        Pins: ${elem.dataset.pins}
-      `;
+  <strong>${elem.dataset.name}</strong><br>
+  <hr>
+  <small>Pins: ${elem.dataset.pins}</small><br>
+  <small>Schaltung: <br>${elem.dataset.description.replaceAll(";", "<br>")}</small>
+`;
     tooltip.style.display = "block";
   });
 
@@ -83,8 +83,34 @@ burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
     }
     // Erstelle im Mittleren Bereich des Viewports ein IC mit den Daten des Ausgewählten ICs
     const elem = evt.currentTarget;
+    const info = icInfos[elem.dataset.id];
     // pins / 2 da ics rows wollen und keine pin anzahl
-    ics.push(new Ic(createVector(300, 400), elem.dataset.pins/2, elem.dataset.name));
-    console.log("Weiter");
+    const neuerIc = new Ic(createVector(300, 400), info.pins / 2, info.name);
+    ics.push(neuerIc);
+    info.gates?.forEach((gate) => {
+      const gateObj =
+        gate.type === "AND"
+          ? new And()
+          : gate.type === "XOR"
+          ? new Xor()
+          : gate.type === "OR"
+          ? new Or()
+          : gate.type === "NOT"
+          ? new Not()
+          : null;
+      if (!gateObj) return;
+
+      // Mappe Pin-Referenzen zu den richtigen Connectors
+      const connectorObjs = gate.connectors.map((idx) => {
+        if (typeof idx === "string" && idx.startsWith("i")) {
+          const i = parseInt(idx.slice(1));
+          return neuerIc.connectorsPlugInvisible[i];
+        } else {
+          return neuerIc.connectorsPlug[idx];
+        }
+      });
+
+      neuerIc.addGate(gateObj, connectorObjs);
+    });
   });
 });
