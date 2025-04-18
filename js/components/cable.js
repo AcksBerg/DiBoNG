@@ -106,6 +106,63 @@ class Cable {
   }
 
   /**
+   * Kontrolliert ob auf ein Kabel-Segment geklickt worden ist.
+   * @returns {boolean} True - Wenn auf das kabel geklickt worden ist; False - Wenn nicht auf das Kabel geklickt worden ist.
+   */
+  onCable() {
+    /**
+     * Gibt die Bounding Box um zwei Punkte zurück.
+     * @param {p5.Vector} punkt1 Punkt1
+     * @param {p5.Vector} punkt2 Punkt2
+     * @returns {obj} Objekt mit pos (p5.Vector), angle(Degrees), w(idth), h(eight)
+     */
+    function createBoundingBox(punkt1, punkt2) {
+      // Auf ein p5.Vector Objekt die Rechnungen ausführen, damit die Ursprungswerte nicht verändert werden.
+      const dir = p5.Vector.sub(punkt2, punkt1);
+
+      return {
+        pos: p5.Vector.add(punkt1, punkt2).div(2),
+        angle: atan2(dir.y, dir.x),
+        w: dir.mag() + sizes.pin.circle * 2,
+        h: sizes.pin.circle * 2,
+      };
+    }
+
+    /**
+     * Prüft ob die Maus-Position innerhalb der BoundingBox ist.
+     * @param {object} boundingBox Ein Objekt welches dem Muster pos(p5.Vector) an der Center-Position, angle(degrees) als Ausrichtung, w(idth), h(eight) entsprechen muss.
+     * @returns {boolean} True - Wenn sich Maus innerhalb der BoundingBox befindet; False - Wenn sich die Maus ausserhalb der BoundingBox befindet.
+     */
+    function inBoundingBox(boundingBox) {
+      // Punkt ins Rechteck-Koordinatensystem verschieben
+      let translated = p5.Vector.sub(getWorldMousePos(), boundingBox.pos);
+
+      // Punkt umgekehrt rotieren (also den Punkt wie das Rechteck Rotieren)
+      let unrotated = createVector(
+        translated.x * cos(-boundingBox.angle) -
+          translated.y * sin(-boundingBox.angle),
+        translated.x * sin(-boundingBox.angle) +
+          translated.y * cos(-boundingBox.angle)
+      );
+
+      // Prüfen ob der Rotierte Punkt in der BoundingBox liegt.
+      return (
+        abs(unrotated.x) <= boundingBox.w / 2 &&
+        abs(unrotated.y) <= boundingBox.h / 2
+      );
+    }
+
+    let lastPos = this.startPin.pos;
+    for (const link of this.links) {
+      if (inBoundingBox(createBoundingBox(lastPos, link))) {
+        return true;
+      }
+      lastPos = link;
+    }
+    return inBoundingBox(createBoundingBox(lastPos, this.endPin.pos));
+  }
+
+  /**
    * Verbindet ein Kabel mit seinem Start und EndPin.
    * @returns bool - true, Verbindung wurde hergestellt. false, Verbindung wurde nicht hergestellt.
    */

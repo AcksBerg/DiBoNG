@@ -211,6 +211,23 @@ function keyPressed() {
  */
 function mousePressed() {
   console.log("MousePressed");
+  // Wenn Strg gedrückt ist und kein Kabel ausgewählt ist soll geprüft werden ob man ein Kabel oder Element löschen kann
+  if (keyIsDown(17) && !currentCable) {
+    for (const ic of ics) {
+      if (ic.isClicked()) {
+        ics = ics.filter((elem) => elem !== ic);
+        return;
+      }
+    }
+    for (const cable of cables) {
+      if (cable.onCable()) {
+        cables = cables.filter((elem) => elem !== cable);
+        return;
+      }
+    }
+    // Am Ende Rausspringen
+    return;
+  }
   for (let i = 0; i < ics.length && !currentElement && !currentCable; i++) {
     if (ics.at(i).isClicked({ click_type: "press" })) {
       currentElement = { elem: ics.at(i) };
