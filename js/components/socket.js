@@ -2,7 +2,7 @@
  * Die Klasse Socket besteht aus einem Hebel und den Außenliegenden (Circle) und Innenliegenden Konnektoren(Pins)
  */
 class Socket {
-  constructor(pos, pinCount = 24) {
+  constructor(pos, pinCount = 24,id) {
     if (pinCount % 2 !== 0) {
       throw new Error("Die Pin-Anzahl des Sockels muss durch 2 Teilbar sein!");
     }
@@ -11,6 +11,7 @@ class Socket {
     this.connectorsCircle = [];
     this.connectorsRect = [];
     this.pinCount = pinCount;
+    this.id = id
     for (let i = 0; i < this.pinCount / 2; i++) {
       //Linke Seite der Konnektoren
       this.connectorsCircle.push(

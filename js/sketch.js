@@ -139,7 +139,7 @@ function setup() {
     new LedArray(createVector(330, 260), colors.ledYellow),
     new LedArray(createVector(330, 320), colors.ledGreen),
   ];
-  platinElementsSocket = [new Socket(createVector(240, 260), 24)];
+  platinElementsSocket = [new Socket(createVector(240, 260), 24,1)];
   platinElements = [
     ...platinElementsInput,
     ...platinElementsOutput,
