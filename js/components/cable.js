@@ -33,8 +33,10 @@ class Cable {
     // Falls die anderen Links nicht weit genug entfernt sind kann kein neuer Link hinzugefügt werden.
     // Als Nutzer Feedback wird das Kabel Transparent.
     if (
-      (!this.endPin && this.startPin.pos.dist(pos) < sizes.cable.minAbstand) ||
-      this.links.filter((e) => e.dist(pos) < sizes.cable.minAbstand).length > 0
+      !this.endPin &&
+      (this.startPin.pos.dist(pos) < sizes.cable.minAbstand ||
+        this.links.filter((e) => e.dist(pos) < sizes.cable.minAbstand).length >
+          0)
     ) {
       stroke(
         setHSLALightAndTrans({ color: this.color, trans: colors.cableTrans })
