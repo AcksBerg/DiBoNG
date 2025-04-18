@@ -37,7 +37,7 @@ burger.querySelector(".ics").innerHTML = "";
 Object.keys(icInfos).forEach((id) => {
   burger.querySelector(
     ".ics"
-  ).innerHTML += `<div class="auswahl weiss">${id}</div>`;
+  ).innerHTML += `<div class="auswahl weiss" data-name="${icInfos[id].name}" data-description="${icInfos[id].description}" data-pins="${icInfos[id].pins}">${id}</div>`;
 });
 
 // Die Schriftgröße der ICs anpassen jenachdem wie lang der Text ist.
@@ -56,18 +56,15 @@ const tooltip = document.getElementById("ic-tooltip");
 
 burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
   elem.addEventListener("mouseover", (e) => {
-    const icKey = e.currentTarget.innerText.trim();
-    const icData = icInfos[icKey];
+    const elem = e.currentTarget;
 
-    if (icData) {
-      tooltip.innerHTML = `
-        <strong>${icData.name}</strong><br>
+    tooltip.innerHTML = `
+        <strong>${elem.dataset.name}</strong><br>
         <hr>
-        ${icData.description}<br>
-        Pins: ${icData.pins}
+        ${elem.dataset.description}<br>
+        Pins: ${elem.dataset.pins}
       `;
-      tooltip.style.display = "block";
-    }
+    tooltip.style.display = "block";
   });
 
   elem.addEventListener("mousemove", (e) => {
@@ -77,5 +74,17 @@ burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
 
   elem.addEventListener("mouseout", () => {
     tooltip.style.display = "none";
+  });
+
+  elem.addEventListener("click", (evt) => {
+    // Wenn noch kein Element ausgewählt ist
+    if (currentElement) {
+      return;
+    }
+    // Erstelle im Mittleren Bereich des Viewports ein IC mit den Daten des Ausgewählten ICs
+    const elem = evt.currentTarget;
+    // pins / 2 da ics rows wollen und keine pin anzahl
+    ics.push(new Ic(createVector(300, 400), elem.dataset.pins/2, elem.dataset.name));
+    console.log("Weiter");
   });
 });
