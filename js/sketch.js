@@ -215,6 +215,7 @@ function mousePressed() {
   if (keyIsDown(17) && !currentCable) {
     for (const ic of ics) {
       if (ic.isClicked()) {
+        ic.disconnectFromSocket();
         ics = ics.filter((elem) => elem !== ic);
         return;
       }
