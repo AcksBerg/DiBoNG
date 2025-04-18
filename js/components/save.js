@@ -1,4 +1,5 @@
-// TODO Docstring und Kommentare @Morris
+// TODO @Morris Docstring und Kommentare 
+// TODO @Morris der Sketchname muss mitgespeichert werden bzw. aus dem Dateinamen ausgelesen werden.
 class Save {
   constructor() {
     this.cableinfo = [];

@@ -39,7 +39,7 @@
       <button>Schließen</button>
     </section>
 
-    <section id="burgermenu">
+    <section id="burgermenu" class="rotated">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="19mm"
@@ -55,13 +55,22 @@
       </svg>
       <div id="burgermenu-content">
         <div class="ueberschrift">Kabelfarbe wählen:</div>
-        <div class="container">
-          <div class="auswahl ausgewaehlt rot"></div>
-          <div class="auswahl gruen"></div>
-          <div class="auswahl blau"></div>
-          <div class="auswahl weiss"></div>
-          <div class="auswahl braun"></div>
-          <div class="auswahl gelb"></div>
+        <div class="container farben">
+          <div class="auswahl ausgewaehlt rot" data-color="--cableRed"></div>
+          <div class="auswahl gruen" data-color="--cableGreen"></div>
+          <div class="auswahl blau" data-color="--cableBlue"></div>
+          <div class="auswahl weiss" data-color="--cableWhite"></div>
+          <div class="auswahl braun" data-color="--cableBrown"></div>
+          <div class="auswahl gelb" data-color="--cableYellow"></div>
+        </div>
+        <hr />
+        <div class="ueberschrift">ICs wählen:</div>
+        <div class="container ics">
+          <div class="auswahl weiss">1234</div>
+          <div class="auswahl weiss">4321</div>
+          <div class="auswahl weiss">4444</div>
+          <div class="auswahl weiss">456789</div>
+          <div class="auswahl weiss">4511687</div>
         </div>
       </div>
     </section>

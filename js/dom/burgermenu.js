@@ -19,33 +19,23 @@ burger.addEventListener("mousedown", (e) => {
   e.stopPropagation();
 });
 
-// TODO Denk dir eine bessere Methode aus :D
-Array.from(burger.querySelectorAll(".auswahl")).forEach((elem) => {
+Array.from(burger.querySelectorAll(".farben>.auswahl")).forEach((elem) => {
   elem.addEventListener("click", (e) => {
     if (currentCable) {
       return;
     }
     burger.querySelector(".ausgewaehlt")?.classList.toggle("ausgewaehlt");
     e.target.classList.toggle("ausgewaehlt");
-    switch (e.target.classList[1]) {
-      case "blau":
-        cableColor = getCssColorVariable("--cableBlue");
-        break;
-      case "rot":
-        cableColor = getCssColorVariable("--cableRed");
-        break;
-      case "gelb":
-        cableColor = getCssColorVariable("--cableYellow");
-        break;
-      case "braun":
-        cableColor = getCssColorVariable("--cableBrown");
-        break;
-      case "weiss":
-        cableColor = getCssColorVariable("--cableWhite");
-        break;
-      case "gruen":
-        cableColor = getCssColorVariable("--cableGreen");
-        break;
-    }
+    cableColor = getCssColorVariable(e.target.dataset.color);
   });
+});
+
+Array.from(burger.querySelectorAll(".ics>.auswahl")).forEach((elem) => {
+  let fontSize = 18; 
+  elem.style.fontSize = fontSize + "px";
+
+  while (elem.scrollWidth > elem.clientWidth && fontSize > 5) {
+    fontSize--;
+    elem.style.fontSize = fontSize + "px";
+  }
 });

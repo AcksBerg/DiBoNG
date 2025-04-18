@@ -19,7 +19,7 @@ nav {
 }
 
 #sketch_name {
-  all: unset; 
+  all: unset;
   padding: 0 20px;
   color: var(--outline);
   font-family: "Consolas";
@@ -198,11 +198,17 @@ nav {
 }
 
 #burgermenu-content .auswahl {
+  display: flex;
+  align-items: center;
   aspect-ratio: 1/1;
   width: 30%;
   margin: 2px 0;
   border: 0px solid var(--ic);
   transition: border 0.2s linear;
+  color: var(--panel);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #burgermenu-content .auswahl:hover {
@@ -214,6 +220,11 @@ nav {
 
 #burgermenu-content .ausgewaehlt {
   border: red 2px solid;
+}
+
+#burgermenu-content hr {
+  margin: 3px 0;
+  border-color: var(--outline);
 }
 
 .ic {
