@@ -49,11 +49,6 @@ class Ic {
         this.connectorsPlugInvisible.push(new Pin())
         
       }
-
-
-      // TODO für debug zwecke, schleift die signale von horizontal durch. Später entfernen
-      // this.connectorsPlug.at(-1).connect(this.connectorsPlug.at(-2));
-      // this.connectorsPlug.at(-2).connect(this.connectorsPlug.at(-1));
     }
   }
 
@@ -84,7 +79,7 @@ class Ic {
       gate.compute();
     });
     this.gates.forEach((gate) => {
-      gate.output.connected.forEach((connectedPin) => {
+      gate.output.connected?.forEach((connectedPin) => {
         connectedPin.active = gate.output.active;
       });
     });
