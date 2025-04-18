@@ -175,4 +175,12 @@ class Cable {
     this.endPin.connect(this.startPin);
     return true;
   }
+
+  /**
+   * Löst die Verbindung des Kabels mit den Connectoren auf
+   */
+  disconnectFrom() {
+    this.startPin.disconnect(this.endPin);
+    this.endPin.disconnect(this.startPin);
+  }
 }

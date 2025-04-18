@@ -221,6 +221,7 @@ function mousePressed() {
     }
     for (const cable of cables) {
       if (cable.onCable()) {
+        cable.disconnectFrom();
         cables = cables.filter((elem) => elem !== cable);
         return;
       }
