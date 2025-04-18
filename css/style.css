@@ -227,6 +227,19 @@ nav {
   border-color: var(--outline);
 }
 
+#ic-tooltip {
+  position: absolute;
+  background: #222;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 5px;
+  pointer-events: none;
+  font-size: 14px;
+  max-width: 200px;
+  z-index: 1000;
+  display: none;
+}
+
 .ic {
   fill: var(--outline);
   fill-opacity: 1;
