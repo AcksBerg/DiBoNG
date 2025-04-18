@@ -33,12 +33,8 @@ class Cable {
     // Falls die anderen Links nicht weit genug entfernt sind kann kein neuer Link hinzugefügt werden.
     // Als Nutzer Feedback wird das Kabel Transparent.
     if (
-      !this.endPin &&
-      (dist(this.startPin.pos.x, this.startPin.pos.y, pos.x, pos.y) <
-        sizes.cable.minAbstand ||
-        this.links.filter(
-          (e) => dist(e.x, e.y, pos.x, pos.y) < sizes.cable.minAbstand
-        ).length > 0)
+      (!this.endPin && this.startPin.pos.dist(pos) < sizes.cable.minAbstand) ||
+      this.links.filter((e) => e.dist(pos) < sizes.cable.minAbstand).length > 0
     ) {
       stroke(
         setHSLALightAndTrans({ color: this.color, trans: colors.cableTrans })
@@ -56,11 +52,8 @@ class Cable {
 
     // Falls die anderen Links nicht weit genug entfernt sind kann kein neuer Link hinzugefügt werden.
     if (
-      dist(this.startPin.pos.x, this.startPin.pos.y, pos.x, pos.y) <
-        sizes.cable.minAbstand ||
-      this.links.filter(
-        (e) => dist(e.x, e.y, pos.x, pos.y) < sizes.cable.minAbstand
-      ).length > 0
+      this.startPin.pos.dist(pos) < sizes.cable.minAbstand ||
+      this.links.filter((e) => e.dist(pos) < sizes.cable.minAbstand).length > 0
     ) {
       return;
     }
@@ -95,10 +88,10 @@ class Cable {
       if (
         inRect(
           createVector(
-            this.links.at(i).x - sizes.cable.link_rect/1.5,
-            this.links.at(i).y - sizes.cable.link_rect/1.5
+            this.links.at(i).x - sizes.cable.link_rect / 1.5,
+            this.links.at(i).y - sizes.cable.link_rect / 1.5
           ),
-          createVector(sizes.cable.link_rect*1.5, sizes.cable.link_rect*1.5)
+          createVector(sizes.cable.link_rect * 1.5, sizes.cable.link_rect * 1.5)
         )
       ) {
         return this.links.at(i);

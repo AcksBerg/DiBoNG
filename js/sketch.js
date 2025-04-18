@@ -101,10 +101,7 @@ const inCircle = (pos, diameter, offset = 0) => {
     circle(pos.x, pos.y, diameter * (1 + offset / 100));
     pop();
   }
-  return (
-    dist(pos.x, pos.y, worldMouse.x, worldMouse.y) <
-    (diameter * (1 + offset / 100)) / 2
-  );
+  return pos.dist(worldMouse) < (diameter * (1 + offset / 100)) / 2;
 };
 
 /**
@@ -139,7 +136,7 @@ function setup() {
     new LedArray(createVector(330, 260), colors.ledYellow),
     new LedArray(createVector(330, 320), colors.ledGreen),
   ];
-  platinElementsSocket = [new Socket(createVector(240, 260), 24,1)];
+  platinElementsSocket = [new Socket(createVector(240, 260), 24, 1)];
   platinElements = [
     ...platinElementsInput,
     ...platinElementsOutput,
