@@ -1,5 +1,4 @@
 let cam; // Kamera-Position
-let camBounds;
 let prevMouse; // Vorherige Mausposition
 let zoom = 2; // Zoom-Faktor
 let debug = true;
@@ -129,15 +128,6 @@ function setup() {
     P2D
   );
   powerButton = new PowerButton(createVector(400, 400));
-  // TODO camBounds auslagern, dazu muss ein weg gefunden werden das nicht windowsWidth und windowHeight genutzt werden muss da diese nicht in helpers.js existieren.
-  // In welchem Gebiet sich die Kamera bewegen kann.
-  // Muss später an die Szene angepasst werden.
-  camBounds = {
-    min_x: -400,
-    min_y: -400,
-    max_x: windowWidth - 100,
-    max_y: windowHeight - 100,
-  };
   cam = createVector(-170, -317);
   prevMouse = createVector(0, 0);
   platinElementsInput = [
@@ -264,10 +254,6 @@ function mouseDragged() {
 
     // Dividiert durch die zoom Stufe um die Bewegung langsamer zu machen wenn man näher drangezoomt ist.
     cam.add(dx / zoom, dy / zoom);
-    // Kontrollieren ob sich die Kamera auch wirklich in den Bounds bewegt und wenn nicht in den Bereich setzten.
-    // TODO Begrenzung auf das schaltbrett neu machen.
-    // cam.x = constrain(cam.x, camBounds.min_x, camBounds.max_x);
-    // cam.y = constrain(cam.y, camBounds.min_y, camBounds.max_y);
   }
   if (mouseButton === LEFT && currentElement) {
     currentElement.elem.move(currentElement.offset);

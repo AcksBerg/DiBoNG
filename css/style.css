@@ -18,6 +18,24 @@ nav {
   box-shadow: 0px 2px 6px 3px var(--ic);
 }
 
+#sketch_name {
+  all: unset; 
+  padding: 0 20px;
+  color: var(--outline);
+  font-family: "Consolas";
+  font-size: 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: text;
+}
+
+#sketch_name:focus {
+  background-color: var(--outline);
+  color: var(--panel);
+  border-radius: 2px;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -212,4 +230,7 @@ nav {
   fill: none;
   stroke-width: 1;
   stroke: var(--outline);
+}
+.pen {
+  stroke-width: 5;
 }

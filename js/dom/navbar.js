@@ -28,8 +28,25 @@ document
       return;
     }
     e.stopPropagation();
-    new Save().downloadJSON();
+    new Save().downloadJSON(
+      document.querySelector("#sketch_name").value + ".json"
+    );
   });
+
+// Sketch Name
+document.querySelector("#sketch_name").addEventListener("change", (ev) => {
+  const element = ev.target;
+  let text = element.value;
+
+  // Nur Erlaubte Zeichen zulassen
+  text = text.replace(/[^a-zA-ZäöüÄÖÜß0-9 ]+/g, "");
+  // Zahlen dürfen nur in der Mitte oder am Ende stehen
+  text = text.replace(/^[0-9]+/, "");
+  // Leerzeichen am Anfang und Ende wegschneiden und Doppelte Leerzeichen verhindern
+  text = text.trim().replace(/\s{2,}/g, " ");
+
+  element.value = text.length !== 0 ? text : "Schaltung";
+});
 
 // Hilfe
 const hilfe_popup = document.querySelector("#hilfe_popup");

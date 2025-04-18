@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>DiBoNG</title>
-    <link rel="icon" type="image/svg+xml" href="SVG/IC_farbe.svg">
+    <link rel="icon" type="image/svg+xml" href="SVG/IC_farbe.svg" />
     <link rel="stylesheet" type="text/css" href="css/variables.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 
@@ -25,6 +25,12 @@
       <div class="dropdown">
         <button id="btn_hilfe" class="dropdown-btn">Hilfe</button>
       </div>
+      <input
+        type="text"
+        placeholder="Schaltung"
+        value="Schaltung"
+        id="sketch_name"
+      />
     </nav>
     <section id="hilfe_popup">
       <header>Die Überschrift</header>
@@ -59,7 +65,7 @@
         </div>
       </div>
     </section>
-    
+
     <!--
     TODO:
     Docstrings mit /** */ für alle Funktionen/Methoden implementieren
@@ -76,8 +82,8 @@
      -->
     <!-- TODO Elemente benötigen eine einzigartige ID um diese richtig Speichern zu können -->
     <script src="js/sketch.js" defer></script>
-    <script src="js/navbar.js" defer></script>
-    <script src="js/burgermenu.js" defer></script>
+    <script src="js/dom/navbar.js" defer></script>
+    <script src="js/dom/burgermenu.js" defer></script>
     <script src="js/components/helpers.js"></script>
     <script src="js/components/powerButton.js"></script>
     <script src="js/components/signal.js"></script>
