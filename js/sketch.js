@@ -18,7 +18,7 @@ let cableColor = getCssColorVariable("--cableRed");
 let showMoreInfo = false;
 
 //versehentliches schließen oder neuladen blockiert
-// window.onbeforeunload = function() {   
+// window.onbeforeunload = function() {
 //   return "Hier muss etwas stehen";
 // }
 
@@ -134,7 +134,7 @@ function setup() {
     windowHeight - getCssNumberVariable("--height"),
     P2D
   );
-  powerButton = new PowerButton(createVector(400, 400));
+  powerButton = new PowerButton(createVector(540, 200));
   cam = createVector(-170, -317);
   prevMouse = createVector(0, 0);
   platinElementsInput = [
@@ -142,11 +142,14 @@ function setup() {
     new BtnArray(createVector(100, 330)),
   ];
   platinElementsOutput = [
-    new LedArray(createVector(330, 200)),
-    new LedArray(createVector(330, 260), colors.ledYellow),
-    new LedArray(createVector(330, 320), colors.ledGreen),
+    new LedArray(createVector(500, 200)),
+    new LedArray(createVector(500, 260), colors.ledYellow),
+    new LedArray(createVector(500, 320), colors.ledGreen),
   ];
-  platinElementsSocket = [new Socket(createVector(240, 260), 24, 1)];
+  platinElementsSocket = [
+    new Socket(createVector(240, 250), 24, 1),
+    new Socket(createVector(370, 260), 20, 2),
+  ];
   platinElements = [
     ...platinElementsInput,
     ...platinElementsOutput,
