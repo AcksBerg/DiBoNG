@@ -17,10 +17,9 @@ let pin_id = 0; //zähler der als pin id fungiert
 let cableColor = getCssColorVariable("--cableRed");
 let showMoreInfo = false;
 
-// TODO für einen Release wie einkommentieren, zum Testen Problematisch
-// window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert
-//   return "really wanna reload, bruv?";
-// }
+window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert
+  return "Hier muss etwas stehen";
+}
 
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
@@ -389,7 +388,7 @@ function mouseClicked() {
     for (let i = 0; i < cables.length && !currentCable; i++) {
       let cableLink = cables.at(i).nearCableLink();
       if (cableLink) {
-        //TODO was soll mit dem Kabel geschehen wenn es ausgewählt worden ist.
+        //TODO Hier kann man anpacken wenn man die Kabel nach dem Erstellen noch verschieben möchte.
         console.log(cableLink);
         return;
       }

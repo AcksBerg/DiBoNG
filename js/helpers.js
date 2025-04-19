@@ -22,7 +22,6 @@ const getCssNumberVariable = (varName) => {
 };
 
 // Die Daten der Verschiedenen ICs.
-// TODO Sinnvolle Daten hinterlegen
 const icInfos = {
   12: {
     name: "IC 12",
