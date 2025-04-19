@@ -102,7 +102,7 @@ const icInfos = {
   4444: {
     name: "IC 4444",
     schaltung: "0 & 2 → 1; 4 & 6 → 3",
-    pins: 6,
+    pins: 8,
     gates: [
       {
         type: "AND",
