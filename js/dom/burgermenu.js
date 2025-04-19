@@ -37,7 +37,7 @@ burger.querySelector(".ics").innerHTML = "";
 Object.keys(icInfos).forEach((id) => {
   burger.querySelector(
     ".ics"
-  ).innerHTML += `<div class="auswahl weiss" data-id="${id}" data-name="${icInfos[id].name}" data-description="${icInfos[id].description}" data-pins="${icInfos[id].pins}">${id}</div>`;
+  ).innerHTML += `<div class="auswahl weiss" data-id="${id}" data-name="${icInfos[id].name}" data-schaltung="${icInfos[id].schaltung}" data-pins="${icInfos[id].pins}">${id}</div>`;
 });
 
 // Die Schriftgröße der ICs anpassen jenachdem wie lang der Text ist.
@@ -62,7 +62,7 @@ burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
   <strong>${elem.dataset.name}</strong><br>
   <hr>
   <small>Pins: ${elem.dataset.pins}</small><br>
-  <small>Schaltung: <br>${elem.dataset.description.replaceAll(";", "<br>")}</small>
+  <small>Schaltung: <br>${elem.dataset.schaltung.replaceAll(";", "<br>")}</small>
 `;
     tooltip.style.display = "block";
   });

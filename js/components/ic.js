@@ -2,7 +2,6 @@
  * Die Klasse IC beinhaltet sich selbst und die Verbundenen Pins vom Type Plug.
  */
 
-
 class Ic {
   constructor(pos, rowCount, name) {
     if (rowCount <= 1) {
@@ -16,7 +15,7 @@ class Ic {
     this.gates = [];
     this.socket = null;
     this.socket_at = null;
-    this.connectorsPlugInvisible= [];
+    this.connectorsPlugInvisible = [];
 
     // Die Plugs werden immer im wechsel Links Rechts hinzugefügt
     for (let i = 0; i < this.rowCount; i++) {
@@ -46,8 +45,7 @@ class Ic {
       );
       // jeder ic hat 100 unsichtbare pins für interne verschaltungen
       for (let index = 0; index < 100; index++) {
-        this.connectorsPlugInvisible.push(new Pin())
-        
+        this.connectorsPlugInvisible.push(new Pin());
       }
     }
   }
@@ -61,17 +59,16 @@ class Ic {
   addGate(gate, pins) {
     // input pins verbinden
     for (let index = 0; index < pins.length - 1; index++) {
+      console.log(pins[index], gate.inputs[index]);
       pins[index].connect(gate.inputs[index]);
     }
     // output pin verbinden
-    gate.output.connect(
-      pins[pins.length - 1]
-    );
+    gate.output.connect(pins.at(-1));
     this.gates.push(gate);
   }
 
   /**
-   * Simuliert alle gates auf einem IC durch. 
+   * Simuliert alle gates auf einem IC durch.
    * Muss aufgerufen werden, damit Gates schalten.
    */
   simulate() {
@@ -130,7 +127,7 @@ class Ic {
    * Prüft, ob die Maus über dem IC liegt und falls ja, ob es mit einem Sockel verbunden ist der geöffnet oder geschlossen ist.
    * @returns bool - true = das IC wurde angeklickt und kann bewegt werden. false = das IC wurde verfehlt oder kann nicht bewegt werden.
    */
-  isClicked({ click_type = "click"} = {}) {
+  isClicked({ click_type = "click" } = {}) {
     // Ist die Maus über dem IC
     if (
       !inRect(
@@ -156,7 +153,7 @@ class Ic {
    * @param {*} socket? Wenn ein Sockel angegeben ist, wird der IC auf diesem Ordentlich ausgerichtet.
    */
   move(offset, socket) {
-    // 
+    //
     if (socket !== undefined) {
       this.pos = createVector(socket.pos.x, socket.pos.y).add(
         createVector(sizes.pin.rect / 2, -sizes.pin.plug_breite / 2)
@@ -240,14 +237,13 @@ class Ic {
   }
 
   update() {}
-  
 }
 
-function simulate_ics(){
+function simulate_ics() {
   /**
    * Lässt bei Aufruf alle ICs rechnen, damit die gates aktualisiert werden
    */
-  ics.forEach(ic => {
+  ics.forEach((ic) => {
     ic.simulate();
   });
 }

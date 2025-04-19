@@ -26,7 +26,7 @@ const getCssNumberVariable = (varName) => {
 const icInfos = {
   12: {
     name: "IC 12",
-    description: "0 & 2 → 1",
+    schaltung: "0 & 2 → 1",
     pins: 4,
     gates: [
       {
@@ -37,7 +37,7 @@ const icInfos = {
   },
   13: {
     name: "IC 13",
-    description: "0 | 2 → 1",
+    schaltung: "0 | 2 → 1",
     pins: 4,
     gates: [
       {
@@ -48,7 +48,7 @@ const icInfos = {
   },
   14: {
     name: "IC 14",
-    description: "0 ^ 2 → 1",
+    schaltung: "0 ^ 2 → 1",
     pins: 4,
     gates: [
       {
@@ -59,16 +59,16 @@ const icInfos = {
   },
   15: {
     name: "IC 15",
-    description: "!0 → 1; !2 → 3",
+    schaltung: "!0 → 1; !2 → 3",
     pins: 4,
     gates: [
       {
         type: "NOT",
-        connectors: [0, -1, 1],
+        connectors: [0, 0, 1],
       },
       {
         type: "NOT",
-        connectors: [2, -1, 3],
+        connectors: [2, 2, 3],
       },
     ],
   },

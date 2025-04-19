@@ -16,14 +16,13 @@ class Gate {
 }
 
 class Not extends Gate {
-  constructor(input1) {
-    super(input1);
-    this.inputs = [input1];
+  constructor(input1, input2) {
+    super(input1, input2);
   }
 
   compute() {
-    this.output.update(new Signal(!this.inputs[0].active))
     this.output.active = !this.inputs[0].active;
+    this.output.update(new Signal(this.output.active));
   }
 }
 
@@ -33,8 +32,8 @@ class Or extends Gate {
   }
 
   compute() {
-    this.output.update(new Signal(this.inputs[0].active || this.inputs[1].active))
     this.output.active = this.inputs[0].active || this.inputs[1].active;
+    this.output.update(new Signal(this.output.active));
   }
 }
 
@@ -45,7 +44,7 @@ class And extends Gate {
 
   compute() {
     this.output.active = this.inputs[0].active && this.inputs[1].active;
-    this.output.update(new Signal(this.inputs[0].active && this.inputs[1].active))
+    this.output.update(new Signal(this.output.active));
   }
 }
 class Xor extends Gate {
@@ -54,8 +53,9 @@ class Xor extends Gate {
   }
 
   compute() {
-    this.output.active = this.inputs[0].active && !this.inputs[1].active || this.inputs[1].active && !this.inputs[0].active;
-    this.output.update(new Signal(this.inputs[0].active && !this.inputs[1].active || this.inputs[1].active && !this.inputs[0].active))
+    this.output.active =
+      (this.inputs[0].active && !this.inputs[1].active) ||
+      (this.inputs[1].active && !this.inputs[0].active);
+    this.output.update(new Signal(this.output.active));
   }
 }
-

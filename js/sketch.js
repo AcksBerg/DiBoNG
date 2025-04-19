@@ -142,29 +142,6 @@ function setup() {
     ...platinElementsOutput,
     ...platinElementsSocket,
   ];
-  ics = [
-    new Ic(createVector(360, 250), 12, "IC1234"),
-    new Ic(createVector(380, 250), 4, "IC4321"),
-    new Ic(createVector(380, 275), 7, "IC4444"),
-  ];
-
-  // default gate für testzwecke:
-  // (pin0 and pin2) xor (pin4 and pin6) => pin1
-  ics[0].addGate(new And(), [
-    ics[0].connectorsPlug[0],
-    ics[0].connectorsPlug[2],
-    ics[0].connectorsPlugInvisible[0],
-  ]);
-  ics[0].addGate(new And(), [
-    ics[0].connectorsPlug[4],
-    ics[0].connectorsPlug[6],
-    ics[0].connectorsPlugInvisible[1],
-  ]);
-  ics[0].addGate(new Xor(), [
-    ics[0].connectorsPlugInvisible[0],
-    ics[0].connectorsPlugInvisible[1],
-    ics[0].connectorsPlug[1],
-  ]);
 }
 
 /**
