@@ -1,7 +1,7 @@
 let cam; // Kamera-Position
 let prevMouse; // Vorherige Mausposition
 let zoom = 2; // Zoom-Faktor
-let debug = true;
+let debug = false;
 let platinElements = [];
 let platinElementsInput = [];
 let platinElementsOutput = [];
