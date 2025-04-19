@@ -17,9 +17,10 @@ let pin_id = 0; //zähler der als pin id fungiert
 let cableColor = getCssColorVariable("--cableRed");
 let showMoreInfo = false;
 
-window.onbeforeunload = function() {   //versehentliches schließen oder neuladen blockiert
-  return "Hier muss etwas stehen";
-}
+//versehentliches schließen oder neuladen blockiert
+// window.onbeforeunload = function() {   
+//   return "Hier muss etwas stehen";
+// }
 
 /**
  * Verändert die Lightness und Transparent werte einer HSLA-Farbe.
