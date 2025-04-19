@@ -33,13 +33,58 @@
       />
     </nav>
     <section id="hilfe_popup">
-      <header>Die Überschrift</header>
-      <article>Der Hilfe Text</article>
+      <header>Nutzerhilfe</header>
+      <article>
+        <table>
+          <thead>
+            <tr>
+              <th>Shortcut</th>
+              <th>Beschreibung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SHIFT</td>
+              <td>Debug-Option aktivieren/deaktivieren.</td>
+            </tr>
+            <tr>
+              <td>STRG</td>
+              <td>
+                Beim Erstellen eines Kabels das erstellte Segment entfernen.
+              </td>
+            </tr>
+            <tr>
+              <td>STRG + L-Maus</td>
+              <td>Das ausgewählte Kabel oder IC entfernen.</td>
+            </tr>
+            <tr>
+              <td>STRG + S</td>
+              <td>Die Schaltung speichern.</td>
+            </tr>
+            <tr>
+              <td>STRG + O</td>
+              <td>Eine Schaltung laden.</td>
+            </tr>
+            <tr>
+              <td>STRG + P</td>
+              <td>Den An/Aus-Schalter betätigen.</td>
+            </tr>
+            <tr>
+              <td>ESC</td>
+              <td>Das Hilfe-Fenster schließen.</td>
+            </tr>
+            <tr>
+              <td>ESC</td>
+              <td>Das Erstellen eines Kabels abbrechen.</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
       <hr />
       <button>Schließen</button>
     </section>
 
-    <section id="burgermenu" class="rotated">
+    <section id="burgermenu" class="">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="19mm"
@@ -65,11 +110,10 @@
         </div>
         <hr />
         <div class="ueberschrift">ICs erstellen:</div>
-        <div class="container ics">
-        </div>
+        <div class="container ics"></div>
       </div>
     </section>
-    
+
     <!--
       TODO:
       Docstrings mit /** */ für alle Funktionen/Methoden implementieren
@@ -84,26 +128,25 @@
       - Taster Button
       - Multi Socket mit Single H und Double H sowie Variabler positionen
       -->
-      <!-- TODO Elemente benötigen eine einzigartige ID um diese richtig Speichern zu können -->
-      <script src="js/sketch.js" defer></script>
-      <script src="js/dom/navbar.js" defer></script>
-      <script src="js/dom/burgermenu.js" defer></script>
-      <script src="js/components/helpers.js"></script>
-      <script src="js/components/powerButton.js"></script>
-      <script src="js/components/signal.js"></script>
-      <script src="js/components/cable.js"></script>
-      <script src="js/components/pin.js"></script>
-      <script src="js/components/ic.js"></script>
-      <script src="js/components/socket.js"></script>
-      <script src="js/components/led.js"></script>
-      <script src="js/components/ledArray.js"></script>
-      <script src="js/components/twoBtnToggle.js"></script>
-      <script src="js/components/btnArray.js"></script>
-      <script src="js/components/gates.js"></script>
-      <script src="js/components/save.js"></script>
-      <script src="js/components/load.js"></script>
-      <script src="js/components/menu.js"></script>
-      <div id="ic-tooltip"></div>
-    </body>
-    </html>
-    
+    <!-- TODO Elemente benötigen eine einzigartige ID um diese richtig Speichern zu können -->
+    <script src="js/sketch.js" defer></script>
+    <script src="js/dom/navbar.js" defer></script>
+    <script src="js/dom/burgermenu.js" defer></script>
+    <script src="js/components/helpers.js"></script>
+    <script src="js/components/powerButton.js"></script>
+    <script src="js/components/signal.js"></script>
+    <script src="js/components/cable.js"></script>
+    <script src="js/components/pin.js"></script>
+    <script src="js/components/ic.js"></script>
+    <script src="js/components/socket.js"></script>
+    <script src="js/components/led.js"></script>
+    <script src="js/components/ledArray.js"></script>
+    <script src="js/components/twoBtnToggle.js"></script>
+    <script src="js/components/btnArray.js"></script>
+    <script src="js/components/gates.js"></script>
+    <script src="js/components/save.js"></script>
+    <script src="js/components/load.js"></script>
+    <script src="js/components/menu.js"></script>
+    <div id="ic-tooltip"></div>
+  </body>
+</html>

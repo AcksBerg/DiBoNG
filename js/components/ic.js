@@ -59,7 +59,6 @@ class Ic {
   addGate(gate, pins) {
     // input pins verbinden
     for (let index = 0; index < pins.length - 1; index++) {
-      console.log(pins[index], gate.inputs[index]);
       pins[index].connect(gate.inputs[index]);
     }
     // output pin verbinden

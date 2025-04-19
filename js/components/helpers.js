@@ -72,6 +72,48 @@ const icInfos = {
       },
     ],
   },
+  1234: {
+    name: "IC 1234",
+    schaltung: "0 & 2 → i0; 4 & 6 → i1; i0 ^ i1 → 1; !i0 → 3; !i1 → 5",
+    pins: 8,
+    gates: [
+      {
+        type: "AND",
+        connectors: [0, 2, "i0"],
+      },
+      {
+        type: "AND",
+        connectors: [4, 6, "i1"],
+      },
+      {
+        type: "XOR",
+        connectors: ["i0", "i1", 1],
+      },
+      {
+        type: "NOT",
+        connectors: ["i0", "i0", 3],
+      },
+      {
+        type: "NOT",
+        connectors: ["i1", "i1", 5],
+      },
+    ],
+  },
+  4444: {
+    name: "IC 4444",
+    schaltung: "0 & 2 → 1; 4 & 6 → 3",
+    pins: 6,
+    gates: [
+      {
+        type: "AND",
+        connectors: [0, 2, 1],
+      },
+      {
+        type: "AND",
+        connectors: [4, 6, 3],
+      },
+    ],
+  },
 };
 
 // Die Vordefinierten Farben und dazugehörige Werte wie Helligkeit und Transperenz gespeichert in hsla
