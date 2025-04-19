@@ -85,7 +85,7 @@ burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
     const elem = evt.currentTarget;
     const info = icInfos[elem.dataset.id];
     // pins / 2 da ics rows wollen und keine pin anzahl
-    const neuerIc = new Ic(createVector(300, 400), info.pins / 2, info.name);
+    const neuerIc = new Ic(getScreenCenter(), info.pins / 2, info.name);
     ics.push(neuerIc);
     info.gates?.forEach((gate) => {
       const gateObj =

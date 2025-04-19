@@ -114,6 +114,16 @@ const getWorldMousePos = () => {
   return createVector((mouseX - cam.x) / zoom, (mouseY - cam.y) / zoom);
 };
 
+/**
+ * Errechnet aus der derzeitigen Position der Camera die Mittlere Position des Canvas
+ * in der Szene indem es die angewandten Transformationen (Move und Zoom)
+ * anwendet
+ * @returns {Vector} Der Vector mit x und y Position der die Mitte des Bildschirms in der Szene darstellt
+ */
+const getScreenCenter = () => {
+  return createVector((width / 2 - cam.x) / zoom, (height / 2 - cam.y) / zoom);
+};
+
 function setup() {
   // Framerate reduziert um meinen Akku nicht ganz so schnell zu leeren.
   setFrameRate(30);
