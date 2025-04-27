@@ -94,7 +94,7 @@ class PowerButton {
   }
 
   update() {
-    // TODO @Morris Alle Eingabegeräte müssen ihr update ausführen wenn der Powerbutton auf ein oder aus
+    // TODO Alle Eingabegeräte müssen ihr update ausführen wenn der Powerbutton auf ein oder aus
     // oder die anderen Buttons sind nur klickbar wenn der Schalter an ist.
     this.active = !this.active;
   }

@@ -6,7 +6,7 @@ class Load {
     this.fileInput = createFileInput(this.handleFile.bind(this));
     this.fileInput.hide(); // damit kein element auf website angezeigt wird
     this.fileInput.elt.addEventListener("click", function (e) {
-      // verhindert, dass der click weitergericht wird und dann wieder mit der aktuellen maus position den click auf die sladen schaltfläche machjt
+      // verhindert, dass der click weitergericht wird und dann wieder mit der aktuellen maus position den click auf die laden schaltfläche macht
       e.stopPropagation();
     });
   }

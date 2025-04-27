@@ -117,9 +117,9 @@ class Pin {
    * @param {Signal} signal Ein Objekt zur Signalverarbeitung
    */
   update(signal) {
-    // TODO @Morris Handling vom Loop hinzufügen siehe Signal TODO
+    // TODO Handling vom Loop hinzufügen siehe Signal TODO
     // Compute erzeugt neues Siganal am output pin
-    // TODO @Morris Update vom IC wird aufgerufen vom Pin update
+    // TODO Update vom IC wird aufgerufen vom Pin update
     signal.visit(this);
     this.connected
       .filter((item) => !signal.visited.includes(item))

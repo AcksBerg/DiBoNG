@@ -31,7 +31,7 @@ class Socket {
           "rect"
         )
       );
-      // TODO @Morris Simulation so umsetzen das keine Schleifen entstehen siehe TODO Signal, wenn das implementiert ist sollte es keine schleifen geben können
+      // TODO Simulation so umsetzen das keine Schleifen entstehen siehe TODO Signal, wenn das implementiert ist sollte es keine schleifen geben können
       this.connectorsCircle.at(-1).connect(this.connectorsRect.at(-1));
       this.connectorsRect.at(-1).connect(this.connectorsCircle.at(-1));
 
@@ -55,7 +55,7 @@ class Socket {
           "rect"
         )
       );
-      // TODO @Morris Simulation so umsetzen das keine Schleifen entstehen siehe TODO Signal, wenn das implementiert ist sollte es keine schleifen geben können
+      // TODO Simulation so umsetzen das keine Schleifen entstehen siehe TODO Signal, wenn das implementiert ist sollte es keine schleifen geben können
       this.connectorsCircle.at(-1).connect(this.connectorsRect.at(-1));
       this.connectorsRect.at(-1).connect(this.connectorsCircle.at(-1));
     }
