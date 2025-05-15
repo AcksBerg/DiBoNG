@@ -50,7 +50,7 @@ class PowerButton {
         sizes.powerButton.mainsDisplacement +
         sizes.powerButton.border * 2,
       sizes.powerButton.width - sizes.powerButton.border * 4,
-      sizes.powerButton.width - sizes.powerButton.border * 6,
+      sizes.powerButton.height * 0.5 - sizes.powerButton.border * 6,
       2
     );
     // Die 0

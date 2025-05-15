@@ -168,6 +168,7 @@ const sizes = {
   ledArray: {
     ledVersatz: 20,
     yVersatz: 15,
+    yVersatzLedGross:4,
   },
   btnArray: {
     size: 20,
@@ -189,9 +190,5 @@ const sizes = {
     height: 40,
     border: 2,
     circle: 5,
-  },
-  menu: {
-    width: 20,
-    height: 20,
   },
 };
