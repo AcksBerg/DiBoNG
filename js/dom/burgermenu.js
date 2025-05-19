@@ -62,7 +62,10 @@ burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
   <strong>${elem.dataset.name}</strong><br>
   <hr>
   <small>Pins: ${elem.dataset.pins}</small><br>
-  <small>Schaltung: <br>${elem.dataset.schaltung.replaceAll(";", "<br>")}</small>
+  <small>Schaltung: <br>${elem.dataset.schaltung.replaceAll(
+    ";",
+    "<br>"
+  )}</small>
 `;
     tooltip.style.display = "block";
   });
@@ -85,7 +88,14 @@ burger.querySelectorAll(".ics>.auswahl").forEach((elem) => {
     const elem = evt.currentTarget;
     const info = icInfos[elem.dataset.id];
     // pins / 2 da ics rows wollen und keine pin anzahl
-    const neuerIc = new Ic(getScreenCenter(), info.pins / 2, info.name);
+    const neuerIc = new Ic(
+      p5.Vector.add(
+        getScreenCenter(),
+        p5.Vector.mult(p5.Vector.random2D(), map(zoom, 1, 10, 20, 10))
+      ),
+      info.pins / 2,
+      info.name
+    );
     ics.push(neuerIc);
     info.gates?.forEach((gate) => {
       const gateObj =
