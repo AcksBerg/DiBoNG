@@ -4,13 +4,14 @@
  */
 
 class Pin {
-  constructor(pos, type = "circle") {
+  constructor(pos, type = "circle", gesperrt = false) {
     this.id = pin_id;
     pin_id++;
     this.pos = pos;
     this.connected = [];
     this.active = false;
     this.type = type;
+    this.gesperrt = gesperrt;
     id_obj.push([this, this.id]);
   }
 
@@ -116,13 +117,13 @@ class Pin {
    * Update wird aufgerufen wenn das Signal den Pin erreicht.
    * @param {Signal} signal Ein Objekt zur Signalverarbeitung
    */
-  update(signal) {
+  update(signal, entsperren = false) {
     // TODO Handling vom Loop hinzufügen siehe Signal TODO
     // Compute erzeugt neues Siganal am output pin
     // TODO Update vom IC wird aufgerufen vom Pin update
-    signal.visit(this);
+    signal.visit(this, entsperren);
     this.connected
-      .filter((item) => !signal.visited.includes(item))
+      .filter((obj) => !signal.visited.includes(obj) && !obj.gesperrt)
       .forEach((obj) => {
         obj.update(signal);
       });

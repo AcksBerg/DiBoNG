@@ -20,18 +20,22 @@ class TwoBtnToggle {
           this.pos.x +
             ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5,
           this.pos.y + sizes.btnArray.size * 0.25
-        )
+        ),
+        "circle",
+        true
       ),
       new Pin(
         createVector(
           this.pos.x +
             ((sizes.btnArray.size / 4) * 3 + sizes.btnArray.size * 2) * 1.5,
           this.pos.y + sizes.btnArray.size * 0.75
-        )
+        ),
+        "circle",
+        true
       ),
     ];
     // Den Negierten Ausgang !Q initialisieren.
-    this.connected[2].update(new Signal(!this.active));
+    this.connected[2].update(new Signal(!this.active), true);
   }
 
   /**
@@ -144,8 +148,8 @@ class TwoBtnToggle {
     // LED
     this.connected[0].update(new Signal(this.active));
     // Oberer Connector
-    this.connected[1].update(new Signal(this.active));
+    this.connected[1].update(new Signal(this.active), true);
     // Unterer Connector
-    this.connected[2].update(new Signal(!this.active));
+    this.connected[2].update(new Signal(!this.active), true);
   }
 }

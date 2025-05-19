@@ -1,8 +1,8 @@
 // TODO Kommentare und Docstring hinzufügen
 class Gate {
   constructor(input1 = null, input2 = null) {
-    this.inputs = [new Pin(0, 0, "any"), new Pin(0, 0, "any")];
-    this.output = new Pin(0, 0, "any");
+    this.inputs = [new Pin(createVector(0,0), "any", false), new Pin(createVector(0,0), "any", false)];
+    this.output = new Pin(createVector(0,0), "any", false);
   }
 
   update_inputs(input1 = null, input2 = null) {

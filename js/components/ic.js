@@ -235,7 +235,6 @@ class Ic {
     return true;
   }
 
-  update() {}
 }
 
 function simulate_ics() {
