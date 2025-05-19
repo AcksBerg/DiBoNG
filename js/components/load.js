@@ -27,6 +27,7 @@ class Load {
     this.data = file.data;
     this.cabledata = this.data[0];
     this.icdata = this.data[1];
+    document.querySelector("#sketch_name").value = this.data[2];
     console.log(this.data);
     this.create_cables();
     this.create_ic();
@@ -64,7 +65,7 @@ class Load {
       this.socket_at_load = element[1];
       this.ic_name_load = element[2];
       // ic daten aus icInfos laden.
-      const info = icInfos[parseInt(this.ic_name_load.split(" ")[1])]
+      const info = icInfos[parseInt(this.ic_name_load.split(" ")[1])];
       // pins / 2 da ics rows wollen und keine pin anzahl
       const neuerIc = new Ic(getScreenCenter(), info.pins / 2, info.name);
       ics.push(neuerIc);
