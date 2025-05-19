@@ -220,7 +220,7 @@ function mousePressed() {
     // Am Ende Rausspringen
     return;
   }
-  for (let i = 0; i < ics.length && !currentElement && !currentCable; i++) {
+  for (let i = ics.length -1; i >= 0 && !currentElement && !currentCable; i--) {
     if (ics.at(i).isClicked({ click_type: "press" })) {
       currentElement = { elem: ics.at(i) };
       currentElement.elem.disconnectFromSocket();
