@@ -181,8 +181,8 @@ const sizes = {
     hebelBreite: 1,
   },
   cable: {
-    minAbstand: 15,
-    link_rect: 3,
+    minAbstand: 8,
+    link_rect: 2,
   },
   powerButton: {
     mainsDisplacement: 2,

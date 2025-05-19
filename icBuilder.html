@@ -1,0 +1,159 @@
+<!-- IC Builder der mithilfe von GPT erstellt worden ist-->
+
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IC Builder</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background: #f4f4f4;
+      }
+      .section {
+        margin-bottom: 2rem;
+      }
+      input,
+      select,
+      button {
+        margin: 5px;
+        padding: 5px;
+      }
+      .gate {
+        margin-bottom: 10px;
+      }
+      textarea {
+        width: 100%;
+        height: 150px;
+      }
+      .pin-grid {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+      .pin-grid span {
+        background: #ccc;
+        padding: 5px 8px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔧 IC Builder</h1>
+
+    <div class="section">
+      <h2>IC anlegen</h2>
+      <label
+        >Name: <input type="text" id="icName" placeholder="z.B. 1234"
+      /></label>
+      <label>Pins: <input type="number" id="icPins" value="8" /></label>
+      <button onclick="createIc()">IC erstellen</button>
+      <div id="icInfo"></div>
+    </div>
+
+    <div class="section">
+      <h2>Gate hinzufügen</h2>
+      <label
+        >Typ:
+        <select id="gateType">
+          <option value="AND">AND</option>
+          <option value="OR">OR</option>
+          <option value="XOR">XOR</option>
+          <option value="NOT">NOT</option>
+        </select>
+      </label>
+      <label
+        >Verbindungen (z.B. 0,2,i0): <input type="text" id="gateConnections"
+      /></label>
+      <button onclick="addGate()">Gate hinzufügen</button>
+      <div id="gatesList"></div>
+    </div>
+
+    <div class="section">
+      <h2>Vorschau (JSON)</h2>
+      <button onclick="generateJSON()">📤 JSON exportieren</button>
+      <textarea id="output"></textarea>
+    </div>
+
+    <script>
+      let ic = null;
+
+      function createIc() {
+        const name = document.getElementById("icName").value.trim();
+        const pins = parseInt(document.getElementById("icPins").value);
+        if (!name || isNaN(pins)) return alert("Bitte gültige Werte eingeben.");
+
+        ic = {
+          name: "IC " + name,
+          description: "Benutzerdefinierter Logikbaustein",
+          pins: pins,
+          gates: [],
+        };
+
+        document.getElementById(
+          "icInfo"
+        ).innerHTML = `✅ IC ${name} mit ${pins} Pins erstellt.`;
+        document.getElementById("gatesList").innerHTML = "";
+      }
+
+      function addGate() {
+        if (!ic) return alert("Erstelle zuerst ein IC.");
+
+        const type = document.getElementById("gateType").value;
+        const connectors = document
+          .getElementById("gateConnections")
+          .value.split(",")
+          .map((c) => c.trim())
+          .filter((c) => c !== "")
+          .map((c) => (c.startsWith("i") ? c : parseInt(c)));
+
+        ic.gates.push({ type, connectors });
+
+        const gateDiv = document.createElement("div");
+        gateDiv.className = "gate";
+        gateDiv.textContent = `🔗 ${type}(${connectors.join(", ")})`;
+        document.getElementById("gatesList").appendChild(gateDiv);
+      }
+
+      function generateJSON() {
+        if (!ic) return;
+        const id = document.getElementById("icName").value.trim();
+
+        const operatorMap = {
+          AND: "&",
+          OR: "|",
+          XOR: "^",
+          NOT: "!",
+        };
+
+        const expressions = ic.gates.map((gate, idx) => {
+          const op = operatorMap[gate.type] || "?";
+          let [a, b, out] = gate.connectors;
+
+          // Wenn nur zwei angegeben, fülle -1 als Dummy ein
+          if (gate.type === "NOT" && gate.connectors.length === 2) {
+            [a, out] = gate.connectors;
+            b = -1;
+            gate.connectors = [a, b, out]; // Korrigiere im Datensatz selbst
+          }
+
+          // Beschreibung zusammenbauen
+          if (gate.type === "NOT") {
+            return `!${a} → ${out}`;
+          } else {
+            return `${a} ${op} ${b} → ${out}`;
+          }
+        });
+
+        const description = `${expressions.join(
+          "; "
+        )}`;
+        ic.description = description;
+
+        const json = `${id}: ${JSON.stringify(ic, null, 2)},`;
+        document.getElementById("output").value = json;
+      }
+    </script>
+  </body>
+</html>

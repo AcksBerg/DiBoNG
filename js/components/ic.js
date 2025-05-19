@@ -232,16 +232,18 @@ class Ic {
         });
     });
     this.socket = null;
+    this.socket_at = null;
     return true;
   }
-
 }
 
 function simulate_ics() {
   /**
    * Lässt bei Aufruf alle ICs rechnen, damit die gates aktualisiert werden
    */
-  ics.forEach((ic) => {
-    ic.simulate();
-  });
+  ics
+    .filter((ic) => ic.socket !== null)
+    .forEach((ic) => {
+      ic.simulate();
+    });
 }
